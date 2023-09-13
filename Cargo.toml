@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 diesel = { version = "2.1.1", features = ["sqlite"] }
 dotenvy = "0.15.7"
+
+[package.scripts]
+schema = "diesel print-schema > src/schema.rs"
