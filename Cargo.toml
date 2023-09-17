@@ -6,8 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0.75"
 diesel = { version = "2.1.1", features = ["sqlite"] }
-dotenvy = "0.15.7"
 
 [package.scripts]
-schema = "diesel print-schema --database-url data/fm.db > src/schema.rs"
+schema = "diesel print-schema --database-url data/fm.db > src/data/schema.rs"
+models = 'diesel_ext --model -I "diesel::prelude::*" -I "crate::data::schema::*" > src/data/models.rs'
