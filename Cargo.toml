@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.75"
 diesel = { version = "2.1.1", features = ["sqlite"] }
+rusqlite = "0.29.0"
 
 [package.scripts]
 schema = "diesel print-schema --database-url data/fm.db > src/data/schema.rs"

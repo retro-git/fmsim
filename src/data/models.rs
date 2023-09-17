@@ -6,25 +6,22 @@
 use diesel::prelude::*;
 use crate::data::schema::*;
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(animation_id))]
+#[derive(Queryable, Debug)]
 pub struct AnimType {
-    pub animation_id: i32,
+    pub id: i32,
     pub name: String,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(type_id))]
+#[derive(Queryable, Debug)]
 pub struct CardType {
-    pub type_id: i32,
+    pub id: i32,
     pub name: String,
     pub is_monster: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(card_id))]
+#[derive(Queryable, Debug)]
 pub struct Card {
-    pub card_id: i32,
+    pub id: i32,
     pub name: String,
     pub description: String,
     pub guardian_star_a_id: i32,
@@ -47,36 +44,32 @@ pub struct Card {
     pub ai_gs: Option<i32>,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(choice_id))]
+#[derive(Queryable, Debug)]
 pub struct ChoiceType {
-    pub choice_id: i32,
+    pub id: i32,
     pub name: String,
     pub time_cost: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(decomp_id))]
+#[derive(Queryable, Debug)]
 pub struct Decomp {
-    pub decomp_id: i32,
+    pub id: i32,
     pub animation_id: i32,
     pub choice_id: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(duelist_pool_id))]
+#[derive(Queryable, Debug)]
 pub struct DuelistPool {
-    pub duelist_pool_id: i32,
+    pub id: i32,
     pub duelist_id: i32,
     pub pool_type_id: i32,
     pub card_id: i32,
     pub prob: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(duelist_id))]
+#[derive(Queryable, Debug)]
 pub struct Duelist {
-    pub duelist_id: i32,
+    pub id: i32,
     pub name: String,
     pub is_mage: bool,
     pub hand_size: i32,
@@ -94,65 +87,57 @@ pub struct Duelist {
     pub set_magic_no_td: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(equip_id))]
+#[derive(Queryable, Debug)]
 pub struct Equip {
-    pub equip_id: i32,
+    pub id: i32,
     pub equip_card_id: i32,
     pub card_id: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(field_effect_id))]
+#[derive(Queryable, Debug)]
 pub struct FieldEffect {
-    pub field_effect_id: i32,
+    pub id: i32,
     pub field_type_id: i32,
     pub card_type_id: i32,
     pub relation: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(field_type_id))]
+#[derive(Queryable, Debug)]
 pub struct FieldType {
-    pub field_type_id: i32,
+    pub id: i32,
     pub name: String,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(fixed_adv_id))]
+#[derive(Queryable, Debug)]
 pub struct FixedAdv {
-    pub fixed_adv_id: i32,
+    pub id: i32,
     pub animation_id: i32,
     pub initial_seed_index: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(fusion_id))]
+#[derive(Queryable, Debug)]
 pub struct Fusion {
-    pub fusion_id: i32,
+    pub id: i32,
     pub card1_id: i32,
     pub card2_id: i32,
     pub result_card_id: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(guardian_star_id))]
+#[derive(Queryable, Debug)]
 pub struct GuardianStar {
-    pub guardian_star_id: i32,
+    pub id: i32,
     pub name: String,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(pool_type_id))]
+#[derive(Queryable, Debug)]
 pub struct PoolType {
-    pub pool_type_id: i32,
+    pub id: i32,
     pub name: String,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(ritual_id))]
+#[derive(Queryable, Debug)]
 pub struct Ritual {
-    pub ritual_id: i32,
+    pub id: i32,
     pub ritual_card_id: i32,
     pub card1_id: i32,
     pub card2_id: i32,
@@ -160,26 +145,23 @@ pub struct Ritual {
     pub result_card_id: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(pool_id))]
+#[derive(Queryable, Debug)]
 pub struct StarterGroup {
-    pub pool_id: i32,
+    pub id: i32,
     pub sample_size: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(starter_pool_id))]
+#[derive(Queryable, Debug)]
 pub struct StarterPool {
-    pub starter_pool_id: i32,
+    pub id: i32,
     pub pool_id: i32,
     pub card_id: i32,
     pub prob: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
-#[diesel(primary_key(variable_adv_id))]
+#[derive(Queryable, Debug)]
 pub struct VariableAdv {
-    pub variable_adv_id: i32,
+    pub id: i32,
     pub animation_id: i32,
     pub initial_seed_index: i32,
     pub advance_size: i32,

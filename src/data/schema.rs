@@ -1,23 +1,23 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    anim_types (animation_id) {
-        animation_id -> Integer,
+    anim_types (id) {
+        id -> Integer,
         name -> Text,
     }
 }
 
 diesel::table! {
-    card_types (type_id) {
-        type_id -> Integer,
+    card_types (id) {
+        id -> Integer,
         name -> Text,
         is_monster -> Integer,
     }
 }
 
 diesel::table! {
-    cards (card_id) {
-        card_id -> Integer,
+    cards (id) {
+        id -> Integer,
         name -> Text,
         description -> Text,
         guardian_star_a_id -> Integer,
@@ -42,24 +42,24 @@ diesel::table! {
 }
 
 diesel::table! {
-    choice_types (choice_id) {
-        choice_id -> Integer,
+    choice_types (id) {
+        id -> Integer,
         name -> Text,
         time_cost -> Integer,
     }
 }
 
 diesel::table! {
-    decomps (decomp_id) {
-        decomp_id -> Integer,
+    decomps (id) {
+        id -> Integer,
         animation_id -> Integer,
         choice_id -> Integer,
     }
 }
 
 diesel::table! {
-    duelist_pools (duelist_pool_id) {
-        duelist_pool_id -> Integer,
+    duelist_pools (id) {
+        id -> Integer,
         duelist_id -> Integer,
         pool_type_id -> Integer,
         card_id -> Integer,
@@ -68,8 +68,8 @@ diesel::table! {
 }
 
 diesel::table! {
-    duelists (duelist_id) {
-        duelist_id -> Integer,
+    duelists (id) {
+        id -> Integer,
         name -> Text,
         is_mage -> Bool,
         hand_size -> Integer,
@@ -89,16 +89,16 @@ diesel::table! {
 }
 
 diesel::table! {
-    equips (equip_id) {
-        equip_id -> Integer,
+    equips (id) {
+        id -> Integer,
         equip_card_id -> Integer,
         card_id -> Integer,
     }
 }
 
 diesel::table! {
-    field_effects (field_effect_id) {
-        field_effect_id -> Integer,
+    field_effects (id) {
+        id -> Integer,
         field_type_id -> Integer,
         card_type_id -> Integer,
         relation -> Integer,
@@ -106,23 +106,23 @@ diesel::table! {
 }
 
 diesel::table! {
-    field_types (field_type_id) {
-        field_type_id -> Integer,
+    field_types (id) {
+        id -> Integer,
         name -> Text,
     }
 }
 
 diesel::table! {
-    fixed_advs (fixed_adv_id) {
-        fixed_adv_id -> Integer,
+    fixed_advs (id) {
+        id -> Integer,
         animation_id -> Integer,
         initial_seed_index -> Integer,
     }
 }
 
 diesel::table! {
-    fusions (fusion_id) {
-        fusion_id -> Integer,
+    fusions (id) {
+        id -> Integer,
         card1_id -> Integer,
         card2_id -> Integer,
         result_card_id -> Integer,
@@ -130,22 +130,22 @@ diesel::table! {
 }
 
 diesel::table! {
-    guardian_stars (guardian_star_id) {
-        guardian_star_id -> Integer,
+    guardian_stars (id) {
+        id -> Integer,
         name -> Text,
     }
 }
 
 diesel::table! {
-    pool_types (pool_type_id) {
-        pool_type_id -> Integer,
+    pool_types (id) {
+        id -> Integer,
         name -> Text,
     }
 }
 
 diesel::table! {
-    rituals (ritual_id) {
-        ritual_id -> Integer,
+    rituals (id) {
+        id -> Integer,
         ritual_card_id -> Integer,
         card1_id -> Integer,
         card2_id -> Integer,
@@ -155,15 +155,15 @@ diesel::table! {
 }
 
 diesel::table! {
-    starter_groups (pool_id) {
-        pool_id -> Integer,
+    starter_groups (id) {
+        id -> Integer,
         sample_size -> Integer,
     }
 }
 
 diesel::table! {
-    starter_pools (starter_pool_id) {
-        starter_pool_id -> Integer,
+    starter_pools (id) {
+        id -> Integer,
         pool_id -> Integer,
         card_id -> Integer,
         prob -> Integer,
@@ -171,8 +171,8 @@ diesel::table! {
 }
 
 diesel::table! {
-    variable_advs (variable_adv_id) {
-        variable_adv_id -> Integer,
+    variable_advs (id) {
+        id -> Integer,
         animation_id -> Integer,
         initial_seed_index -> Integer,
         advance_size -> Integer,
@@ -185,6 +185,7 @@ diesel::joinable!(decomps -> choice_types (choice_id));
 diesel::joinable!(duelist_pools -> cards (card_id));
 diesel::joinable!(duelist_pools -> duelists (duelist_id));
 diesel::joinable!(duelist_pools -> pool_types (pool_type_id));
+diesel::joinable!(field_effects -> cards (card_type_id));
 diesel::joinable!(field_effects -> field_types (field_type_id));
 diesel::joinable!(fixed_advs -> anim_types (animation_id));
 diesel::joinable!(starter_pools -> cards (card_id));
