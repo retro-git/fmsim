@@ -12,7 +12,7 @@ pub static CARDS: LazyLock<Vec<BaseCard>> = LazyLock::new(|| {
 });
 
 pub static DUELISTS: LazyLock<Vec<Duelist>> = LazyLock::new(|| {
-    let card_data = include_bytes!("../../data/cards.json");
+    let card_data = include_bytes!("../../data/duelists.json");
     serde_json::from_slice(card_data).expect("Error while reading cards")
 });
 
