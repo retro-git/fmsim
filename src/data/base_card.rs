@@ -7,48 +7,48 @@ where
     D: serde::Deserializer<'de>,
     T: num_traits::FromPrimitive,
 {
-    let i = i32::deserialize(deserializer)?;
-    T::from_i32(i).ok_or_else(|| serde::de::Error::custom("Out of range"))
+    let i = u32::deserialize(deserializer)?;
+    T::from_u32(i).ok_or_else(|| serde::de::Error::custom("Out of range"))
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct BaseCard {
-    pub id: i32,
+    pub id: u32,
     pub name: String,
     pub description: String,
     #[serde(deserialize_with = "from_primitive")]
     pub guardian_star_a: GuardianStar,
     #[serde(deserialize_with = "from_primitive")]
     pub guardian_star_b: GuardianStar,
-    pub level: i32,
+    pub level: u32,
     #[serde(rename = "type")]
     #[serde(deserialize_with = "from_primitive")]
     pub card_type: CardType,
-    pub base_attack: i32,
-    pub base_defense: i32,
-    pub stars: i32,
-    pub card_code: i32,
-    pub attribute: i32,
-    pub name_color: i32,
-    pub desc_color: i32,
-    pub abc_sort: i32,
-    pub max_sort: i32,
-    pub atk_sort: i32,
-    pub def_sort: i32,
-    pub typ_sort: i32,
-    pub ai_sort: i32,
-    pub ai_gs: Option<i32>,
-    pub fusions: HashMap<i32, i32>,
-    pub equips: Vec<i32>,
+    pub base_attack: u32,
+    pub base_defense: u32,
+    pub stars: u32,
+    pub card_code: u32,
+    pub attribute: u32,
+    pub name_color: u32,
+    pub desc_color: u32,
+    pub abc_sort: u32,
+    pub max_sort: u32,
+    pub atk_sort: u32,
+    pub def_sort: u32,
+    pub typ_sort: u32,
+    pub ai_sort: u32,
+    pub ai_gs: Option<u32>,
+    pub fusions: HashMap<u32, u32>,
+    pub equips: Vec<u32>,
     pub ritual: Option<Ritual>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Ritual {
-    pub card1_id: i32,
-    pub card2_id: i32,
-    pub card3_id: i32,
-    pub result_card_id: i32,
+    pub card1_id: u32,
+    pub card2_id: u32,
+    pub card3_id: u32,
+    pub result_card_id: u32,
 }
 
 #[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive)]
