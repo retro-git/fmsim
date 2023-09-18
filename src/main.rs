@@ -66,7 +66,7 @@ pub enum FieldType {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct Card {
+struct BaseCard {
     id: i32,
     name: String,
     description: String,
@@ -135,7 +135,7 @@ fn main() {
     let duelist_data = include_bytes!("../data/duelists.json");
 
     // use serde to parse all cards into a vector
-    let cards: Vec<Card> = serde_json::from_slice(card_data).expect("Error while reading cards");
+    let cards: Vec<BaseCard> = serde_json::from_slice(card_data).expect("Error while reading cards");
 
     // use serde to parse all duelists into a vector
     let duelists: Vec<Duelist> =
