@@ -12,7 +12,7 @@ where
 }
 
 #[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive)]
-pub enum CardTypes {
+pub enum CardType {
     Dragon = 0,
     Spellcaster = 1,
     Zombie = 2,
@@ -40,7 +40,7 @@ pub enum CardTypes {
 }
 
 #[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive)]
-pub enum GuardianStars {
+pub enum GuardianStar {
     NoStar = 0,
     Mars = 1,
     Jupiter = 2,
@@ -71,13 +71,13 @@ struct BaseCard {
     name: String,
     description: String,
     #[serde(deserialize_with = "from_primitive")]
-    guardian_star_a: GuardianStars,
+    guardian_star_a: GuardianStar,
     #[serde(deserialize_with = "from_primitive")]
-    guardian_star_b: GuardianStars,
+    guardian_star_b: GuardianStar,
     level: i32,
     #[serde(rename = "type")]
     #[serde(deserialize_with = "from_primitive")]
-    card_type: CardTypes,
+    card_type: CardType,
     base_attack: i32,
     base_defense: i32,
     stars: i32,
