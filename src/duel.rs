@@ -9,6 +9,7 @@ enum ActiveCard {
     Magic { id: u32 },
     Trap { id: u32 },
     Ritual { id: u32 },
+    Equip { id: u32 },
 }
 
 struct Player {

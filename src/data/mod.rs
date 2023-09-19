@@ -28,5 +28,10 @@ mod tests {
     fn test_card_from_id() {
         let pegm = card_from_id(67);
         assert_eq!(pegm.name, "Perfectly Ultimate Great Moth");
+        // Check Variant is Monster
+        match pegm.variant {
+            CardVariant::Monster { .. } => assert!(true),
+            _ => assert!(false)
+        }
     }
 }

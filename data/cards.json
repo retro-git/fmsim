@@ -45421,10 +45421,10 @@
         },
         "variant": {
             "type": "Ritual",
-            "card1_id": 254,
-            "card2_id": 295,
-            "card3_id": 628,
-            "result_card_id": 361
+            "card1_id": 255,
+            "card2_id": 296,
+            "card3_id": 629,
+            "result_card_id": 362
         }
     },
     {
@@ -45444,10 +45444,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 28,
-            "card2_id": 30,
-            "card3_id": 100,
-            "result_card_id": 356
+            "card1_id": 29,
+            "card2_id": 31,
+            "card3_id": 101,
+            "result_card_id": 357
         }
     },
     {
@@ -45467,10 +45467,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 370,
-            "card2_id": 371,
-            "card3_id": 372,
-            "result_card_id": 373
+            "card1_id": 371,
+            "card2_id": 372,
+            "card3_id": 373,
+            "result_card_id": 374
         }
     },
     {
@@ -46151,10 +46151,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 26,
-            "card2_id": 37,
-            "card3_id": 57,
-            "result_card_id": 363
+            "card1_id": 27,
+            "card2_id": 38,
+            "card3_id": 58,
+            "result_card_id": 364
         }
     },
     {
@@ -46174,10 +46174,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 84,
-            "card2_id": 297,
-            "card3_id": 376,
-            "result_card_id": 359
+            "card1_id": 85,
+            "card2_id": 298,
+            "card3_id": 377,
+            "result_card_id": 360
         }
     },
     {
@@ -46216,10 +46216,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 200,
-            "card2_id": 402,
-            "card3_id": 482,
-            "result_card_id": 355
+            "card1_id": 201,
+            "card2_id": 403,
+            "card3_id": 483,
+            "result_card_id": 356
         }
     },
     {
@@ -46239,10 +46239,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 185,
-            "card2_id": 260,
-            "card3_id": 594,
-            "result_card_id": 364
+            "card1_id": 186,
+            "card2_id": 261,
+            "card3_id": 595,
+            "result_card_id": 365
         }
     },
     {
@@ -46262,10 +46262,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 0,
-            "card2_id": 0,
-            "card3_id": 0,
-            "result_card_id": 379
+            "card1_id": 1,
+            "card2_id": 1,
+            "card3_id": 1,
+            "result_card_id": 380
         }
     },
     {
@@ -46285,10 +46285,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 248,
-            "card2_id": 394,
-            "card3_id": 510,
-            "result_card_id": 700
+            "card1_id": 249,
+            "card2_id": 395,
+            "card3_id": 511,
+            "result_card_id": 701
         }
     },
     {
@@ -46308,10 +46308,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 13,
-            "card2_id": 294,
-            "card3_id": 546,
-            "result_card_id": 701
+            "card1_id": 14,
+            "card2_id": 295,
+            "card3_id": 547,
+            "result_card_id": 702
         }
     },
     {
@@ -46331,10 +46331,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 2,
-            "card2_id": 63,
-            "card3_id": 452,
-            "result_card_id": 702
+            "card1_id": 3,
+            "card2_id": 64,
+            "card3_id": 453,
+            "result_card_id": 703
         }
     },
     {
@@ -46354,10 +46354,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 159,
-            "card2_id": 160,
-            "card3_id": 534,
-            "result_card_id": 703
+            "card1_id": 160,
+            "card2_id": 161,
+            "card3_id": 535,
+            "result_card_id": 704
         }
     },
     {
@@ -46377,10 +46377,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 5,
-            "card2_id": 46,
-            "card3_id": 570,
-            "result_card_id": 704
+            "card1_id": 6,
+            "card2_id": 47,
+            "card3_id": 571,
+            "result_card_id": 705
         }
     },
     {
@@ -46594,10 +46594,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 167,
-            "card2_id": 293,
-            "card3_id": 603,
-            "result_card_id": 705
+            "card1_id": 168,
+            "card2_id": 294,
+            "card3_id": 604,
+            "result_card_id": 706
         }
     },
     {
@@ -46617,10 +46617,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 88,
-            "card2_id": 448,
-            "card3_id": 450,
-            "result_card_id": 709
+            "card1_id": 89,
+            "card2_id": 449,
+            "card3_id": 451,
+            "result_card_id": 710
         }
     },
     {
@@ -46640,10 +46640,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 101,
-            "card2_id": 181,
-            "card3_id": 219,
-            "result_card_id": 719
+            "card1_id": 102,
+            "card2_id": 182,
+            "card3_id": 220,
+            "result_card_id": 720
         }
     },
     {
@@ -46663,10 +46663,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 177,
-            "card2_id": 268,
-            "card3_id": 287,
-            "result_card_id": 708
+            "card1_id": 178,
+            "card2_id": 269,
+            "card3_id": 288,
+            "result_card_id": 709
         }
     },
     {
@@ -46686,10 +46686,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 165,
-            "card2_id": 404,
-            "card3_id": 415,
-            "result_card_id": 714
+            "card1_id": 166,
+            "card2_id": 405,
+            "card3_id": 416,
+            "result_card_id": 715
         }
     },
     {
@@ -46709,10 +46709,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 51,
-            "card2_id": 479,
-            "card3_id": 532,
-            "result_card_id": 716
+            "card1_id": 52,
+            "card2_id": 480,
+            "card3_id": 533,
+            "result_card_id": 717
         }
     },
     {
@@ -46732,10 +46732,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 238,
-            "card2_id": 377,
-            "card3_id": 620,
-            "result_card_id": 715
+            "card1_id": 239,
+            "card2_id": 378,
+            "card3_id": 621,
+            "result_card_id": 716
         }
     },
     {
@@ -46755,10 +46755,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 265,
-            "card2_id": 634,
-            "card3_id": 637,
-            "result_card_id": 707
+            "card1_id": 266,
+            "card2_id": 635,
+            "card3_id": 638,
+            "result_card_id": 708
         }
     },
     {
@@ -46778,10 +46778,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 145,
-            "card2_id": 478,
-            "card3_id": 484,
-            "result_card_id": 718
+            "card1_id": 146,
+            "card2_id": 479,
+            "card3_id": 485,
+            "result_card_id": 719
         }
     },
     {
@@ -46801,10 +46801,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 435,
-            "card2_id": 440,
-            "card3_id": 541,
-            "result_card_id": 717
+            "card1_id": 436,
+            "card2_id": 441,
+            "card3_id": 542,
+            "result_card_id": 718
         }
     },
     {
@@ -47326,10 +47326,10 @@
         "fusions": {},
         "variant": {
             "type": "Ritual",
-            "card1_id": 6,
-            "card2_id": 34,
-            "card3_id": 416,
-            "result_card_id": 721
+            "card1_id": 7,
+            "card2_id": 35,
+            "card3_id": 417,
+            "result_card_id": 722
         }
     },
     {
