@@ -1,21 +1,27 @@
-// struct ActiveCard {
-//     id: u32,
-//     attack: u32,
-//     defense: u32,
-// }
+use num_derive::{ToPrimitive, FromPrimitive};
+use serde::{Serialize, Deserialize};
 
-enum ActiveCard {
-    Monster { id: u32, attack: u32, defense: u32 },
-    Magic { id: u32 },
-    Trap { id: u32 },
-    Ritual { id: u32 },
-    Equip { id: u32 },
+use crate::Card;
+
+#[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive)]
+pub enum FieldType {
+    Neutral = 0,
+    Forest = 1,
+    Mountain = 2,
+    Sogen = 3,
+    Umi = 4,
+    Wasteland = 5,
+    Yami = 6,
 }
 
 struct Player {
     life_points: i32,
-    deck: Vec<u32>,
-    hand: Vec<ActiveCard>,
+    deck: Vec<Card>,
+    hand: Vec<Card>,
 }
 
-struct Duel {}
+struct Duel {
+    players: [Player; 2],
+    field: [[Option<Card>; 5]; 4],
+    field_type: FieldType,
+}
