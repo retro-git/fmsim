@@ -6,7 +6,7 @@ pub use duelist::*;
 
 use std::sync::LazyLock;
 
-pub static CARDS: LazyLock<Vec<BaseCard>> = LazyLock::new(|| {
+pub static CARDS: LazyLock<Vec<Card>> = LazyLock::new(|| {
     let card_data = include_bytes!("../../data/cards.json");
     serde_json::from_slice(card_data).expect("Error while reading cards")
 });
@@ -16,7 +16,7 @@ pub static DUELISTS: LazyLock<Vec<Duelist>> = LazyLock::new(|| {
     serde_json::from_slice(card_data).expect("Error while reading cards")
 });
 
-pub fn card_from_id(id: usize) -> &'static BaseCard {
+pub fn card_from_id(id: usize) -> &'static Card {
     CARDS.get(id - 1).unwrap()
 }
 

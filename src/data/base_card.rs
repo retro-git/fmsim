@@ -11,8 +11,8 @@ where
     T::from_u32(i).ok_or_else(|| serde::de::Error::custom("Out of range"))
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct BaseCard {
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Card {
     pub id: u32,
     pub name: String,
     pub description: String,
@@ -30,14 +30,14 @@ pub struct BaseCard {
     pub variant: CardVariant,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(tag = "type")]
 pub enum CardVariant {
     Monster {
         #[serde(deserialize_with = "from_primitive")]
         monster_type: MonsterType,
-        base_attack: u32,
-        base_defense: u32,
+        attack: u32,
+        defense: u32,
         #[serde(deserialize_with = "from_primitive")]
         guardian_star_a: GuardianStarType,
         #[serde(deserialize_with = "from_primitive")]
@@ -57,7 +57,7 @@ pub enum CardVariant {
     Trap
 }
 
-#[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive)]
+#[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive, Copy, Clone)]
 pub enum GuardianStarType {
     NoStar = 0,
     Mars = 1,
@@ -72,7 +72,7 @@ pub enum GuardianStarType {
     Venus = 10,
 }
 
-#[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive)]
+#[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive, Copy, Clone)]
 pub enum MonsterType {
     Dragon = 0,
     Spellcaster = 1,
