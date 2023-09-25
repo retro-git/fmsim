@@ -2,7 +2,7 @@ use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use crate::card_from_id;
+use crate::CARDS;
 
 fn from_primitive<'de, D, T>(deserializer: D) -> Result<T, D::Error>
 where
@@ -59,48 +59,67 @@ pub enum CardVariant {
     Trap,
 }
 
-pub fn combine(card1: &mut Card, card2: &mut Card) -> Card {
-    // If both cards are monsters, attempt to fuse them. We do this by checking if the card1's ID is in card2's fusions, and vice versa.
-    // If we find a match, we fuse them and return the result. Otherwise, we return card2.
+pub fn card_from_id(id: usize) -> Card {
+    CARDS.get(id - 1).unwrap().clone()
+}
 
-    // If one card is a monster and the other is a magic/trap/ritual, we return the monster.
-    
-    // If one card is a monster and the other is an equip, we attempt to apply the equip.
-    // This is done by checking if the equip card has the monster's ID in its equips list.
-    // If so, we return the monster card with its attack boosted by 500. UNLESS the equip card is Megamorph, in which case the attack is increased by 1000.
+pub fn combine(card1: &Card, card2: &Card) -> Card {
+    // First we attempt to fuse the cards. If this fails, we then attempt to equip.
+    // If this fails again, and both cards are monsters, we return the second card.
+    // If one of the cards is a monster but the other is not, we return whichever is the monster.
+    // In any other case, we return the second card.
 
-    // If both cards are magic/trap/ritual/equip, we return card2.
-
-    match (&mut card1.variant, &mut card2.variant) {
-        (CardVariant::Monster { .. }, CardVariant::Monster { .. }) => {
-            if card1.fusions.contains_key(&card2.id) {
-                card_from_id(card1.fusions[&card2.id])
-            } else if card2.fusions.contains_key(&card1.id) {
-                card_from_id(card2.fusions[&card1.id])
-            } else {
-                card2.clone()
-            }
-        }
-
-        (CardVariant::Equip { equips: card1_equips }, CardVariant::Monster { attack, .. }) => {
-            if card1_equips.contains(&card2.id) {
-                *attack += 500;
-            }
-            card2.clone()
-        }
-
-        (CardVariant::Monster { attack, .. }, CardVariant::Equip { equips: card2_equips }) => {
-            if card2_equips.contains(&card1.id) {
-                *attack += 500;
-            }
-            card1.clone()
-        }
-
-        (CardVariant::Monster { .. }, _) => card1.clone(),
-        (_, CardVariant::Monster { .. }) => card2.clone(),
-
-        (_, _) => card2.clone(),
+    match fuse(card1, card2) {
+        Some(fused_card) => fused_card,
+        None => match equip(card1, card2) {
+            Some(equipped_card) => equipped_card,
+            None => match (&card1.variant, &card2.variant) {
+                (CardVariant::Monster { .. }, CardVariant::Monster { .. }) => card2.clone(),
+                (CardVariant::Monster { .. }, _) => card1.clone(),
+                (_, CardVariant::Monster { .. }) => card2.clone(),
+                (_, _) => card2.clone(),
+            },
+        },
     }
+}
+
+pub fn fuse(card1: &Card, card2: &Card) -> Option<Card> {
+    if card1.fusions.contains_key(&card2.id) {
+        Some(card_from_id(card1.fusions[&card2.id]))
+    } else if card2.fusions.contains_key(&card1.id) {
+        Some(card_from_id(card2.fusions[&card1.id]))
+    } else {
+        None
+    }
+}
+
+pub fn equip(card1: &Card, card2: &Card) -> Option<Card> {
+    let (equip_card, monster_card) = match (&card1.variant, &card2.variant) {
+        (CardVariant::Equip { .. }, CardVariant::Monster { .. }) => (card1, card2),
+        (CardVariant::Monster { .. }, CardVariant::Equip { .. }) => (card2, card1),
+        (_, _) => return None,
+    };
+
+    let mut monster_clone = monster_card.clone();
+    if let CardVariant::Equip { equips } = &equip_card.variant {
+        if equips.contains(&monster_clone.id) {
+            if let CardVariant::Monster {
+                attack, defense, ..
+            } = &mut monster_clone.variant
+            {
+                let boost_amount = if equip_card.name == "Megamorph" {
+                    1000
+                } else {
+                    500
+                };
+                *attack += boost_amount;
+                *defense += boost_amount;
+            }
+        } else {
+            return None;
+        }
+    }
+    Some(monster_clone)
 }
 
 #[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive, Copy, Clone)]
@@ -140,4 +159,8 @@ pub enum MonsterType {
     Pyro = 17,
     Rock = 18,
     Plant = 19,
+}
+
+#[cfg(test)]
+mod tests {
 }

@@ -16,10 +16,6 @@ pub static DUELISTS: LazyLock<Vec<Duelist>> = LazyLock::new(|| {
     serde_json::from_slice(card_data).expect("Error while reading cards")
 });
 
-pub fn card_from_id(id: usize) -> Card {
-    CARDS.get(id - 1).unwrap().clone()
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

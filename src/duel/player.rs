@@ -36,7 +36,7 @@ impl Player {
         }
     }
 
-    // pub fn play_hand(&mut self, indices: Vec<usize>) {
-    //     // 
-    // }
+    pub fn play_hand(&mut self, indices: Vec<usize>) -> Vec<Card> {
+        vec![]
+    }
 }

@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use crate::Card;
 
 use self::command::DuelCommand;
-use self::player::{Player, PlayerBuilder};
+use self::player::Player;
 
 pub mod command;
 pub mod deck;
@@ -74,12 +74,11 @@ pub enum FieldType {
     Yami = 6,
 }
 
+#[cfg(test)]
 mod tests {
-    use crate::duel::{Duel, FieldType, Player, DuelBuilder};
+    use crate::duel::Duel;
 
-    use super::command::{self, HandPlayMultiple};
-
-#[test]
+    #[test]
     fn test_duel_turns() {
         let mut duel = Duel::default();
 
@@ -90,4 +89,3 @@ mod tests {
         assert_eq!(duel.get_player().life_points, 8000);
     }
 }
-

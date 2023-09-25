@@ -38,7 +38,6 @@ pub fn deck_is_valid(deck: &[Card]) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::data::DUELISTS;
 
     #[test]
     fn test_generate_random_deck() {
