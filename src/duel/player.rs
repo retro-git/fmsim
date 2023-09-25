@@ -35,8 +35,4 @@ impl Player {
             self.hand.push(self.deck.pop().unwrap());
         }
     }
-
-    pub fn play_hand(&mut self, indices: Vec<usize>) -> Vec<Card> {
-        vec![]
-    }
 }
