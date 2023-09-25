@@ -1,9 +1,9 @@
-use num_derive::{ToPrimitive, FromPrimitive};
+use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 
 use crate::Card;
 
-#[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive, Copy, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, FromPrimitive, ToPrimitive, Copy, Clone)]
 pub enum FaceDirection {
     Up,
     Down,
@@ -27,6 +27,7 @@ pub struct MonsterRowPosition {
     pub face_direction: FaceDirection,
     pub card_mode: CardMode,
     pub guardian_star_choice: GuardianStarChoice,
+    pub disabled: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

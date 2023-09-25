@@ -4,7 +4,11 @@ use thiserror::Error;
 
 use crate::{combine, CardVariant};
 
-use super::{Duel, field::{MonsterRowPosition, FaceDirection, CardMode, GuardianStarChoice}, state::*};
+use super::{
+    field::{CardMode, FaceDirection, GuardianStarChoice, MonsterRowPosition},
+    state::*,
+    Duel,
+};
 
 #[derive(Error, Debug)]
 pub enum DuelCommandError {
@@ -26,19 +30,24 @@ pub trait DuelCommand {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct HandPlaySingleMonsterCmd {
     pub hand_index: usize,
-    pub field_index: usize,
     pub face_direction: FaceDirection,
+    pub field_index: usize,
 }
 impl DuelCommand for HandPlaySingleMonsterCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
         // check the duel state. if it is not Hand, return an error.
-        matches!(duel.state, DuelStateEnum::HandState(_)).then(|| ()).ok_or(DuelCommandError::InvalidState)?;
+        matches!(duel.state, DuelStateEnum::HandState(_))
+            .then(|| ())
+            .ok_or(DuelCommandError::InvalidState)?;
         // check the hand index is not out of bounds. it must be less than the hand length.
         if self.hand_index >= duel.get_player().hand.len() {
             return Err(DuelCommandError::InvalidHandIndex);
         }
         // check that the card at hand_index is a monster by matching on card.variant
-        if !matches!(duel.get_player().hand[self.hand_index].variant, CardVariant::Monster{ .. }) {
+        if !matches!(
+            duel.get_player().hand[self.hand_index].variant,
+            CardVariant::Monster { .. }
+        ) {
             return Err(DuelCommandError::HandCardTypeMismatch);
         }
         // check the field index is not out of bounds. it must be less than the monster row length.
@@ -47,10 +56,10 @@ impl DuelCommand for HandPlaySingleMonsterCmd {
         }
 
         // pop the card at hand_index from the hand.
-        let card = duel.get_player().hand.remove(self.hand_index);
+        let card = duel.get_player_mut().hand.remove(self.hand_index);
         // check the monster row at field_index. if there is already a monster there, call combine on the two monsters.
         // put the result in the monster row.
-        let existing_position = duel.get_player().monster_row[self.field_index].take();
+        let existing_position = duel.get_player_mut().monster_row[self.field_index].take();
         let card = if let Some(monster) = existing_position {
             self.face_direction = FaceDirection::Up;
             combine(&card, &monster.card)
@@ -58,16 +67,18 @@ impl DuelCommand for HandPlaySingleMonsterCmd {
             card
         };
 
-        duel.get_player().monster_row[self.field_index] = Some(MonsterRowPosition {
+        duel.get_player_mut().monster_row[self.field_index] = Some(MonsterRowPosition {
             card,
             face_direction: self.face_direction,
             card_mode: CardMode::Attack,
             guardian_star_choice: GuardianStarChoice::A,
+            disabled: false,
         });
 
         duel.state = SetGuardianStarState {
-            field_index: self.field_index,
-        }.into();
+            monster_row_index: self.field_index,
+        }
+        .into();
 
         Ok(())
     }
@@ -97,8 +108,33 @@ impl DuelCommand for HandPlaySingleMagicDownCmd {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct HandPlaySingleRitualUpCmd {
+    pub hand_index: usize,
+}
+impl DuelCommand for HandPlaySingleRitualUpCmd {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+        todo!()
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct HandPlaySingleRitualDownCmd {
+    pub hand_index: usize,
+    pub field_index: usize,
+}
+impl DuelCommand for HandPlaySingleRitualDownCmd {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+        // matches!(duel.state, DuelStateEnum::HandState(_)).then(|| ()).ok_or(DuelCommandError::InvalidState)?;
+
+        todo!();
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct HandPlaySingleTrapCmd {
     pub hand_index: usize,
+    pub face_direction: FaceDirection,
+    pub field_index: usize,
 }
 impl DuelCommand for HandPlaySingleTrapCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
@@ -109,8 +145,8 @@ impl DuelCommand for HandPlaySingleTrapCmd {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct HandPlaySingleEquipCmd {
     pub hand_index: usize,
-    pub monster_index: usize,
     pub face_direction: FaceDirection,
+    pub field_index: usize,
 }
 impl DuelCommand for HandPlaySingleEquipCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
@@ -131,7 +167,7 @@ impl DuelCommand for HandPlayMultipleCmd {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SetGuardianStarCmd {
-    pub star: GuardianStarChoice,
+    pub guardian_star_choice: GuardianStarChoice,
 }
 impl DuelCommand for SetGuardianStarCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
@@ -141,8 +177,8 @@ impl DuelCommand for SetGuardianStarCmd {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct FieldAttackCmd {
-    pub player_monster_index: usize,
-    pub opponent_monster_index: usize,
+    pub monster_row_index: usize,
+    pub enemy_monster_row_index: usize,
 }
 impl DuelCommand for FieldAttackCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
@@ -162,8 +198,8 @@ impl DuelCommand for FieldChangeModeCmd {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct FieldPlayEquipCmd {
-    pub equip_index: usize,
-    pub monster_index: usize,
+    pub spell_row_index: usize,
+    pub monster_row_index: usize,
 }
 impl DuelCommand for FieldPlayEquipCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
@@ -173,7 +209,7 @@ impl DuelCommand for FieldPlayEquipCmd {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct FieldPlaySpellCmd {
-    pub spell_index: usize,
+    pub spell_row_index: usize,
 }
 impl DuelCommand for FieldPlaySpellCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
@@ -187,13 +223,12 @@ impl DuelCommand for EndTurnCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
         duel.turn += 1;
 
-        let player = duel.get_player();
+        let player = duel.get_player_mut();
         player.draw();
 
         if player.hand.len() < 5 {
             duel.state = EndState.into();
-        }
-        else {
+        } else {
             duel.state = HandState.into();
         }
 
@@ -207,6 +242,8 @@ pub enum DuelCommandEnum {
     HandPlaySingleMonsterCmd,
     HandPlaySingleMagicUpCmd,
     HandPlaySingleMagicDownCmd,
+    HandPlaySingleRitualUpCmd,
+    HandPlaySingleRitualDownCmd,
     HandPlaySingleTrapCmd,
     HandPlaySingleEquipCmd,
     HandPlayMultipleCmd,

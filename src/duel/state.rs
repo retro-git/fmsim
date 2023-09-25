@@ -1,5 +1,5 @@
 use enum_dispatch::enum_dispatch;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use super::command::DuelCommandEnum;
 
@@ -25,7 +25,9 @@ impl DuelState for FieldState {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct SetGuardianStarState{ pub field_index: usize }
+pub struct SetGuardianStarState {
+    pub monster_row_index: usize,
+}
 impl DuelState for SetGuardianStarState {
     fn get_all_valid_commands(&self) -> Vec<DuelCommandEnum> {
         todo!()
@@ -48,5 +50,5 @@ pub enum DuelStateEnum {
     FieldState, // The hand phase is done and the user can perform field actions (such as attacking, toggling between attack/defense, etc.)
     // FieldPlayEquip { position: usize }, // The user selected an equip card on the spell row. Now awaiting them to pick the monster to equip to.
     SetGuardianStarState, // Happens when a monster is played from the hand, or when an equip is played on an existing monster but the equip fails.
-    EndState,                                                // The game is over.
+    EndState,             // The game is over.
 }

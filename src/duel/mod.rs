@@ -7,9 +7,10 @@ use self::player::Player;
 use self::state::{DuelState, DuelStateEnum, HandState};
 
 pub mod command;
+pub mod command_builder;
 pub mod deck;
-pub mod player;
 pub mod field;
+pub mod player;
 pub mod state;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Builder)]
@@ -24,18 +25,36 @@ pub struct Duel {
 
 impl Default for Duel {
     fn default() -> Self {
-        Self {
+        let mut duel = Self {
             player1: Player::default(),
             player2: Player::default(),
             field_type: FieldType::Neutral,
             turn: 0,
             state: HandState.into(),
-        }
+        };
+        duel.get_player_mut().draw();
+        duel
     }
 }
 
 impl Duel {
-    fn get_player(&mut self) -> &mut Player {
+    fn get_player(&self) -> &Player {
+        if self.turn % 2 == 0 {
+            &self.player1
+        } else {
+            &self.player2
+        }
+    }
+
+    fn get_enemy(&self) -> &Player {
+        if self.turn % 2 == 0 {
+            &self.player2
+        } else {
+            &self.player1
+        }
+    }
+
+    fn get_player_mut(&mut self) -> &mut Player {
         if self.turn % 2 == 0 {
             &mut self.player1
         } else {
@@ -43,7 +62,7 @@ impl Duel {
         }
     }
 
-    fn get_opponent(&mut self) -> &mut Player {
+    fn get_enemy_mut(&mut self) -> &mut Player {
         if self.turn % 2 == 0 {
             &mut self.player2
         } else {
@@ -76,7 +95,7 @@ mod tests {
         let mut duel = Duel::default();
 
         assert_eq!(duel.get_player().life_points, 8000);
-        duel.get_player().life_points -= 1000;
+        duel.get_player_mut().life_points -= 1000;
         assert_eq!(duel.get_player().life_points, 7000);
         duel.turn += 1;
         assert_eq!(duel.get_player().life_points, 8000);

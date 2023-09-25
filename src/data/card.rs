@@ -63,6 +63,14 @@ pub fn card_from_id(id: usize) -> Card {
     CARDS.get(id - 1).unwrap().clone()
 }
 
+pub fn combine_cards(cards: Vec<Card>) -> Card {
+    let mut combined_card = cards[0].clone();
+    for card in cards.iter().skip(1) {
+        combined_card = combine(&combined_card, card);
+    }
+    combined_card
+}
+
 pub fn combine(card1: &Card, card2: &Card) -> Card {
     // First we attempt to fuse the cards. If this fails, we then attempt to equip.
     // If this fails again, and both cards are monsters, we return the second card.
@@ -70,14 +78,14 @@ pub fn combine(card1: &Card, card2: &Card) -> Card {
     // In any other case, we return the second card.
     use CardVariant::*;
 
-    fuse(card1, card2).or_else(|| equip(card1, card2)).unwrap_or_else(|| {
-        match (&card1.variant, &card2.variant) {
+    fuse(card1, card2)
+        .or_else(|| equip(card1, card2))
+        .unwrap_or_else(|| match (&card1.variant, &card2.variant) {
             (Monster { .. }, Monster { .. }) => card2.clone(),
             (Monster { .. }, _) => card1.clone(),
             (_, Monster { .. }) => card2.clone(),
             (_, _) => card2.clone(),
-        }
-    })
+        })
 }
 
 pub fn fuse(card1: &Card, card2: &Card) -> Option<Card> {
@@ -159,5 +167,4 @@ pub enum MonsterType {
 }
 
 #[cfg(test)]
-mod tests {
-}
+mod tests {}
