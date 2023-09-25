@@ -6,17 +6,21 @@ fn main() {
         Monster { monster_type, .. } => {
             // print base_attack within the variant
             println!("{:?}", monster_type)
-        },
-        _ => assert!(false)
+        }
+        _ => assert!(false),
     }
 
     match &bewd.variant {
-        Monster {  attack, guardian_star_b, .. } => {
+        Monster {
+            attack,
+            guardian_star_b,
+            ..
+        } => {
             // print base_attack within the variant
             println!("{}", attack);
             println!("{:?}", guardian_star_b);
-        },
-        _ => assert!(false)
+        }
+        _ => assert!(false),
     }
 
     println!("{:?}", bewd);

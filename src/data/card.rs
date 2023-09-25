@@ -54,7 +54,7 @@ pub enum CardVariant {
         equips: Vec<u32>,
     },
     Magic,
-    Trap
+    Trap,
 }
 
 #[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive, Copy, Clone)]

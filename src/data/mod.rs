@@ -1,7 +1,7 @@
-pub mod base_card;
+pub mod card;
 pub mod duelist;
 
-pub use base_card::*;
+pub use card::*;
 pub use duelist::*;
 
 use std::sync::LazyLock;
@@ -16,8 +16,8 @@ pub static DUELISTS: LazyLock<Vec<Duelist>> = LazyLock::new(|| {
     serde_json::from_slice(card_data).expect("Error while reading cards")
 });
 
-pub fn card_from_id(id: usize) -> &'static Card {
-    CARDS.get(id - 1).unwrap()
+pub fn card_from_id(id: usize) -> Card {
+    CARDS.get(id - 1).unwrap().clone()
 }
 
 #[cfg(test)]
@@ -31,7 +31,7 @@ mod tests {
         // Check Variant is Monster
         match pegm.variant {
             CardVariant::Monster { .. } => assert!(true),
-            _ => assert!(false)
+            _ => assert!(false),
         }
     }
 }
