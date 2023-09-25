@@ -10,6 +10,7 @@ use self::player::Player;
 pub mod command;
 pub mod deck;
 pub mod player;
+pub mod field;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum DuelState {
@@ -28,6 +29,7 @@ pub struct Duel {
     player2: Player,
     field_type: FieldType,
     turn: u32,
+    state: DuelState,
 }
 
 impl Default for Duel {
@@ -37,6 +39,7 @@ impl Default for Duel {
             player2: Player::default(),
             field_type: FieldType::Neutral,
             turn: 0,
+            state: DuelState::Hand,
         }
     }
 }

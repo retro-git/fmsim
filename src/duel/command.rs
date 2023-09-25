@@ -1,6 +1,6 @@
 use enum_dispatch::enum_dispatch;
 
-use super::Duel;
+use super::{Duel, DuelState};
 
 #[enum_dispatch]
 pub trait DuelCommand {
@@ -10,7 +10,7 @@ pub trait DuelCommand {
 pub struct HandPlaySingleMonster {
     pub hand_index: usize,
     pub field_index: usize,
-    pub direction: bool,
+    pub face_direction: bool,
 }
 impl DuelCommand for HandPlaySingleMonster {
     fn execute(&self, duel: &mut Duel) {
@@ -39,7 +39,7 @@ impl DuelCommand for HandPlaySingleTrap {
 pub struct HandPlaySingleEquip {
     pub hand_index: usize,
     pub monster_index: usize,
-    pub direction: bool,
+    pub face_direction: bool,
 }
 impl DuelCommand for HandPlaySingleEquip {
     fn execute(&self, duel: &mut Duel) {
@@ -107,7 +107,17 @@ impl DuelCommand for FieldPlaySpell {
 pub struct EndTurn;
 impl DuelCommand for EndTurn {
     fn execute(&self, duel: &mut Duel) {
-        todo!()
+        duel.turn += 1;
+
+        let player = duel.get_player();
+        player.draw();
+
+        if player.hand.len() < 5 {
+            duel.state = DuelState::End;
+        }
+        else {
+            duel.state = DuelState::Hand;
+        }
     }
 }
 
