@@ -2,6 +2,8 @@ use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+use crate::card_from_id;
+
 fn from_primitive<'de, D, T>(deserializer: D) -> Result<T, D::Error>
 where
     D: serde::Deserializer<'de>,
@@ -13,7 +15,7 @@ where
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Card {
-    pub id: u32,
+    pub id: usize,
     pub name: String,
     pub description: String,
     pub stars: u32,
@@ -26,7 +28,7 @@ pub struct Card {
     pub typ_sort: u32,
     pub ai_sort: u32,
     pub ai_gs: Option<u32>,
-    pub fusions: HashMap<u32, u32>,
+    pub fusions: HashMap<usize, usize>,
     pub variant: CardVariant,
 }
 
@@ -45,16 +47,60 @@ pub enum CardVariant {
         level: u32,
     },
     Ritual {
-        card1_id: u32,
-        card2_id: u32,
-        card3_id: u32,
-        result_card_id: u32,
+        card1_id: usize,
+        card2_id: usize,
+        card3_id: usize,
+        result_card_id: usize,
     },
     Equip {
-        equips: Vec<u32>,
+        equips: Vec<usize>,
     },
     Magic,
     Trap,
+}
+
+pub fn combine(card1: &mut Card, card2: &mut Card) -> Card {
+    // If both cards are monsters, attempt to fuse them. We do this by checking if the card1's ID is in card2's fusions, and vice versa.
+    // If we find a match, we fuse them and return the result. Otherwise, we return card2.
+
+    // If one card is a monster and the other is a magic/trap/ritual, we return the monster.
+    
+    // If one card is a monster and the other is an equip, we attempt to apply the equip.
+    // This is done by checking if the equip card has the monster's ID in its equips list.
+    // If so, we return the monster card with its attack boosted by 500. UNLESS the equip card is Megamorph, in which case the attack is increased by 1000.
+
+    // If both cards are magic/trap/ritual/equip, we return card2.
+
+    match (&mut card1.variant, &mut card2.variant) {
+        (CardVariant::Monster { .. }, CardVariant::Monster { .. }) => {
+            if card1.fusions.contains_key(&card2.id) {
+                card_from_id(card1.fusions[&card2.id])
+            } else if card2.fusions.contains_key(&card1.id) {
+                card_from_id(card2.fusions[&card1.id])
+            } else {
+                card2.clone()
+            }
+        }
+
+        (CardVariant::Equip { equips: card1_equips }, CardVariant::Monster { attack, .. }) => {
+            if card1_equips.contains(&card2.id) {
+                *attack += 500;
+            }
+            card2.clone()
+        }
+
+        (CardVariant::Monster { attack, .. }, CardVariant::Equip { equips: card2_equips }) => {
+            if card2_equips.contains(&card1.id) {
+                *attack += 500;
+            }
+            card1.clone()
+        }
+
+        (CardVariant::Monster { .. }, _) => card1.clone(),
+        (_, CardVariant::Monster { .. }) => card2.clone(),
+
+        (_, _) => card2.clone(),
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive, Copy, Clone)]
@@ -95,82 +141,3 @@ pub enum MonsterType {
     Rock = 18,
     Plant = 19,
 }
-
-// #[derive(Serialize, Deserialize, Debug)]
-// pub struct BaseCard {
-//     pub id: u32,
-//     pub name: String,
-//     pub description: String,
-//     #[serde(deserialize_with = "from_primitive")]
-//     pub guardian_star_a: GuardianStar,
-//     #[serde(deserialize_with = "from_primitive")]
-//     pub guardian_star_b: GuardianStar,
-//     pub level: u32,
-//     #[serde(rename = "type")]
-//     #[serde(deserialize_with = "from_primitive")]
-//     pub card_type: CardType,
-//     pub base_attack: u32,
-//     pub base_defense: u32,
-//     pub stars: u32,
-//     pub card_code: u32,
-//     pub attribute: u32,
-//     pub name_color: u32,
-//     pub desc_color: u32,
-//     pub abc_sort: u32,
-//     pub max_sort: u32,
-//     pub atk_sort: u32,
-//     pub def_sort: u32,
-//     pub typ_sort: u32,
-//     pub ai_sort: u32,
-//     pub ai_gs: Option<u32>,
-//     pub fusions: HashMap<u32, u32>,
-//     pub equips: Vec<u32>,
-//     pub ritual: Option<Ritual>,
-// }
-
-// #[derive(Serialize, Deserialize, Debug)]
-// pub struct Ritual {
-//     pub card1_id: u32,
-//     pub card2_id: u32,
-//     pub card3_id: u32,
-//     pub result_card_id: u32,
-// }
-
-// #[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive)]
-// pub enum CardType {
-//     Dragon = 0,
-//     Spellcaster = 1,
-//     Zombie = 2,
-//     Warrior = 3,
-//     BeastWarrior = 4,
-//     Beast = 5,
-//     WingedBeast = 6,
-//     Fiend = 7,
-//     Fairy = 8,
-//     Insect = 9,
-//     Dinosaur = 10,
-//     Reptile = 11,
-//     Fish = 12,
-//     SeaSerpent = 13,
-//     Machine = 14,
-//     Thunder = 15,
-//     Aqua = 16,
-//     Pyro = 17,
-//     Rock = 18,
-//     Plant = 19,
-//     Magic = 20,
-//     Trap = 21,
-//     Ritual = 22,
-//     Equip = 23,
-// }
-
-// #[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive)]
-// pub enum FieldType {
-//     Neutral = 0,
-//     Forest = 1,
-//     Mountain = 2,
-//     Sogen = 3,
-//     Umi = 4,
-//     Wasteland = 5,
-//     Yami = 6,
-// }

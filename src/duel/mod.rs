@@ -11,17 +11,6 @@ pub mod command;
 pub mod deck;
 pub mod player;
 
-#[derive(Serialize, Deserialize, Debug, Copy, Clone, FromPrimitive, ToPrimitive)]
-pub enum FieldType {
-    Neutral = 0,
-    Forest = 1,
-    Mountain = 2,
-    Sogen = 3,
-    Umi = 4,
-    Wasteland = 5,
-    Yami = 6,
-}
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum DuelState {
     Hand, // The user is selecting a card, or multiple cards, from the hand.
@@ -72,6 +61,17 @@ impl Duel {
     fn execute_command(&mut self, command: command::DuelCommandEnum) {
         command.execute(self);
     }
+}
+
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, FromPrimitive, ToPrimitive)]
+pub enum FieldType {
+    Neutral = 0,
+    Forest = 1,
+    Mountain = 2,
+    Sogen = 3,
+    Umi = 4,
+    Wasteland = 5,
+    Yami = 6,
 }
 
 mod tests {
