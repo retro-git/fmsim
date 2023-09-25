@@ -68,19 +68,16 @@ pub fn combine(card1: &Card, card2: &Card) -> Card {
     // If this fails again, and both cards are monsters, we return the second card.
     // If one of the cards is a monster but the other is not, we return whichever is the monster.
     // In any other case, we return the second card.
+    use CardVariant::*;
 
-    match fuse(card1, card2) {
-        Some(fused_card) => fused_card,
-        None => match equip(card1, card2) {
-            Some(equipped_card) => equipped_card,
-            None => match (&card1.variant, &card2.variant) {
-                (CardVariant::Monster { .. }, CardVariant::Monster { .. }) => card2.clone(),
-                (CardVariant::Monster { .. }, _) => card1.clone(),
-                (_, CardVariant::Monster { .. }) => card2.clone(),
-                (_, _) => card2.clone(),
-            },
-        },
-    }
+    fuse(card1, card2).or_else(|| equip(card1, card2)).unwrap_or_else(|| {
+        match (&card1.variant, &card2.variant) {
+            (Monster { .. }, Monster { .. }) => card2.clone(),
+            (Monster { .. }, _) => card1.clone(),
+            (_, Monster { .. }) => card2.clone(),
+            (_, _) => card2.clone(),
+        }
+    })
 }
 
 pub fn fuse(card1: &Card, card2: &Card) -> Option<Card> {

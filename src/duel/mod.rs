@@ -2,25 +2,15 @@ use derive_builder::Builder;
 use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 
-use crate::Card;
-
 use self::command::DuelCommand;
 use self::player::Player;
+use self::state::{DuelState, DuelStateEnum, HandState};
 
 pub mod command;
 pub mod deck;
 pub mod player;
 pub mod field;
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub enum DuelState {
-    Hand, // The user is selecting a card, or multiple cards, from the hand.
-    // HandPlaySingle { card: Card }, // The user selected a single card to play from the hand. Now awaiting further info depending on the card type (e.g. face up/down, field position).
-    Field, // The hand phase is done and the user can perform field actions (such as attacking, toggling between attack/defense, etc.)
-    // FieldPlayEquip { position: usize }, // The user selected an equip card on the spell row. Now awaiting them to pick the monster to equip to.
-    SetGuardianStar { card: Card, field_index: usize }, // Happens when a monster is played from the hand, or when an equip is played on an existing monster but the equip fails.
-    End,                                                // The game is over.
-}
+pub mod state;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Builder)]
 #[builder(setter(into), default)]
@@ -29,7 +19,7 @@ pub struct Duel {
     player2: Player,
     field_type: FieldType,
     turn: u32,
-    state: DuelState,
+    state: DuelStateEnum,
 }
 
 impl Default for Duel {
@@ -39,7 +29,7 @@ impl Default for Duel {
             player2: Player::default(),
             field_type: FieldType::Neutral,
             turn: 0,
-            state: DuelState::Hand,
+            state: HandState.into(),
         }
     }
 }
@@ -61,7 +51,7 @@ impl Duel {
         }
     }
 
-    fn execute_command(&mut self, command: command::DuelCommandEnum) {
+    fn execute_command(&mut self, mut command: command::DuelCommandEnum) {
         command.execute(self);
     }
 }
