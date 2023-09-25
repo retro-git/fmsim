@@ -406,28 +406,50 @@ impl<'a> CommandBuilder<'a> {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-//     #[test]
-//     fn test_hand_play_single_monster_cmd() {
-//         let mut duel = Duel::default();
-//         let mut command_builder = CommandBuilder::new(&mut duel);
+    #[test]
+    fn test_hand_play_single_cmd() {
+        let mut duel = Duel::default();
+        let mut command_builder = CommandBuilder::new(&mut duel);
 
-//         command_builder.hand_indices(vec![0]).unwrap();
-//         command_builder.face_direction(FaceDirection::Up).unwrap();
-//         command_builder.field_index(0).unwrap();
-
-//         let command = command_builder.get_command().unwrap();
-
-//         match command {
-//             DuelCommandEnum::HandPlaySingleMonsterCmd(HandPlaySingleMonsterCmd { hand_index, field_index, face_direction }) => {
-//                 assert_eq!(hand_index, 0);
-//                 assert_eq!(face_direction, FaceDirection::Up);
-//                 assert_eq!(field_index, 0);
-//             }
-//             _ => panic!("Expected HandPlaySingleMonsterCmd"),
-//         }
-//     }
-// }
+        command_builder.hand_indices(vec![0]).unwrap();
+        command_builder.face_direction(FaceDirection::Up).unwrap();
+        // if command is now built, it will be a HandPlaySingleRitualUpCmd or HandPlaySingleMagicUpCmd
+        // otherwise, we need to set a field_index. then we will have a HandPlaySingleMonsterCmd/HandPlaySingleTrapCmd/HandPlaySingleEquipCmd/HandPlaySingleRitualDownCmd/HandPlaySingleMagicDownCmd
+        if let Some(command) = command_builder.get_command() {
+            match command {
+                DuelCommandEnum::HandPlaySingleMagicUpCmd(HandPlaySingleMagicUpCmd { hand_index }) => {
+                    assert_eq!(hand_index, 0);
+                }
+                DuelCommandEnum::HandPlaySingleRitualUpCmd(HandPlaySingleRitualUpCmd { hand_index }) => {
+                    assert_eq!(hand_index, 0);
+                }
+                _ => panic!("Expected HandPlaySingleMagicUpCmd or HandPlaySingleRitualUpCmd"),
+            }
+        } else {
+            command_builder.field_index(0).unwrap();
+            let command = command_builder.get_command().unwrap();
+            match command {
+                DuelCommandEnum::HandPlaySingleMonsterCmd(HandPlaySingleMonsterCmd { hand_index, field_index, face_direction }) => {
+                    assert_eq!(hand_index, 0);
+                    assert_eq!(face_direction, FaceDirection::Up);
+                    assert_eq!(field_index, 0);
+                }
+                DuelCommandEnum::HandPlaySingleTrapCmd(HandPlaySingleTrapCmd { hand_index, field_index, face_direction }) => {
+                    assert_eq!(hand_index, 0);
+                    assert_eq!(face_direction, FaceDirection::Up);
+                    assert_eq!(field_index, 0);
+                }
+                DuelCommandEnum::HandPlaySingleEquipCmd(HandPlaySingleEquipCmd { hand_index, field_index, face_direction }) => {
+                    assert_eq!(hand_index, 0);
+                    assert_eq!(face_direction, FaceDirection::Up);
+                    assert_eq!(field_index, 0);
+                }
+                _ => panic!("Expected HandPlaySingleMonsterCmd"),
+            }
+        }
+    }
+}
