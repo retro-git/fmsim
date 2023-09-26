@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use self::command::DuelCommand;
 use self::player::Player;
-use self::state::{DuelState, DuelStateEnum, HandState};
+use self::state::{DuelStateEnum, HandState};
 
 pub mod command;
 pub mod command_builder;
