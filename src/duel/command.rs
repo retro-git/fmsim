@@ -21,6 +21,10 @@ pub enum DuelCommandError {
     InvalidFieldIndex,
     #[error("Hand Card Type Mismatch")]
     HandCardTypeMismatch,
+    #[error("Not Equip Card")]
+    NotEquipCard,
+    #[error("No Card In Spell Row")]
+    NoCardInSpellRow,
 }
 
 #[enum_dispatch]
@@ -68,15 +72,22 @@ impl DuelCommand for HandPlaySingleMonsterCmd {
             card
         };
 
-        duel.get_player_mut().monster_row[self.field_index] = Some(MonsterRowPosition {
-            card,
-            face_direction: self.face_direction,
-            card_mode: CardMode::Attack,
-            guardian_star_choice: GuardianStarChoice::A,
-            disabled: false,
-        });
+        // duel.get_player_mut().monster_row[self.field_index] = Some(MonsterRowPosition {
+        //     card,
+        //     face_direction: self.face_direction,
+        //     card_mode: CardMode::Attack,
+        //     guardian_star_choice: GuardianStarChoice::A,
+        //     disabled: false,
+        // });
 
         duel.state = SetGuardianStarState {
+            monster_row_position: MonsterRowPosition {
+                card,
+                face_direction: self.face_direction,
+                card_mode: CardMode::Attack,
+                guardian_star_choice: GuardianStarChoice::A,
+                disabled: false,
+            },
             monster_row_index: self.field_index,
         }
         .into();
@@ -198,8 +209,43 @@ impl DuelCommand for FieldChangeModeCmd {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct FieldPlayEquipCmd {
+pub struct FieldSelectEquipCmd {
     pub spell_row_index: usize,
+}
+impl DuelCommand for FieldSelectEquipCmd {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+        // return the duel unmodified, expect the state is set to FieldEquipSelectedState with the spell_row_index set.
+        let player = duel.get_player_mut();
+        let spell_card_pos = player.spell_row.get(self.spell_row_index).ok_or(DuelCommandError::InvalidFieldIndex)?;
+
+        match spell_card_pos {
+            Some(spell_pos) => {
+                if let CardVariant::Equip{ .. } = spell_pos.card.variant {
+                    duel.state = FieldEquipSelectedState {
+                        spell_row_index: self.spell_row_index,
+                    }.into();
+                    Ok(())
+                } else {
+                    Err(DuelCommandError::NotEquipCard)
+                }
+            },
+            None => Err(DuelCommandError::NoCardInSpellRow),
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct FieldCancelSelectEquipCmd;
+impl DuelCommand for FieldCancelSelectEquipCmd {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+        // return the duel unmodified, expect the state is set to FieldState.
+        duel.state = FieldState.into();
+        Ok(())
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct FieldPlayEquipCmd {
     pub monster_row_index: usize,
 }
 impl DuelCommand for FieldPlayEquipCmd {
@@ -208,7 +254,7 @@ impl DuelCommand for FieldPlayEquipCmd {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone)]
 pub struct FieldPlaySpellCmd {
     pub spell_row_index: usize,
 }
@@ -251,6 +297,8 @@ pub enum DuelCommandEnum {
     SetGuardianStarCmd,
     FieldAttackCmd,
     FieldChangeModeCmd,
+    FieldSelectEquipCmd,
+    FieldCancelSelectEquipCmd,
     FieldPlayEquipCmd,
     FieldPlaySpellCmd,
     EndTurnCmd,

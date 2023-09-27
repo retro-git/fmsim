@@ -2,7 +2,7 @@ use std::{rc::Rc, collections::HashSet};
 use thiserror::Error;
 use crate::CardVariant;
 
-use super::{field::{FaceDirection, CardMode}, command::*, Duel, state::{DuelState, DuelStateEnum}};
+use super::{field::{FaceDirection, CardMode, GuardianStarChoice}, command::*, Duel, state::DuelStateEnum};
 
 struct Start;
 struct Hand;
@@ -20,20 +20,22 @@ struct CommandBuilder<State> {
 
 #[derive(Error, Debug)]
 pub enum CommandBuilderError {
-    #[error("Invalid Duel State")]
+    #[error("Invalid Duel State.")]
     InvalidDuelState,
-    #[error("Invalid Hand Selection")]
+    #[error("Invalid Hand Selection.")]
     OutOfBoundsHandSelection,
-    #[error("Invalid Field Selection")]
+    #[error("Invalid Field Selection.")]
     OutOfBoundsFieldSelection,
-    #[error("Invalid Hand Selection")]
+    #[error("Invalid Hand Selection.")]
     DuplicateHandSelection,
-    #[error("Cannot attack empty position while enemy monsters are present")]
+    #[error("Cannot attack empty position while enemy monsters are present.")]
     CannotAttackEmptyPositionWhileMonstersPresent,
-    #[error("The selected monster is disabled")]
+    #[error("The selected monster is disabled.")]
     CannotSelectDisabledMonster,
-    #[error("The selected monster cannot attack because it is in defense mode")]
+    #[error("The selected monster cannot attack because it is in defense mode.")]
     CannotAttackWithMonsterInDefense,
+    #[error("Tried to apply an equip to an empty position. It must be a monster.")]
+    CannotEquipEmptyPosition,
 }
 
 impl CommandBuilder<Start> {
@@ -66,6 +68,37 @@ impl CommandBuilder<Start> {
         }
     }
 
+    fn apply_equip(self, monster_row_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+        if let DuelStateEnum::FieldEquipSelectedState(_) = &self.duel.state {
+            if self.duel.get_player().monster_row.get(monster_row_index).is_some() {
+                Ok(FieldPlayEquipCmd {
+                    monster_row_index,
+                }.into())
+            } else {
+                Err(CommandBuilderError::CannotEquipEmptyPosition)
+            }
+        } else {
+            Err(CommandBuilderError::InvalidDuelState)
+        }
+    }
+
+    fn cancel_equip(self) -> Result<DuelCommandEnum, CommandBuilderError> {
+        if let DuelStateEnum::FieldEquipSelectedState(_) = &self.duel.state {
+            Ok(FieldCancelSelectEquipCmd.into())
+        } else {
+            Err(CommandBuilderError::InvalidDuelState)
+        }
+    }
+
+    fn set_guardian_star(self, guardian_star_choice: GuardianStarChoice) -> Result<DuelCommandEnum, CommandBuilderError> {
+        if let DuelStateEnum::SetGuardianStarState(_) = self.duel.state {
+            Ok(SetGuardianStarCmd {
+                guardian_star_choice,
+            }.into())
+        } else {
+            Err(CommandBuilderError::InvalidDuelState)
+        }
+    }
     // fn guardian_star
 }
 
@@ -229,16 +262,23 @@ impl CommandBuilder<Field> {
         }
     }
 
-    fn select_spell(self, spell_index: usize) -> Result<CommandBuilder<FieldSpellSelected>, CommandBuilderError> {
-        if spell_index >= self.duel.get_player().spell_row.len() {
-            Err(CommandBuilderError::OutOfBoundsFieldSelection)
-        } else {
-            Ok(CommandBuilder {
-                state: FieldSpellSelected {
-                    spell_index,
-                },
-                duel: self.duel,
-            })
+    fn play_spell(self, spell_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+        let player = self.duel.get_player();
+        let spell_card_pos = player.spell_row.get(spell_index).ok_or(CommandBuilderError::OutOfBoundsFieldSelection)?;
+
+        match spell_card_pos {
+            Some(spell_pos) => {
+                if let CardVariant::Equip{ .. } = spell_pos.card.variant {
+                    Ok(FieldSelectEquipCmd {
+                        spell_row_index: spell_index,
+                    }.into())
+                } else {
+                    Ok(FieldPlaySpellCmd {
+                        spell_row_index: spell_index,
+                    }.into())
+                }
+            },
+            None => Err(CommandBuilderError::OutOfBoundsFieldSelection),
         }
     }
 
@@ -276,7 +316,4 @@ impl CommandBuilder<FieldMonsterSelected> {
             monster_index: self.state.monster_index,
         }.into()
     }
-}
-
-impl CommandBuilder<FieldSpellSelected> {
 }
