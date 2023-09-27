@@ -73,7 +73,7 @@ impl Duel {
     }
 
     fn execute_command(&mut self, mut command: command::DuelCommandEnum) {
-        command.execute(self);
+        command.execute(self).unwrap();
     }
 }
 

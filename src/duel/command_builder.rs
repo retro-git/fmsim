@@ -317,3 +317,35 @@ impl CommandBuilder<FieldMonsterSelected> {
         }.into()
     }
 }
+
+#[cfg(test)]
+// test for playing a single card from hand to field
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_play_single_card() -> Result<(), CommandBuilderError> {
+        let mut duel = Rc::new(Duel::default());
+        let builder = CommandBuilder::new(Rc::clone(&duel));
+        let command = builder.hand()?.select(0)?.facing(FaceDirection::Up).place(0)?;
+        dbg!(&command);
+
+        let card = duel.get_player().hand.get(0).unwrap().clone();
+        Rc::get_mut(&mut duel).unwrap().execute_command(command);
+
+        // if the card is a monster, we should now be in a DualStateEnum::SetGuardianStarState
+        // if the card is a spell, we should now be in a DualStateEnum::FieldState
+        match card.variant {
+            CardVariant::Monster { .. } => {
+                dbg!(&duel.state);
+                assert!(matches!(duel.state, DuelStateEnum::SetGuardianStarState(_)));
+            },
+            _ => {
+                dbg!(&duel.state);
+                assert!(matches!(duel.state, DuelStateEnum::FieldState(_)));
+            },
+        }
+
+        Ok(())
+    }
+}
