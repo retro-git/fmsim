@@ -1,3 +1,4 @@
+use derive_builder::Builder;
 use enum_dispatch::enum_dispatch;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
@@ -27,7 +28,7 @@ pub trait DuelCommand {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError>;
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, Builder)]
 pub struct HandPlaySingleMonsterCmd {
     pub hand_index: usize,
     pub face_direction: FaceDirection,
@@ -253,4 +254,25 @@ pub enum DuelCommandEnum {
     FieldPlayEquipCmd,
     FieldPlaySpellCmd,
     EndTurnCmd,
+}
+
+// test creating a HandPlaySingleMonsterCmd with builder
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_create_hand_play_single_monster_cmd_with_builder() {
+        let mut builder = HandPlaySingleMonsterCmdBuilder::default();
+        let hand_index = 0;
+        let field_index = 1;
+        let face_direction = FaceDirection::Up;
+
+        builder.hand_index(hand_index).field_index(field_index).face_direction(face_direction);
+        let command = builder.build().unwrap();
+
+        assert_eq!(command.hand_index, hand_index);
+        assert_eq!(command.field_index, field_index);
+        assert_eq!(command.face_direction, face_direction);
+    }
 }

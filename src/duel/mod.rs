@@ -12,6 +12,7 @@ pub mod deck;
 pub mod field;
 pub mod player;
 pub mod state;
+pub mod test;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Builder)]
 #[builder(setter(into), default)]
