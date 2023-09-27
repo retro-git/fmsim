@@ -9,13 +9,13 @@ pub enum FaceDirection {
     Down,
 }
 
-#[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive, Copy, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, FromPrimitive, ToPrimitive, Copy, Clone)]
 pub enum CardMode {
     Attack,
     Defense,
 }
 
-#[derive(Serialize, Deserialize, Debug, FromPrimitive, ToPrimitive, Copy, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, FromPrimitive, ToPrimitive, Copy, Clone)]
 pub enum GuardianStarChoice {
     A,
     B,

@@ -1,455 +1,282 @@
+use std::{rc::Rc, collections::HashSet};
+use thiserror::Error;
 use crate::CardVariant;
 
-use super::{
-    command::*,
-    field::{FaceDirection, GuardianStarChoice},
-    state::DuelStateEnum,
-    Duel,
-};
+use super::{field::{FaceDirection, CardMode}, command::*, Duel, state::{DuelState, DuelStateEnum}};
 
-use thiserror::Error;
+struct Start;
+struct Hand;
+struct HandSingleSelected {
+    hand_index: usize,
+}
+struct HandAwaitingField {
+    hand_indices: Vec<usize>,
+    face_direction: Option<FaceDirection>,
+}
+struct CommandBuilder<State> {
+    state: State,
+    duel: Rc<Duel>,
+}
 
 #[derive(Error, Debug)]
-pub enum DuelCommandBuilderError {
+pub enum CommandBuilderError {
     #[error("Invalid Duel State")]
-    NotExpectingParam,
-    #[error("Invalid Hand Index")]
-    InvalidHandIndex,
-    #[error("Invalid Field Index")]
-    InvalidFieldIndex,
-    #[error("Can't attack an empty monster position if the enemy has monsters on the field")]
-    InvalidAttackTarget,
-    #[error("Command has already been built")]
-    CommandAlreadyBuilt,
+    InvalidDuelState,
+    #[error("Invalid Hand Selection")]
+    OutOfBoundsHandSelection,
+    #[error("Invalid Field Selection")]
+    OutOfBoundsFieldSelection,
+    #[error("Invalid Hand Selection")]
+    DuplicateHandSelection,
+    #[error("Cannot attack empty position while enemy monsters are present")]
+    CannotAttackEmptyPositionWhileMonstersPresent,
+    #[error("The selected monster is disabled")]
+    CannotSelectDisabledMonster,
+    #[error("The selected monster cannot attack because it is in defense mode")]
+    CannotAttackWithMonsterInDefense,
 }
 
-struct CommandParam<T> {
-    pub settable: bool,
-    pub value: Option<T>,
+impl CommandBuilder<Start> {
+    fn new(duel: Rc<Duel>) -> Self {
+        CommandBuilder {
+            state: Start,
+            duel,
+        }
+    }
+
+    fn hand(self) -> Result<CommandBuilder<Hand>, CommandBuilderError> {
+        if let DuelStateEnum::HandState{ .. } = self.duel.state {
+            Ok(CommandBuilder {
+                state: Hand,
+                duel: self.duel,
+            })
+        } else {
+            Err(CommandBuilderError::InvalidDuelState)
+        }
+    }
+
+    fn field(self) -> Result<CommandBuilder<Field>, CommandBuilderError> {
+        if let DuelStateEnum::FieldState{ .. } = self.duel.state {
+            Ok(CommandBuilder {
+                state: Field,
+                duel: self.duel,
+            })
+        } else {
+            Err(CommandBuilderError::InvalidDuelState)
+        }
+    }
+
+    // fn guardian_star
 }
 
-impl<T> Default for CommandParam<T> {
-    fn default() -> Self {
-        Self {
-            settable: false,
-            value: None,
+impl CommandBuilder<Hand> {
+    fn select(self, hand_index: usize) -> Result<CommandBuilder<HandSingleSelected>, CommandBuilderError> {
+        if hand_index < self.duel.get_player().hand.len() {
+            Ok(CommandBuilder {
+                state: HandSingleSelected {
+                    hand_index,
+                },
+                duel: self.duel,
+            })
+        } else {
+            Err(CommandBuilderError::OutOfBoundsHandSelection)
+        }
+    }
+
+    fn select_multiple(self, hand_indices: Vec<usize>) -> Result<CommandBuilder<HandAwaitingField>, CommandBuilderError> {
+        let hand_len = self.duel.get_player().hand.len();
+        let unique_indices: HashSet<_> = hand_indices.iter().collect();
+        if unique_indices.len() != hand_indices.len() {
+            return Err(CommandBuilderError::DuplicateHandSelection);
+        }
+        for &index in &hand_indices {
+            if index >= hand_len {
+                return Err(CommandBuilderError::OutOfBoundsHandSelection);
+            }
+        }
+        Ok(CommandBuilder {
+            state: HandAwaitingField {
+                hand_indices,
+                face_direction: None,
+            },
+            duel: self.duel,
+        })
+    }
+}
+
+impl CommandBuilder<HandSingleSelected> {
+    fn facing(self, face_direction: FaceDirection) -> CommandBuilder<HandAwaitingField> {
+        CommandBuilder {
+            state: HandAwaitingField {
+                hand_indices: vec![self.state.hand_index],
+                face_direction: Some(face_direction),
+            },
+            duel: self.duel,
         }
     }
 }
 
-// - if the duel is in the Hand state:
-//     - expect vector of indices.
-//     - if the vector has multiple indices supplied, check that each index is in the range 0 to 4 inclusive, otherwise return an error. also check that all the indices are unique, i.e. no number appears more than once, otherwise throw error. then expect a field position, again checked to be between 0 and 4, to build a HandPlayMultipleCmd.
-//     - if a single hand_index (within 0 to 4). get the card at that index in the hand, and check its enum variant type:
-//         - monster: expect a facing direction (FaceUp/FaceDown enum) and field_index (checked within 0-4 range) for the monster row to create a HandPlaySingleMonsterCmd
-//         - trap: expect a facing direction (FaceUp/FaceDown enum) and field_index (checked within 0-4 range) for the spell row to create a HandPlaySingleTrapCmd
-//         - magic: expect a FaceUp/FaceDown. if FaceUp, create a HandPlaySingleMagicUpCmd. Otherwise, expect a field_index (checked within 0-4 range) to build a HandPlaySingleMagicDownCmd.
-//         - equip: expecte a FaceUp/FaceDown and field_index (checked within 0-4 range) to build a HandPlaySingleEquipCmd. if FaceUp is selected, then the supplied field_index must be used to index the monster row and check that a monster is present there, otherwise an error will be thrown.
-//         - ritual: basically the same as magic. expect a FaceUp/FaceDown. if FaceUp, create a HandPlaySingleRitualUpCmd. Otherwise, expect a field_index (checked within 0-4 range) to build a HandPlaySingleRitualDownCmd.
-// - if the duel is in the Field state:
-//     - expect monster_row_index or spell_row_index to be set
-//     - if monster_row_index is provided:
-//         - expect an index checked within 0-4. also check that the index on the monster row has a monster present, otherwise return error. also check that the specified field position is not disabled, otherwise return an error.
-//         - then expect either enemy_monster_index between 0-4 or a CardMode enum (Attack or Defense).
-//             - if enemy_monster_index is provided: check if the enemy’s monster row is all None. if so, then create a FieldAttackCmd. if not, check that the enemy’s monster row contains a monster at the specified index. if so, then create a FieldAttackCmd. otherwise, return an error.
-//             - if a CardMode enum is provided: create a FieldChangeModeCmd.
-//             - note that im not sure yet about this handling for the FieldChangeModeCmd.
-//     - if spell_row_ubdex is provided:
-//         - expect an index checked within 0-4. also check that the index on the spell row has a spell present, otherwise return error.
-//         - check the variant type of the spell.
-//             - if it is equip: expect a monster_row_index checked within 0-4. check that the specified index on the player’s monster row contains a monster. if not, throw an error. otherwise, create a FieldPlaySpellCmd.
-//         - if it is any other type: create a FieldPlaySpellCmd
-// - if the duel is in the SetGuardianStar state:
-//     - expect a GuardianStarChoice enum (either A or B) to create a SetGuardianStarCmd.
-
-pub struct CommandBuilder<'a> {
-    hand_indices: CommandParam<Vec<usize>>,
-    face_direction: CommandParam<FaceDirection>, // possible terminal if faceup and hand_indices[0] is a magic or ritual
-    field_index: CommandParam<usize>,            // terminal
-
-    spell_row_index: CommandParam<usize>, // possible terminal if not equip
-    monster_row_index: CommandParam<usize>, // possible terminal if spell_row_index is set to an equip
-    enemy_monster_row_index: CommandParam<usize>, // terminal
-
-    guardian_star_choice: CommandParam<GuardianStarChoice>, // terminal
-
-    command: Option<DuelCommandEnum>,
-
-    duel: &'a Duel,
-}
-
-// CommandBuilder's new function should take a duel reference.
-// It will then examine the duel's state and determine with CommandParams should initially be settable.
-// It will then return a CommandBuilder with those CommandParams settable.
-// The CommandBuilder will then have a function to set each CommandParam.
-// When a CommandParam is set, it will check if it is settable.
-// If it is not settable, it will return an error.
-// If it is settable, it will set the value and return the updated CommandBuilder. It may also change which CommandParams are settable.
-// CommandBuilder will have a function to build the command.
-// It will try to match the current state of the CommandBuilder to a command that can be built.
-// If it can't, it will return an error.
-// If it can, it will build the command and return it.
-impl<'a> CommandBuilder<'a> {
-    pub fn new(duel: &'a Duel) -> Self {
-        let mut builder = Self {
-            hand_indices: Default::default(),
-            face_direction: Default::default(),
-            field_index: Default::default(),
-            monster_row_index: Default::default(),
-            enemy_monster_row_index: Default::default(),
-            spell_row_index: Default::default(),
-            guardian_star_choice: Default::default(),
-            command: None,
-            duel,
+impl CommandBuilder<HandAwaitingField> {
+    fn place(self, field_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+        let card = match self.state.hand_indices.len() {
+            1 => {
+                self.duel.get_player().hand[self.state.hand_indices[0]].clone()
+            }
+            _ => {
+                let mut cards = Vec::new();
+                // if field_index already has a monster, we need to clone it and prepend it to cards.
+                if let Some(monster) = self.duel.get_player().monster_row[field_index].as_ref() {
+                    cards.push(monster.card.clone());
+                }
+                for index in &self.state.hand_indices {
+                    cards.push(self.duel.get_player().hand[*index].clone());
+                }
+                crate::combine_cards(cards)
+            }
         };
 
-        match duel.state {
-            DuelStateEnum::HandState(_) => {
-                builder.hand_indices.settable = true;
-            }
-            DuelStateEnum::FieldState(_) => {
-                builder.monster_row_index.settable = true;
-                builder.spell_row_index.settable = true;
-            }
-            DuelStateEnum::SetGuardianStarState(_) => {
-                builder.guardian_star_choice.settable = true;
-            }
-            DuelStateEnum::EndState(_) => {}
-        }
-
-        builder
-    }
-
-    pub fn hand_indices(
-        &mut self,
-        indices: Vec<usize>,
-    ) -> Result<&mut Self, DuelCommandBuilderError> {
-        self.check_command_set()?;
-
-        if !self.hand_indices.settable {
-            return Err(DuelCommandBuilderError::NotExpectingParam);
-        }
-
-        for index in &indices {
-            if *index > 4 {
-                return Err(DuelCommandBuilderError::InvalidHandIndex);
-            }
-        }
-
-        if indices.len() > 1 {
-            let mut unique_indices = indices.clone();
-            unique_indices.sort();
-            unique_indices.dedup();
-            if unique_indices.len() != indices.len() {
-                return Err(DuelCommandBuilderError::InvalidHandIndex);
-            }
-            self.field_index.settable = true;
-        } else {
-            self.face_direction.settable = true;
-        }
-
-        self.hand_indices.value = Some(indices);
-        self.hand_indices.settable = false;
-        Ok(self)
-    }
-
-    pub fn face_direction(
-        &mut self,
-        face_direction: FaceDirection,
-    ) -> Result<&mut Self, DuelCommandBuilderError> {
-        self.check_command_set()?;
-
-        if !self.face_direction.settable {
-            return Err(DuelCommandBuilderError::NotExpectingParam);
-        }
-
-        let hand_index = self.hand_indices.value.as_ref().unwrap()[0];
-        let card = &self.duel.get_player().hand[hand_index];
+        // if the card is a monster, we need to check that the field_index is within the length of the monster row.
+        // otherwise, we need to check that the field_index is within the length of the spell row.
         match card.variant {
-            CardVariant::Monster { .. } | CardVariant::Trap { .. } | CardVariant::Equip { .. } => {
-                self.field_index.settable = true;
-            }
-            CardVariant::Magic { .. } => {
-                if face_direction == FaceDirection::Down {
-                    self.field_index.settable = true;
-                } else {
-                    self.command = Some(HandPlaySingleMagicUpCmd { hand_index }.into());
+            CardVariant::Monster { .. } => {
+                if field_index >= self.duel.get_player().monster_row.len() {
+                    return Err(CommandBuilderError::OutOfBoundsFieldSelection);
                 }
-            }
-            CardVariant::Ritual { .. } => {
-                if face_direction == FaceDirection::Down {
-                    self.field_index.settable = true;
-                } else {
-                    self.command = Some(HandPlaySingleRitualUpCmd { hand_index }.into());
+            },
+            _ => {
+                if field_index >= self.duel.get_player().spell_row.len() {
+                    return Err(CommandBuilderError::OutOfBoundsFieldSelection);
                 }
-            }
+            },
         }
 
-        self.face_direction.value = Some(face_direction);
-        self.face_direction.settable = false;
-        Ok(self)
-    }
-
-    pub fn field_index(
-        &mut self,
-        field_index: usize,
-    ) -> Result<&mut Self, DuelCommandBuilderError> {
-        self.check_command_set()?;
-        
-        if !self.field_index.settable {
-            return Err(DuelCommandBuilderError::NotExpectingParam);
-        }
-
-        if field_index > 4 {
-            return Err(DuelCommandBuilderError::InvalidFieldIndex);
-        }
-
-        self.field_index.value = Some(field_index);
-        self.field_index.settable = false;
-
-        // clone the player, and call play_hand
-        let mut player = self.duel.get_player().clone();
-        let hand_indices = self.hand_indices.value.as_ref().unwrap();
-        let result_card = player.play_hand(
-            &self.hand_indices.value.as_ref().unwrap(),
-            self.field_index.value.unwrap(),
-        );
-
-        match (hand_indices.len() > 1, result_card.variant) {
-            (true, _) => {
-                self.command = Some(HandPlayMultipleCmd {
-                    hand_indices: hand_indices.clone(),
-                    field_index,
+        match self.state.hand_indices.len() {
+            1 => {
+                let face_direction = self.state.face_direction.unwrap();
+                let hand_index = self.state.hand_indices[0];
+                match card.variant {
+                    CardVariant::Monster { .. } => Ok(HandPlaySingleMonsterCmd {
+                        hand_index,
+                        face_direction,
+                        field_index,
+                    }.into()),
+                    CardVariant::Magic { .. } => {
+                        match face_direction {
+                            FaceDirection::Up => Ok(HandPlaySingleMagicUpCmd {
+                                hand_index,
+                            }.into()),
+                            FaceDirection::Down => Ok(HandPlaySingleMagicDownCmd {
+                                hand_index,
+                                field_index,
+                            }.into()),
+                        }
+                    },
+                    CardVariant::Ritual { .. } => {
+                        match face_direction {
+                            FaceDirection::Up => Ok(HandPlaySingleRitualUpCmd {
+                                hand_index,
+                            }.into()),
+                            FaceDirection::Down => Ok(HandPlaySingleRitualDownCmd {
+                                hand_index,
+                                field_index,
+                            }.into()),
+                        }
+                    },
+                    CardVariant::Trap { .. } => Ok(HandPlaySingleTrapCmd {
+                        hand_index,
+                        field_index,
+                        face_direction,
+                    }.into()),
+                    CardVariant::Equip { .. } => Ok(HandPlaySingleEquipCmd {
+                        hand_index,
+                        field_index,
+                        face_direction,
+                    }.into()),
                 }
-                .into());
-            }
-            (false, CardVariant::Monster { .. }) => {
-                self.command = Some(HandPlaySingleMonsterCmd {
-                    hand_index: hand_indices[0],
-                    field_index,
-                    face_direction: self.face_direction.value.unwrap(),
-                }
-                .into());
-            }
-            (false, CardVariant::Trap { .. }) => {
-                self.command = Some(HandPlaySingleTrapCmd {
-                    hand_index: hand_indices[0],
-                    field_index,
-                    face_direction: self.face_direction.value.unwrap(),
-                }
-                .into());
-            }
-            (false, CardVariant::Magic { .. }) => {
-                self.command = Some(HandPlaySingleMagicDownCmd {
-                    hand_index: hand_indices[0],
-                    field_index,
-                }
-                .into());
-            }
-            (false, CardVariant::Ritual { .. }) => {
-                self.command = Some(HandPlaySingleRitualDownCmd {
-                    hand_index: hand_indices[0],
-                    field_index,
-                }
-                .into());
-            }
-            (false, CardVariant::Equip { .. }) => {
-                self.command = Some(HandPlaySingleEquipCmd {
-                    hand_index: hand_indices[0],
-                    field_index,
-                    face_direction: self.face_direction.value.unwrap(),
-                }
-                .into());
-            }
+            },
+            _ => Ok(HandPlayMultipleCmd {
+                hand_indices: self.state.hand_indices,
+                field_index,
+            }.into())
         }
-
-        Ok(self)
-    }
-
-    pub fn guardian_star_choice(
-        &mut self,
-        guardian_star_choice: GuardianStarChoice,
-    ) -> Result<&mut Self, DuelCommandBuilderError> {
-        self.check_command_set()?;
-
-        if !self.guardian_star_choice.settable {
-            return Err(DuelCommandBuilderError::NotExpectingParam);
-        }
-
-        self.guardian_star_choice.value = Some(guardian_star_choice);
-        self.guardian_star_choice.settable = false;
-
-        self.command = Some(SetGuardianStarCmd {
-            guardian_star_choice,
-        }.into());
-
-        Ok(self)
-    }
-
-    pub fn spell_row_index(
-        &mut self,
-        spell_row_index: usize,
-    ) -> Result<&mut Self, DuelCommandBuilderError> {
-        self.check_command_set()?;
-
-        if !self.spell_row_index.settable {
-            return Err(DuelCommandBuilderError::NotExpectingParam);
-        }
-
-        if spell_row_index > 4 {
-            return Err(DuelCommandBuilderError::InvalidFieldIndex);
-        }
-
-        let player = self.duel.get_player();
-        if player.spell_row[spell_row_index].is_none() {
-            return Err(DuelCommandBuilderError::InvalidFieldIndex);
-        }
-
-        let card_variant = &player.spell_row[spell_row_index]
-            .as_ref()
-            .unwrap()
-            .card
-            .variant;
-
-        if matches!(card_variant, CardVariant::Equip { .. }) {
-            self.monster_row_index.settable = true;
-        } else {
-            self.command = Some(FieldPlaySpellCmd {
-                spell_row_index,
-            }
-            .into());
-        }
-
-        self.spell_row_index.value = Some(spell_row_index);
-        self.spell_row_index.settable = false;
-        Ok(self)
-    }
-
-    pub fn monster_row_index(
-        &mut self,
-        monster_row_index: usize,
-    ) -> Result<&mut Self, DuelCommandBuilderError> {
-        self.check_command_set()?;
-
-        if !self.monster_row_index.settable {
-            return Err(DuelCommandBuilderError::NotExpectingParam);
-        }
-
-        if monster_row_index > 4 {
-            return Err(DuelCommandBuilderError::InvalidFieldIndex);
-        }
-
-        // different behaviour based on whether spell_row_index is set
-        // if it is not, then we are expecting enemy_monster_row_index
-        // otherwise, we are not expecting anything
-        let is_spell_row_index_set = self.spell_row_index.value.is_some();
-        if !is_spell_row_index_set && self.duel.get_enemy().monster_row[monster_row_index].is_none()
-        {
-            return Err(DuelCommandBuilderError::InvalidFieldIndex);
-        }
-        self.enemy_monster_row_index.settable = !is_spell_row_index_set;
-
-        if is_spell_row_index_set {
-            // FieldPlayEquipCmd
-            self.command = Some(FieldPlayEquipCmd {
-                spell_row_index: self.spell_row_index.value.unwrap(),
-                monster_row_index,
-            }.into());
-        }
-
-        self.monster_row_index.value = Some(monster_row_index);
-        self.monster_row_index.settable = false;
-        Ok(self)
-    }
-
-    pub fn enemy_monster_row_index(
-        &mut self,
-        enemy_monster_row_index: usize,
-    ) -> Result<&mut Self, DuelCommandBuilderError> {
-        self.check_command_set()?;
-
-        if !self.enemy_monster_row_index.settable {
-            return Err(DuelCommandBuilderError::NotExpectingParam);
-        }
-
-        if enemy_monster_row_index > 4 {
-            return Err(DuelCommandBuilderError::InvalidFieldIndex);
-        }
-
-        let enemy = self.duel.get_enemy();
-        if enemy.monster_row[enemy_monster_row_index].is_none()
-            && !enemy.monster_row.iter().all(|monster| monster.is_none())
-        {
-            return Err(DuelCommandBuilderError::InvalidAttackTarget);
-        }
-
-        self.enemy_monster_row_index.value = Some(enemy_monster_row_index);
-        self.enemy_monster_row_index.settable = false;
-
-        self.command = Some(FieldAttackCmd {
-            monster_row_index: self.monster_row_index.value.unwrap(),
-            enemy_monster_row_index,
-        }.into());
-
-        Ok(self)
-    }
-
-    pub fn get_command(&self) -> Option<DuelCommandEnum> {
-        self.command.clone()
-    }
-
-    fn check_command_set(&self) -> Result<(), DuelCommandBuilderError> {
-        if self.command.is_some() {
-            return Err(DuelCommandBuilderError::CommandAlreadyBuilt);
-        }
-        Ok(())
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_hand_play_single_cmd() {
-        let mut duel = Duel::default();
-        let mut command_builder = CommandBuilder::new(&mut duel);
-
-        command_builder.hand_indices(vec![0]).unwrap();
-        command_builder.face_direction(FaceDirection::Up).unwrap();
-        // if command is now built, it will be a HandPlaySingleRitualUpCmd or HandPlaySingleMagicUpCmd
-        // otherwise, we need to set a field_index. then we will have a HandPlaySingleMonsterCmd/HandPlaySingleTrapCmd/HandPlaySingleEquipCmd/HandPlaySingleRitualDownCmd/HandPlaySingleMagicDownCmd
-        if let Some(command) = command_builder.get_command() {
-            match command {
-                DuelCommandEnum::HandPlaySingleMagicUpCmd(HandPlaySingleMagicUpCmd { hand_index }) => {
-                    assert_eq!(hand_index, 0);
-                }
-                DuelCommandEnum::HandPlaySingleRitualUpCmd(HandPlaySingleRitualUpCmd { hand_index }) => {
-                    assert_eq!(hand_index, 0);
-                }
-                _ => panic!("Expected HandPlaySingleMagicUpCmd or HandPlaySingleRitualUpCmd"),
-            }
+struct Field;
+struct FieldMonsterSelected {
+    monster_index: usize,
+}
+struct FieldSpellSelected {
+    spell_index: usize,
+}
+impl CommandBuilder<Field> {
+    fn select_monster(self, monster_index: usize) -> Result<CommandBuilder<FieldMonsterSelected>, CommandBuilderError> {
+        if monster_index >= self.duel.get_player().monster_row.len() {
+            Err(CommandBuilderError::OutOfBoundsFieldSelection)
         } else {
-            command_builder.field_index(0).unwrap();
-            let command = command_builder.get_command().unwrap();
-            match command {
-                DuelCommandEnum::HandPlaySingleMonsterCmd(HandPlaySingleMonsterCmd { hand_index, field_index, face_direction }) => {
-                    assert_eq!(hand_index, 0);
-                    assert_eq!(face_direction, FaceDirection::Up);
-                    assert_eq!(field_index, 0);
+            let monster = &self.duel.get_player().monster_row[monster_index];
+            if let Some(monster) = monster {
+                if monster.disabled {
+                    return Err(CommandBuilderError::CannotSelectDisabledMonster);
                 }
-                DuelCommandEnum::HandPlaySingleTrapCmd(HandPlaySingleTrapCmd { hand_index, field_index, face_direction }) => {
-                    assert_eq!(hand_index, 0);
-                    assert_eq!(face_direction, FaceDirection::Up);
-                    assert_eq!(field_index, 0);
-                }
-                DuelCommandEnum::HandPlaySingleEquipCmd(HandPlaySingleEquipCmd { hand_index, field_index, face_direction }) => {
-                    assert_eq!(hand_index, 0);
-                    assert_eq!(face_direction, FaceDirection::Up);
-                    assert_eq!(field_index, 0);
-                }
-                _ => panic!("Expected HandPlaySingleMonsterCmd"),
             }
+            Ok(CommandBuilder {
+                state: FieldMonsterSelected {
+                    monster_index,
+                },
+                duel: self.duel,
+            })
         }
     }
+
+    fn select_spell(self, spell_index: usize) -> Result<CommandBuilder<FieldSpellSelected>, CommandBuilderError> {
+        if spell_index >= self.duel.get_player().spell_row.len() {
+            Err(CommandBuilderError::OutOfBoundsFieldSelection)
+        } else {
+            Ok(CommandBuilder {
+                state: FieldSpellSelected {
+                    spell_index,
+                },
+                duel: self.duel,
+            })
+        }
+    }
+
+    fn end_turn(self) -> DuelCommandEnum {
+        EndTurnCmd.into()
+    }
+}
+
+impl CommandBuilder<FieldMonsterSelected> {
+    fn attack(self, enemy_monster_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+        let player = self.duel.get_player();
+        let monster = &player.monster_row[self.state.monster_index];
+        if let Some(monster) = monster {
+            if monster.card_mode == CardMode::Defense {
+                return Err(CommandBuilderError::CannotAttackWithMonsterInDefense);
+            }
+        }
+        let enemy = self.duel.get_enemy();
+        if enemy_monster_index >= enemy.monster_row.len() {
+            return Err(CommandBuilderError::OutOfBoundsFieldSelection);
+        }
+        if enemy.monster_row[enemy_monster_index].is_none() {
+            if enemy.monster_row.iter().any(|monster| monster.is_some()) {
+                return Err(CommandBuilderError::CannotAttackEmptyPositionWhileMonstersPresent);
+            }
+        }
+        Ok(FieldAttackCmd {
+            monster_row_index: self.state.monster_index,
+            enemy_monster_row_index: enemy_monster_index,
+        }.into())
+    }
+
+    fn change_mode(self) -> DuelCommandEnum {
+        FieldChangeModeCmd {
+            monster_index: self.state.monster_index,
+        }.into()
+    }
+}
+
+impl CommandBuilder<FieldSpellSelected> {
 }

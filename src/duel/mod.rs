@@ -8,6 +8,7 @@ use self::state::{DuelStateEnum, HandState};
 
 pub mod command;
 pub mod command_builder;
+pub mod command_builder_bak;
 pub mod deck;
 pub mod field;
 pub mod player;

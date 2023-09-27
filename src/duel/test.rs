@@ -1,3 +1,5 @@
+use std::any::Any;
+
 use super::{field::FaceDirection, command::HandPlaySingleMonsterCmd};
 
 pub struct HandPlaySingleMonsterCmdBuilder<S> {
@@ -144,6 +146,67 @@ enum PlayerCardCommand {
     PlayEquip(usize),
 }
 
+struct HandState;
+struct FieldState {
+    selected_hand_index: usize,
+}
+
+struct Duel<T> {
+    state: T,
+    previous_states: Vec<Box<dyn Any>>, // Stack of previous states
+}
+
+impl Duel<HandState> {
+    fn new() -> Self {
+        Self {
+            state: HandState {
+                // Initialize HandState fields here
+            },
+            previous_states: Vec::new(),
+        }
+    }
+
+    // Modify select_from_hand to take a hand_index parameter
+    fn select_from_hand(mut self, hand_index: usize) -> Duel<FieldState> {
+        // Push the current state onto the stack before transitioning
+        self.previous_states.push(Box::new(self.state));
+
+        Duel {
+            state: FieldState {
+                selected_hand_index: hand_index,
+                // Initialize other FieldState fields here
+            },
+            previous_states: self.previous_states,
+        }
+    }
+}
+
+impl Duel<FieldState> {
+    // FieldState-specific methods here
+
+    fn undo(mut self) -> Duel<HandState> {
+        // Pop the last state off the stack and revert to it
+        let previous_state = self.previous_states.pop().unwrap().downcast::<HandState>().unwrap();
+
+        Duel {
+            state: *previous_state,
+            previous_states: self.previous_states,
+        }
+    }
+
+    fn end_turn(mut self) -> Duel<HandState> {
+        // Push the current state onto the stack before transitioning
+        self.previous_states.push(Box::new(self.state));
+
+        Duel {
+            state: HandState {
+                // Initialize HandState fields here
+            },
+            previous_states: self.previous_states,
+        }
+    }
+}
+
 // PlayerCardCommandBuilder
 // contains a function to select a card by index from a PlayerCards.
 // if the type of the card is Ritual, then return PlayRitual.
@@ -154,6 +217,48 @@ enum PlayerCardCommand {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_execute_commands_from_file() {
+        // Simulate a file with two commands: "select_from_hand 5" and "end_turn"
+        let file_contents = "select_from_hand 5\nend_turn";
+
+        // Split the file into lines
+        let mut lines = file_contents.lines();
+
+        // Start a new duel
+        let duel = Duel::new();
+
+        let first_line = lines.next().unwrap();
+        let parts = first_line.split_whitespace().collect::<Vec<&str>>();
+
+        let duel: Duel<FieldState> = match parts.as_slice() {
+            ["select_from_hand", hand_index] => {
+                let hand_index = hand_index.parse().expect("Invalid hand index");
+                duel.select_from_hand(hand_index)
+            }
+            _ => panic!("Invalid command"),
+        };
+
+        let second_line = lines.next().unwrap();
+        let parts = second_line.split_whitespace().collect::<Vec<&str>>();
+
+        let duel = match parts.as_slice() {
+            ["end_turn"] => {
+                duel.end_turn()
+            }
+            _ => panic!("Invalid command"),
+        };
+    }
+
+    #[test]
+    fn test_duel_new_select_hand_undo() {
+        let duel = Duel::new();
+        let duel = duel.select_from_hand(5);
+        let duel = duel.undo();
+        let duel = duel.select_from_hand(6);
+        let duel = duel.end_turn();
+    }
 
     #[test]
     fn test_create_hand_play_single_monster_cmd_with_builder() {
