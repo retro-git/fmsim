@@ -286,7 +286,7 @@ impl DuelCommand for EndTurnCmd {
 #[enum_dispatch(DuelCommand)]
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum DuelCommandEnum {
-    HandPlaySingleMonsterCmd(HandPlaySingleMonsterCmd),
+    HandPlaySingleMonsterCmd,
     HandPlaySingleMagicUpCmd,
     HandPlaySingleMagicDownCmd,
     HandPlaySingleRitualUpCmd,
