@@ -8,12 +8,10 @@ use self::state::{DuelStateEnum, HandState};
 
 pub mod command;
 pub mod command_builder;
-pub mod command_builder_bak;
 pub mod deck;
 pub mod field;
 pub mod player;
 pub mod state;
-pub mod test;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Builder)]
 #[builder(setter(into), default)]

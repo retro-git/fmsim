@@ -71,7 +71,7 @@ impl CommandBuilder<Start> {
     fn apply_equip(self, monster_row_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
         if let DuelStateEnum::FieldEquipSelectedState(_) = &self.duel.state {
             if self.duel.get_player().monster_row.get(monster_row_index).is_some() {
-                Ok(FieldPlayEquipCmd {
+                Ok(FieldApplyEquipCmd {
                     monster_row_index,
                 }.into())
             } else {
@@ -183,55 +183,21 @@ impl CommandBuilder<HandAwaitingField> {
             },
         }
 
-        match self.state.hand_indices.len() {
+        return match self.state.hand_indices.len() {
             1 => {
-                let face_direction = self.state.face_direction.unwrap();
-                let hand_index = self.state.hand_indices[0];
-                match card.variant {
-                    CardVariant::Monster { .. } => Ok(HandPlaySingleMonsterCmd {
-                        hand_index,
-                        face_direction,
-                        field_index,
-                    }.into()),
-                    CardVariant::Magic { .. } => {
-                        match face_direction {
-                            FaceDirection::Up => Ok(HandPlaySingleMagicUpCmd {
-                                hand_index,
-                            }.into()),
-                            FaceDirection::Down => Ok(HandPlaySingleMagicDownCmd {
-                                hand_index,
-                                field_index,
-                            }.into()),
-                        }
-                    },
-                    CardVariant::Ritual { .. } => {
-                        match face_direction {
-                            FaceDirection::Up => Ok(HandPlaySingleRitualUpCmd {
-                                hand_index,
-                            }.into()),
-                            FaceDirection::Down => Ok(HandPlaySingleRitualDownCmd {
-                                hand_index,
-                                field_index,
-                            }.into()),
-                        }
-                    },
-                    CardVariant::Trap { .. } => Ok(HandPlaySingleTrapCmd {
-                        hand_index,
-                        field_index,
-                        face_direction,
-                    }.into()),
-                    CardVariant::Equip { .. } => Ok(HandPlaySingleEquipCmd {
-                        hand_index,
-                        field_index,
-                        face_direction,
-                    }.into()),
-                }
-            },
-            _ => Ok(HandPlayMultipleCmd {
-                hand_indices: self.state.hand_indices,
-                field_index,
-            }.into())
-        }
+                Ok(HandPlaySingleCmd {
+                    hand_index: self.state.hand_indices[0],
+                    field_index,
+                    face_direction: self.state.face_direction.unwrap(),
+                }.into())
+            }
+            _ => {
+                Ok(HandPlayMultipleCmd {
+                    hand_indices: self.state.hand_indices,
+                    field_index,
+                }.into())
+            }
+        };
     }
 }
 
@@ -267,16 +233,10 @@ impl CommandBuilder<Field> {
         let spell_card_pos = player.spell_row.get(spell_index).ok_or(CommandBuilderError::OutOfBoundsFieldSelection)?;
 
         match spell_card_pos {
-            Some(spell_pos) => {
-                if let CardVariant::Equip{ .. } = spell_pos.card.variant {
-                    Ok(FieldSelectEquipCmd {
-                        spell_row_index: spell_index,
-                    }.into())
-                } else {
-                    Ok(FieldPlaySpellCmd {
-                        spell_row_index: spell_index,
-                    }.into())
-                }
+            Some(_) => {
+                Ok(FieldPlaySpellCmd {
+                    spell_row_index: spell_index,
+                }.into())
             },
             None => Err(CommandBuilderError::OutOfBoundsFieldSelection),
         }
