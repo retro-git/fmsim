@@ -9,9 +9,12 @@ struct Hand;
 struct HandSingleSelected {
     hand_index: usize,
 }
-struct HandAwaitingField {
+struct HandSingleSelectedWithFaceDirection {
+    hand_index: usize,
+    face_direction: FaceDirection,
+}
+struct HandMultipleSelected {
     hand_indices: Vec<usize>,
-    face_direction: Option<FaceDirection>,
 }
 struct CommandBuilder<State> {
     state: State,
@@ -22,6 +25,10 @@ struct CommandBuilder<State> {
 pub enum CommandBuilderError {
     #[error("Invalid Duel State.")]
     InvalidDuelState,
+    #[error("Face-up magic or ritual cards cannot be placed on the field.")]
+    CannotPlaceFaceUpMagicOrRitual,
+    #[error("Only face-up magic or ritual cards can be played directly from the hand.")]
+    OnlyFaceUpMagicOrRitualCanBePlayedFromHand,
     #[error("Invalid Hand Selection.")]
     OutOfBoundsHandSelection,
     #[error("Invalid Field Selection.")]
@@ -116,7 +123,7 @@ impl CommandBuilder<Hand> {
         }
     }
 
-    fn select_multiple(self, hand_indices: Vec<usize>) -> Result<CommandBuilder<HandAwaitingField>, CommandBuilderError> {
+    fn select_multiple(self, hand_indices: Vec<usize>) -> Result<CommandBuilder<HandMultipleSelected>, CommandBuilderError> {
         let hand_len = self.duel.get_player().hand.len();
         let unique_indices: HashSet<_> = hand_indices.iter().collect();
         if unique_indices.len() != hand_indices.len() {
@@ -128,9 +135,8 @@ impl CommandBuilder<Hand> {
             }
         }
         Ok(CommandBuilder {
-            state: HandAwaitingField {
+            state: HandMultipleSelected {
                 hand_indices,
-                face_direction: None,
             },
             duel: self.duel,
         })
@@ -138,40 +144,44 @@ impl CommandBuilder<Hand> {
 }
 
 impl CommandBuilder<HandSingleSelected> {
-    fn facing(self, face_direction: FaceDirection) -> CommandBuilder<HandAwaitingField> {
+    fn facing(self, face_direction: FaceDirection) -> CommandBuilder<HandSingleSelectedWithFaceDirection> {
         CommandBuilder {
-            state: HandAwaitingField {
-                hand_indices: vec![self.state.hand_index],
-                face_direction: Some(face_direction),
+            state: HandSingleSelectedWithFaceDirection {
+                hand_index: self.state.hand_index,
+                face_direction,
             },
             duel: self.duel,
         }
     }
 }
 
-impl CommandBuilder<HandAwaitingField> {
-    fn place(self, field_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
-        let card = match self.state.hand_indices.len() {
-            1 => {
-                self.duel.get_player().hand[self.state.hand_indices[0]].clone()
-            }
-            _ => {
-                let mut cards = Vec::new();
-                // if field_index already has a monster, we need to clone it and prepend it to cards.
-                if let Some(monster) = self.duel.get_player().monster_row[field_index].as_ref() {
-                    cards.push(monster.card.clone());
-                }
-                for index in &self.state.hand_indices {
-                    cards.push(self.duel.get_player().hand[*index].clone());
-                }
-                crate::combine_cards(cards)
-            }
-        };
+impl CommandBuilder<HandSingleSelectedWithFaceDirection> {
+    fn play(self) -> Result<DuelCommandEnum, CommandBuilderError> {
+        // play() handles playing a faceup magic or ritual
+        // if its not a faceup magic or ritual, return a OnlyFaceUpMagicOrRitualCanBePlayedFromHand
+        let card = &self.duel.get_player().hand[self.state.hand_index];
+        if !matches!(card.variant, CardVariant::Magic { .. } | CardVariant::Ritual { .. }) || self.state.face_direction == FaceDirection::Down {
+            return Err(CommandBuilderError::OnlyFaceUpMagicOrRitualCanBePlayedFromHand);
+        }
 
-        // if the card is a monster, we need to check that the field_index is within the length of the monster row.
-        // otherwise, we need to check that the field_index is within the length of the spell row.
+        Ok(HandPlaySingleCmd {
+            hand_index: self.state.hand_index,
+            face_direction: self.state.face_direction,
+            field_index: None,
+        }.into())
+    }
+    
+    fn place(self, field_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+        // Return an error if the card is a magic or ritual and the face_direction is FaceDirection::Up.
+        let card = &self.duel.get_player().hand[self.state.hand_index];
+        if matches!(card.variant, CardVariant::Magic { .. } | CardVariant::Ritual { .. }) && self.state.face_direction == FaceDirection::Up {
+            return Err(CommandBuilderError::CannotPlaceFaceUpMagicOrRitual);
+        }
+
+        // if the card is a monster or faceup equip, we need to check that the field_index is within the monster row.
+        // otherwise, we need to check that the field_index is within the spell row.
         match card.variant {
-            CardVariant::Monster { .. } => {
+            CardVariant::Monster { .. } | CardVariant::Equip { .. } if self.state.face_direction == FaceDirection::Up => {
                 if field_index >= self.duel.get_player().monster_row.len() {
                     return Err(CommandBuilderError::OutOfBoundsFieldSelection);
                 }
@@ -183,21 +193,37 @@ impl CommandBuilder<HandAwaitingField> {
             },
         }
 
-        return match self.state.hand_indices.len() {
-            1 => {
-                Ok(HandPlaySingleCmd {
-                    hand_index: self.state.hand_indices[0],
-                    field_index,
-                    face_direction: self.state.face_direction.unwrap(),
-                }.into())
+        Ok(HandPlaySingleCmd {
+            hand_index: self.state.hand_index,
+            face_direction: self.state.face_direction,
+            field_index: Some(field_index),
+        }.into())
+    }
+}
+
+impl CommandBuilder<HandMultipleSelected> {
+    fn place(self, field_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+        let mut cards = Vec::new();
+        // if field_index already has a monster, we need to prepend it to cards.
+        if let Some(monster) = self.duel.get_player().monster_row[field_index].as_ref() {
+            cards.push(monster.card.clone());
+        }
+        for index in &self.state.hand_indices {
+            cards.push(self.duel.get_player().hand[*index].clone());
+        }
+        let card = crate::combine_cards(cards);
+
+        // if the card is a monster, we need to check that the field_index is within the length of the monster row.
+        if let CardVariant::Monster { .. } = card.variant {
+            if field_index >= self.duel.get_player().monster_row.len() {
+                return Err(CommandBuilderError::OutOfBoundsFieldSelection);
             }
-            _ => {
-                Ok(HandPlayMultipleCmd {
-                    hand_indices: self.state.hand_indices,
-                    field_index,
-                }.into())
-            }
-        };
+        }
+
+        Ok(HandPlayMultipleCmd {
+            hand_indices: self.state.hand_indices,
+            field_index,
+        }.into())
     }
 }
 

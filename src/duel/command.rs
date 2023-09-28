@@ -36,11 +36,21 @@ pub trait DuelCommand {
 pub struct HandPlaySingleCmd {
     pub hand_index: usize,
     pub face_direction: FaceDirection,
-    pub field_index: usize,
+    pub field_index: Option<usize>,
 }
 impl DuelCommand for HandPlaySingleCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
         todo!()
+        // we need to handle the following cases separately:
+        // - card is a monster. we place it at field_index on the monster row, combining it with any existing card present.
+        // - card is a faceup magic. we execute the magic effect (this is todo, each magic has a different effect).
+        // - card is a facedown magic. we place it at field_index on the spell row, combining it with any existing card.
+        // - card is a faceup ritual. we execute the ritual effect (todo)
+        // - card is a facedown ritual. we place it at field_index on the spell row, combining it with any existing card.
+        // - card is an equip. 
+        // - card is a trap
+
+
         // check the duel state. if it is not Hand, return an error.
         // matches!(duel.state, DuelStateEnum::HandState(_))
         //     .then(|| ())
