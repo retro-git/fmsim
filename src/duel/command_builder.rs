@@ -25,6 +25,8 @@ struct CommandBuilder<State> {
 pub enum CommandBuilderError {
     #[error("Invalid Duel State.")]
     InvalidDuelState,
+    #[error("When selecting multiple cards, must pick 2-5 cards.")]
+    InvalidNumberOfCardsSelected,
     #[error("Face-up magic or ritual cards cannot be placed on the field.")]
     CannotPlaceFaceUpMagicOrRitual,
     #[error("Only face-up magic or ritual cards can be played directly from the hand.")]
@@ -128,6 +130,9 @@ impl CommandBuilder<Hand> {
         let unique_indices: HashSet<_> = hand_indices.iter().collect();
         if unique_indices.len() != hand_indices.len() {
             return Err(CommandBuilderError::DuplicateHandSelection);
+        }
+        if hand_indices.len() < 2 || hand_indices.len() > 5 {
+            return Err(CommandBuilderError::InvalidNumberOfCardsSelected);
         }
         for &index in &hand_indices {
             if index >= hand_len {
