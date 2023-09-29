@@ -1,5 +1,4 @@
-use std::{rc::Rc, collections::HashSet};
-use thiserror::Error;
+use std::collections::HashSet;
 use crate::CardVariant;
 
 use super::{field::{FaceDirection, CardMode, GuardianStarChoice}, command::*, Duel, state::DuelStateEnum};
@@ -16,107 +15,77 @@ struct HandSingleSelectedWithFaceDirection {
 struct HandMultipleSelected {
     hand_indices: Vec<usize>,
 }
-struct CommandBuilder<State> {
+struct CommandBuilder<'a, State> {
     state: State,
-    duel: Rc<Duel>,
+    duel: &'a Duel,
 }
 
-#[derive(Error, Debug)]
-pub enum CommandBuilderError {
-    #[error("Invalid Duel State.")]
-    InvalidDuelState,
-    #[error("When selecting multiple cards, must pick 2-5 cards.")]
-    InvalidNumberOfCardsSelected,
-    #[error("Face-up magic or ritual cards cannot be placed on the field.")]
-    CannotPlaceFaceUpMagicOrRitual,
-    #[error("Only face-up magic or ritual cards can be played directly from the hand.")]
-    OnlyFaceUpMagicOrRitualCanBePlayedFromHand,
-    #[error("Out-of-bounds Hand Selection.")]
-    OutOfBoundsHandSelection,
-    #[error("Out-of-bounds Field Selection.")]
-    OutOfBoundsFieldSelection,
-    #[error("Out-of-bounds Hand Selection.")]
-    DuplicateHandSelection,
-    #[error("Monster not present at the selected position.")]
-    MonsterNotPresentAtSelectedPosition,
-    #[error("Spell not present at the selected position.")]
-    SpellNotPresentAtSelectedPosition,
-    #[error("Cannot attack empty position while enemy monsters are present.")]
-    CannotAttackEmptyPositionWhileMonstersPresent,
-    #[error("The selected monster is disabled.")]
-    CannotSelectDisabledMonster,
-    #[error("The selected monster cannot attack because it is in defense mode.")]
-    CannotAttackWithMonsterInDefense,
-    #[error("Tried to apply an equip to an empty position. It must be a monster.")]
-    CannotEquipEmptyPosition,
-}
-
-impl CommandBuilder<Start> {
-    fn new(duel: Rc<Duel>) -> Self {
+impl<'a> CommandBuilder<'a, Start> {
+    fn new(duel: &'a Duel) -> Self {
         CommandBuilder {
             state: Start,
             duel,
         }
     }
 
-    fn hand(self) -> Result<CommandBuilder<Hand>, CommandBuilderError> {
+    fn hand(self) -> Result<CommandBuilder<'a, Hand>, CommandError> {
         if let DuelStateEnum::HandState{ .. } = self.duel.state {
             Ok(CommandBuilder {
                 state: Hand,
                 duel: self.duel,
             })
         } else {
-            Err(CommandBuilderError::InvalidDuelState)
+            Err(CommandError::InvalidDuelState)
         }
     }
 
-    fn field(self) -> Result<CommandBuilder<Field>, CommandBuilderError> {
+    fn field(self) -> Result<CommandBuilder<'a, Field>, CommandError> {
         if let DuelStateEnum::FieldState{ .. } = self.duel.state {
             Ok(CommandBuilder {
                 state: Field,
                 duel: self.duel,
             })
         } else {
-            Err(CommandBuilderError::InvalidDuelState)
+            Err(CommandError::InvalidDuelState)
         }
     }
 
-    fn apply_equip(self, monster_row_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+    fn apply_equip(self, monster_row_index: usize) -> Result<DuelCommandEnum, CommandError> {
         if let DuelStateEnum::FieldEquipSelectedState(_) = &self.duel.state {
             if self.duel.get_player().monster_row.get(monster_row_index).is_some() {
-                Ok(FieldApplyEquipCmd {
+                Ok(FieldPlayEquipPickMonsterCmd {
                     monster_row_index,
                 }.into())
             } else {
-                Err(CommandBuilderError::CannotEquipEmptyPosition)
+                Err(CommandError::CannotEquipEmptyPosition)
             }
         } else {
-            Err(CommandBuilderError::InvalidDuelState)
+            Err(CommandError::InvalidDuelState)
         }
     }
 
-    fn cancel_equip(self) -> Result<DuelCommandEnum, CommandBuilderError> {
+    fn cancel_equip(self) -> Result<DuelCommandEnum, CommandError> {
         if let DuelStateEnum::FieldEquipSelectedState(_) = &self.duel.state {
-            Ok(FieldCancelSelectEquipCmd.into())
+            Ok(FieldCancelPlayEquipCmd.into())
         } else {
-            Err(CommandBuilderError::InvalidDuelState)
+            Err(CommandError::InvalidDuelState)
         }
     }
 
-    fn set_guardian_star(self, guardian_star_choice: GuardianStarChoice) -> Result<DuelCommandEnum, CommandBuilderError> {
+    fn set_guardian_star(self, guardian_star_choice: GuardianStarChoice) -> Result<DuelCommandEnum, CommandError> {
         if let DuelStateEnum::SetGuardianStarState(_) = self.duel.state {
             Ok(SetGuardianStarCmd {
                 guardian_star_choice,
             }.into())
         } else {
-            Err(CommandBuilderError::InvalidDuelState)
+            Err(CommandError::InvalidDuelState)
         }
     }
     // fn guardian_star
 }
 
-impl CommandBuilder<Hand> {
-    fn select(self, hand_index: usize) -> Result<CommandBuilder<HandSingleSelected>, CommandBuilderError> {
+impl<'a> CommandBuilder<'a, Hand>  {
+    fn select(self, hand_index: usize) -> Result<CommandBuilder<'a, HandSingleSelected>, CommandError> {
         if hand_index < self.duel.get_player().hand.len() {
             Ok(CommandBuilder {
                 state: HandSingleSelected {
@@ -125,22 +94,22 @@ impl CommandBuilder<Hand> {
                 duel: self.duel,
             })
         } else {
-            Err(CommandBuilderError::OutOfBoundsHandSelection)
+            Err(CommandError::OutOfBoundsHandSelection)
         }
     }
 
-    fn select_multiple(self, hand_indices: Vec<usize>) -> Result<CommandBuilder<HandMultipleSelected>, CommandBuilderError> {
+    fn select_multiple(self, hand_indices: Vec<usize>) -> Result<CommandBuilder<'a, HandMultipleSelected>, CommandError> {
         let hand_len = self.duel.get_player().hand.len();
         let unique_indices: HashSet<_> = hand_indices.iter().collect();
         if unique_indices.len() != hand_indices.len() {
-            return Err(CommandBuilderError::DuplicateHandSelection);
+            return Err(CommandError::DuplicateHandSelection);
         }
         if hand_indices.len() < 2 || hand_indices.len() > 5 {
-            return Err(CommandBuilderError::InvalidNumberOfCardsSelected);
+            return Err(CommandError::InvalidNumberOfCardsSelected);
         }
         for &index in &hand_indices {
             if index >= hand_len {
-                return Err(CommandBuilderError::OutOfBoundsHandSelection);
+                return Err(CommandError::OutOfBoundsHandSelection);
             }
         }
         Ok(CommandBuilder {
@@ -152,8 +121,8 @@ impl CommandBuilder<Hand> {
     }
 }
 
-impl CommandBuilder<HandSingleSelected> {
-    fn facing(self, face_direction: FaceDirection) -> CommandBuilder<HandSingleSelectedWithFaceDirection> {
+impl<'a> CommandBuilder<'a, HandSingleSelected> {
+    fn facing(self, face_direction: FaceDirection) -> CommandBuilder<'a, HandSingleSelectedWithFaceDirection> {
         CommandBuilder {
             state: HandSingleSelectedWithFaceDirection {
                 hand_index: self.state.hand_index,
@@ -164,13 +133,13 @@ impl CommandBuilder<HandSingleSelected> {
     }
 }
 
-impl CommandBuilder<HandSingleSelectedWithFaceDirection> {
-    fn play(self) -> Result<DuelCommandEnum, CommandBuilderError> {
+impl<'a> CommandBuilder<'a, HandSingleSelectedWithFaceDirection> {
+    fn play(self) -> Result<DuelCommandEnum, CommandError> {
         // play() handles playing a faceup magic or ritual
         // if its not a faceup magic or ritual, return a OnlyFaceUpMagicOrRitualCanBePlayedFromHand
         let card = &self.duel.get_player().hand[self.state.hand_index];
         if !matches!(card.variant, CardVariant::Magic { .. } | CardVariant::Ritual { .. }) || self.state.face_direction == FaceDirection::Down {
-            return Err(CommandBuilderError::OnlyFaceUpMagicOrRitualCanBePlayedFromHand);
+            return Err(CommandError::OnlyFaceUpMagicOrRitualCanBePlayedFromHand);
         }
 
         Ok(HandPlaySingleCmd {
@@ -180,11 +149,11 @@ impl CommandBuilder<HandSingleSelectedWithFaceDirection> {
         }.into())
     }
     
-    fn place(self, field_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+    fn place(self, field_index: usize) -> Result<DuelCommandEnum, CommandError> {
         // Return an error if the card is a magic or ritual and the face_direction is FaceDirection::Up.
         let card = &self.duel.get_player().hand[self.state.hand_index];
         if matches!(card.variant, CardVariant::Magic { .. } | CardVariant::Ritual { .. }) && self.state.face_direction == FaceDirection::Up {
-            return Err(CommandBuilderError::CannotPlaceFaceUpMagicOrRitual);
+            return Err(CommandError::CannotPlaceFaceUpMagicOrRitual);
         }
 
         // if the card is a monster or faceup equip, we need to check that the field_index is within the monster row.
@@ -192,12 +161,12 @@ impl CommandBuilder<HandSingleSelectedWithFaceDirection> {
         match card.variant {
             CardVariant::Monster { .. } | CardVariant::Equip { .. } if self.state.face_direction == FaceDirection::Up => {
                 if field_index >= self.duel.get_player().monster_row.len() {
-                    return Err(CommandBuilderError::OutOfBoundsFieldSelection);
+                    return Err(CommandError::OutOfBoundsFieldSelection);
                 }
             },
             _ => {
                 if field_index >= self.duel.get_player().spell_row.len() {
-                    return Err(CommandBuilderError::OutOfBoundsFieldSelection);
+                    return Err(CommandError::OutOfBoundsFieldSelection);
                 }
             },
         }
@@ -210,8 +179,8 @@ impl CommandBuilder<HandSingleSelectedWithFaceDirection> {
     }
 }
 
-impl CommandBuilder<HandMultipleSelected> {
-    fn place(self, field_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+impl<'a> CommandBuilder<'a, HandMultipleSelected> {
+    fn place(self, field_index: usize) -> Result<DuelCommandEnum, CommandError> {
         let mut cards = Vec::new();
         // if field_index already has a monster, we need to prepend it to cards.
         if let Some(monster) = self.duel.get_player().monster_row[field_index].as_ref() {
@@ -225,7 +194,7 @@ impl CommandBuilder<HandMultipleSelected> {
         // if the card is a monster, we need to check that the field_index is within the length of the monster row.
         if let CardVariant::Monster { .. } = card.variant {
             if field_index >= self.duel.get_player().monster_row.len() {
-                return Err(CommandBuilderError::OutOfBoundsFieldSelection);
+                return Err(CommandError::OutOfBoundsFieldSelection);
             }
         }
 
@@ -243,19 +212,19 @@ struct FieldMonsterSelected {
 struct FieldSpellSelected {
     spell_index: usize,
 }
-impl CommandBuilder<Field> {
-    fn select_monster(self, monster_index: usize) -> Result<CommandBuilder<FieldMonsterSelected>, CommandBuilderError> {
+impl<'a> CommandBuilder<'a, Field> {
+    fn select_monster(self, monster_index: usize) -> Result<CommandBuilder<'a, FieldMonsterSelected>, CommandError> {
         if monster_index >= self.duel.get_player().monster_row.len() {
-            Err(CommandBuilderError::OutOfBoundsFieldSelection)
+            Err(CommandError::OutOfBoundsFieldSelection)
         } else {
             let monster = &self.duel.get_player().monster_row[monster_index];
             if let Some(monster) = monster {
                 if monster.disabled {
-                    return Err(CommandBuilderError::CannotSelectDisabledMonster);
+                    return Err(CommandError::CannotSelectDisabledMonster);
                 }
             }
             else {
-                return Err(CommandBuilderError::MonsterNotPresentAtSelectedPosition);
+                return Err(CommandError::MonsterNotPresentAtSelectedPosition);
             }
             Ok(CommandBuilder {
                 state: FieldMonsterSelected {
@@ -266,9 +235,9 @@ impl CommandBuilder<Field> {
         }
     }
 
-    fn play_spell(self, spell_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+    fn play_spell(self, spell_index: usize) -> Result<DuelCommandEnum, CommandError> {
         let player = self.duel.get_player();
-        let spell_card_pos = player.spell_row.get(spell_index).ok_or(CommandBuilderError::OutOfBoundsFieldSelection)?;
+        let spell_card_pos = player.spell_row.get(spell_index).ok_or(CommandError::OutOfBoundsFieldSelection)?;
 
         match spell_card_pos {
             Some(_) => {
@@ -276,7 +245,7 @@ impl CommandBuilder<Field> {
                     spell_row_index: spell_index,
                 }.into())
             },
-            None => Err(CommandBuilderError::SpellNotPresentAtSelectedPosition),
+            None => Err(CommandError::SpellNotPresentAtSelectedPosition),
         }
     }
 
@@ -285,22 +254,22 @@ impl CommandBuilder<Field> {
     }
 }
 
-impl CommandBuilder<FieldMonsterSelected> {
-    fn attack(self, enemy_monster_index: usize) -> Result<DuelCommandEnum, CommandBuilderError> {
+impl<'a> CommandBuilder<'a, FieldMonsterSelected> {
+    fn attack(self, enemy_monster_index: usize) -> Result<DuelCommandEnum, CommandError> {
         let player = self.duel.get_player();
         let monster = &player.monster_row[self.state.monster_index];
         if let Some(monster) = monster {
             if monster.card_mode == CardMode::Defense {
-                return Err(CommandBuilderError::CannotAttackWithMonsterInDefense);
+                return Err(CommandError::CannotAttackWithMonsterInDefense);
             }
         }
         let enemy = self.duel.get_enemy();
         if enemy_monster_index >= enemy.monster_row.len() {
-            return Err(CommandBuilderError::OutOfBoundsFieldSelection);
+            return Err(CommandError::OutOfBoundsFieldSelection);
         }
         if enemy.monster_row[enemy_monster_index].is_none() {
             if enemy.monster_row.iter().any(|monster| monster.is_some()) {
-                return Err(CommandBuilderError::CannotAttackEmptyPositionWhileMonstersPresent);
+                return Err(CommandError::CannotAttackEmptyPositionWhileMonstersPresent);
             }
         }
         Ok(FieldAttackCmd {
@@ -322,7 +291,7 @@ mod test {
     use super::*;
 
     // #[test]
-    // fn test_play_single_card() -> Result<(), CommandBuilderError> {
+    // fn test_play_single_card() -> Result<(), CommandError> {
     //     let mut duel = Rc::new(Duel::default());
     //     let builder = CommandBuilder::new(Rc::clone(&duel));
     //     let command = builder.hand()?.select(0)?.facing(FaceDirection::Up).place(0)?;
@@ -350,14 +319,17 @@ mod test {
     // create a test that causes an error
     #[test]
     fn test_play_single_card_error() {
-        let mut duel = Rc::new(Duel::default());
-        let builder = CommandBuilder::new(Rc::clone(&duel));
+        let duel = Duel::default();
+        let builder = CommandBuilder::new(&duel);
         let command = builder.field(); // this will cause InvalidDuelState error
         // let err = command.unwrap_err();
         if let Err(e) = command {
             dbg!(&e);
             println!("{}", e);
+            assert!(true);
         }
-        assert!(false);
+        else {
+            assert!(false);
+        }
     }
 }

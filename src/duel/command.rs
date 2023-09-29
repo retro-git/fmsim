@@ -2,6 +2,7 @@ use derive_builder::Builder;
 use enum_dispatch::enum_dispatch;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
+use std::collections::HashSet;
 
 use crate::{combine, CardVariant};
 
@@ -11,25 +12,40 @@ use super::{
     Duel,
 };
 
+
 #[derive(Error, Debug)]
-pub enum DuelCommandError {
-    #[error("Invalid Duel State")]
-    InvalidState,
-    #[error("Invalid Hand Index")]
-    InvalidHandIndex,
-    #[error("Invalid Field Index")]
-    InvalidFieldIndex,
-    #[error("Hand Card Type Mismatch")]
-    HandCardTypeMismatch,
-    #[error("Not Equip Card")]
-    NotEquipCard,
-    #[error("No Card In Spell Row")]
-    NoCardInSpellRow,
+pub enum CommandError {
+    #[error("Invalid Duel State.")]
+    InvalidDuelState,
+    #[error("When selecting multiple cards, must pick 2-5 cards.")]
+    InvalidNumberOfCardsSelected,
+    #[error("Face-up magic or ritual cards cannot be placed on the field.")]
+    CannotPlaceFaceUpMagicOrRitual,
+    #[error("Only face-up magic or ritual cards can be played directly from the hand.")]
+    OnlyFaceUpMagicOrRitualCanBePlayedFromHand,
+    #[error("Out-of-bounds Hand Selection.")]
+    OutOfBoundsHandSelection,
+    #[error("Out-of-bounds Field Selection.")]
+    OutOfBoundsFieldSelection,
+    #[error("Out-of-bounds Hand Selection.")]
+    DuplicateHandSelection,
+    #[error("Monster not present at the selected position.")]
+    MonsterNotPresentAtSelectedPosition,
+    #[error("Spell not present at the selected position.")]
+    SpellNotPresentAtSelectedPosition,
+    #[error("Cannot attack empty position while enemy monsters are present.")]
+    CannotAttackEmptyPositionWhileMonstersPresent,
+    #[error("The selected monster is disabled.")]
+    CannotSelectDisabledMonster,
+    #[error("The selected monster cannot attack because it is in defense mode.")]
+    CannotAttackWithMonsterInDefense,
+    #[error("Tried to apply an equip to an empty position. It must be a monster.")]
+    CannotEquipEmptyPosition,
 }
 
 #[enum_dispatch]
 pub trait DuelCommand {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError>;
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError>;
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Builder)]
@@ -39,71 +55,25 @@ pub struct HandPlaySingleCmd {
     pub field_index: Option<usize>,
 }
 impl DuelCommand for HandPlaySingleCmd {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // Check if the duel is in the correct state
+        if !matches!(duel.state, DuelStateEnum::HandState{ .. }) {
+            return Err(CommandError::InvalidDuelState);
+        }
+
+        // Check if the hand index is valid
+        let card = duel.get_player().hand.get(self.hand_index).ok_or(CommandError::OutOfBoundsHandSelection)?;
+
+        if matches!(card.variant, CardVariant::Magic { .. } | CardVariant::Ritual { .. }) && self.face_direction == FaceDirection::Up && self.field_index.is_some() {
+            return Err(CommandError::CannotPlaceFaceUpMagicOrRitual);
+        }
+        if let Some(field_index) = self.field_index {
+            if field_index >= duel.get_player().monster_row.len() {
+                return Err(CommandError::OutOfBoundsFieldSelection);
+            }
+        }
+        
         todo!()
-        // we need to handle the following cases separately:
-        // - card is a monster. we place it at field_index on the monster row, combining it with any existing card present.
-        // - card is a faceup magic. we execute the magic effect (this is todo, each magic has a different effect).
-        // - card is a facedown magic. we place it at field_index on the spell row, combining it with any existing card.
-        // - card is a faceup ritual. we execute the ritual effect (todo)
-        // - card is a facedown ritual. we place it at field_index on the spell row, combining it with any existing card.
-        // - card is an equip. 
-        // - card is a trap
-
-
-        // check the duel state. if it is not Hand, return an error.
-        // matches!(duel.state, DuelStateEnum::HandState(_))
-        //     .then(|| ())
-        //     .ok_or(DuelCommandError::InvalidState)?;
-        // // check the hand index is not out of bounds. it must be less than the hand length.
-        // if self.hand_index >= duel.get_player().hand.len() {
-        //     return Err(DuelCommandError::InvalidHandIndex);
-        // }
-        // // check that the card at hand_index is a monster by matching on card.variant
-        // if !matches!(
-        //     duel.get_player().hand[self.hand_index].variant,
-        //     CardVariant::Monster { .. }
-        // ) {
-        //     return Err(DuelCommandError::HandCardTypeMismatch);
-        // }
-        // // check the field index is not out of bounds. it must be less than the monster row length.
-        // if self.field_index >= duel.get_player().monster_row.len() {
-        //     return Err(DuelCommandError::InvalidFieldIndex);
-        // }
-
-        // // pop the card at hand_index from the hand.
-        // let card = duel.get_player_mut().hand.remove(self.hand_index);
-        // // check the monster row at field_index. if there is already a monster there, call combine on the two monsters.
-        // // put the result in the monster row.
-        // let existing_position = duel.get_player_mut().monster_row[self.field_index].take();
-        // let card = if let Some(monster) = existing_position {
-        //     self.face_direction = FaceDirection::Up;
-        //     combine(&card, &monster.card)
-        // } else {
-        //     card
-        // };
-
-        // // duel.get_player_mut().monster_row[self.field_index] = Some(MonsterRowPosition {
-        // //     card,
-        // //     face_direction: self.face_direction,
-        // //     card_mode: CardMode::Attack,
-        // //     guardian_star_choice: GuardianStarChoice::A,
-        // //     disabled: false,
-        // // });
-
-        // duel.state = SetGuardianStarState {
-        //     monster_row_position: MonsterRowPosition {
-        //         card,
-        //         face_direction: self.face_direction,
-        //         card_mode: CardMode::Attack,
-        //         guardian_star_choice: GuardianStarChoice::A,
-        //         disabled: false,
-        //     },
-        //     monster_row_index: self.field_index,
-        // }
-        // .into();
-
-        // Ok(())
     }
 }
 
@@ -113,7 +83,28 @@ pub struct HandPlayMultipleCmd {
     pub field_index: usize,
 }
 impl DuelCommand for HandPlayMultipleCmd {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // Check if the duel is in the correct state
+        if !matches!(duel.state, DuelStateEnum::HandState{ .. }) {
+            return Err(CommandError::InvalidDuelState);
+        }
+
+        // Check that there are a valid number of cards selected
+        if self.hand_indices.len() < 2 || self.hand_indices.len() > 5 {
+            return Err(CommandError::InvalidNumberOfCardsSelected);
+        }
+
+        // Check that there are no duplicate cards selected
+        let hand_indices_set: HashSet<_> = self.hand_indices.iter().collect();
+        if hand_indices_set.len() != self.hand_indices.len() {
+            return Err(CommandError::DuplicateHandSelection);
+        }
+
+        // Check if the field index is valid
+        if self.field_index >= duel.get_player().monster_row.len() {
+            return Err(CommandError::OutOfBoundsFieldSelection);
+        }
+
         todo!()
     }
 }
@@ -123,7 +114,12 @@ pub struct SetGuardianStarCmd {
     pub guardian_star_choice: GuardianStarChoice,
 }
 impl DuelCommand for SetGuardianStarCmd {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // Check if the duel is in the correct state (SetGuardianStarState)
+        if !matches!(duel.state, DuelStateEnum::SetGuardianStarState(_)) {
+            return Err(CommandError::InvalidDuelState);
+        }
+
         todo!()
     }
 }
@@ -134,7 +130,35 @@ pub struct FieldAttackCmd {
     pub enemy_monster_row_index: usize,
 }
 impl DuelCommand for FieldAttackCmd {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // Check if the duel is in the correct state (FieldState)
+        if !matches!(duel.state, DuelStateEnum::FieldState(_)) {
+            return Err(CommandError::InvalidDuelState);
+        }
+
+        // Check that monster_row_index contains a monster, and that it is not disabled
+        let monster = duel.get_player().monster_row.get(self.monster_row_index).ok_or(CommandError::OutOfBoundsFieldSelection)?;
+        if let Some(monster) = monster {
+            if monster.disabled {
+                return Err(CommandError::CannotSelectDisabledMonster);
+            }
+            if monster.card_mode == CardMode::Defense {
+                return Err(CommandError::CannotAttackWithMonsterInDefense);
+            }
+        } else {
+            return Err(CommandError::MonsterNotPresentAtSelectedPosition);
+        }
+
+        let enemy = duel.get_enemy();
+        if self.enemy_monster_row_index >= enemy.monster_row.len() {
+            return Err(CommandError::OutOfBoundsFieldSelection);
+        }
+        if enemy.monster_row[self.enemy_monster_row_index].is_none() {
+            if enemy.monster_row.iter().any(|monster| monster.is_some()) {
+                return Err(CommandError::CannotAttackEmptyPositionWhileMonstersPresent);
+            }
+        }
+
         todo!()
     }
 }
@@ -144,7 +168,22 @@ pub struct FieldChangeModeCmd {
     pub monster_index: usize,
 }
 impl DuelCommand for FieldChangeModeCmd {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // Check if the duel is in the correct state (FieldState)
+        if !matches!(duel.state, DuelStateEnum::FieldState(_)) {
+            return Err(CommandError::InvalidDuelState);
+        }
+
+        // Check that monster_index contains a monster, and that it is not disabled
+        let monster = duel.get_player().monster_row.get(self.monster_index).ok_or(CommandError::OutOfBoundsFieldSelection)?;
+        if let Some(monster) = monster {
+            if monster.disabled {
+                return Err(CommandError::CannotSelectDisabledMonster);
+            }
+        } else {
+            return Err(CommandError::MonsterNotPresentAtSelectedPosition);
+        }
+
         todo!()
     }
 }
@@ -154,15 +193,31 @@ pub struct FieldPlaySpellCmd {
     pub spell_row_index: usize,
 }
 impl DuelCommand for FieldPlaySpellCmd {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // Check if the duel is in the correct state (FieldState)
+        if !matches!(duel.state, DuelStateEnum::FieldState(_)) {
+            return Err(CommandError::InvalidDuelState);
+        }
+
+        // Check that spell_row_index contains a spell
+        let spell = duel.get_player().spell_row.get(self.spell_row_index).ok_or(CommandError::OutOfBoundsFieldSelection)?;
+        if spell.is_none() {
+            return Err(CommandError::SpellNotPresentAtSelectedPosition);
+        }
+
         todo!()
     }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct FieldCancelSelectEquipCmd;
-impl DuelCommand for FieldCancelSelectEquipCmd {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+pub struct FieldCancelPlayEquipCmd;
+impl DuelCommand for FieldCancelPlayEquipCmd {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // Check for FieldEquipSelectedState
+        if !matches!(duel.state, DuelStateEnum::FieldEquipSelectedState(_)) {
+            return Err(CommandError::InvalidDuelState);
+        }
+
         // return the duel unmodified, expect the state is set to FieldState.
         duel.state = FieldState.into();
         Ok(())
@@ -170,11 +225,22 @@ impl DuelCommand for FieldCancelSelectEquipCmd {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct FieldApplyEquipCmd {
+pub struct FieldPlayEquipPickMonsterCmd {
     pub monster_row_index: usize,
 }
-impl DuelCommand for FieldApplyEquipCmd {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+impl DuelCommand for FieldPlayEquipPickMonsterCmd {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // Check for FieldEquipSelectedState
+        if !matches!(duel.state, DuelStateEnum::FieldEquipSelectedState(_)) {
+            return Err(CommandError::InvalidDuelState);
+        }
+
+        // Check that monster_row_index contains a monster
+        let monster = duel.get_player().monster_row.get(self.monster_row_index).ok_or(CommandError::OutOfBoundsFieldSelection)?;
+        if monster.is_none() {
+            return Err(CommandError::CannotEquipEmptyPosition);
+        }
+
         todo!()
     }
 }
@@ -182,7 +248,12 @@ impl DuelCommand for FieldApplyEquipCmd {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct EndTurnCmd;
 impl DuelCommand for EndTurnCmd {
-    fn execute(&mut self, duel: &mut Duel) -> Result<(), DuelCommandError> {
+    fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // Check for FieldState
+        if !matches!(duel.state, DuelStateEnum::FieldState(_)) {
+            return Err(CommandError::InvalidDuelState);
+        }
+    
         duel.turn += 1;
 
         let player = duel.get_player_mut();
@@ -207,8 +278,8 @@ pub enum DuelCommandEnum {
     FieldAttackCmd,
     FieldChangeModeCmd,
     FieldPlaySpellCmd,
-    FieldApplyEquipCmd,
-    FieldCancelSelectEquipCmd,
+    FieldPlayEquipPickMonsterCmd,
+    FieldCancelPlayEquipCmd,
     EndTurnCmd,
 }
 
