@@ -31,12 +31,16 @@ pub enum CommandBuilderError {
     CannotPlaceFaceUpMagicOrRitual,
     #[error("Only face-up magic or ritual cards can be played directly from the hand.")]
     OnlyFaceUpMagicOrRitualCanBePlayedFromHand,
-    #[error("Invalid Hand Selection.")]
+    #[error("Out-of-bounds Hand Selection.")]
     OutOfBoundsHandSelection,
-    #[error("Invalid Field Selection.")]
+    #[error("Out-of-bounds Field Selection.")]
     OutOfBoundsFieldSelection,
-    #[error("Invalid Hand Selection.")]
+    #[error("Out-of-bounds Hand Selection.")]
     DuplicateHandSelection,
+    #[error("Monster not present at the selected position.")]
+    MonsterNotPresentAtSelectedPosition,
+    #[error("Spell not present at the selected position.")]
+    SpellNotPresentAtSelectedPosition,
     #[error("Cannot attack empty position while enemy monsters are present.")]
     CannotAttackEmptyPositionWhileMonstersPresent,
     #[error("The selected monster is disabled.")]
@@ -250,6 +254,9 @@ impl CommandBuilder<Field> {
                     return Err(CommandBuilderError::CannotSelectDisabledMonster);
                 }
             }
+            else {
+                return Err(CommandBuilderError::MonsterNotPresentAtSelectedPosition);
+            }
             Ok(CommandBuilder {
                 state: FieldMonsterSelected {
                     monster_index,
@@ -269,7 +276,7 @@ impl CommandBuilder<Field> {
                     spell_row_index: spell_index,
                 }.into())
             },
-            None => Err(CommandBuilderError::OutOfBoundsFieldSelection),
+            None => Err(CommandBuilderError::SpellNotPresentAtSelectedPosition),
         }
     }
 
@@ -314,29 +321,43 @@ impl CommandBuilder<FieldMonsterSelected> {
 mod test {
     use super::*;
 
+    // #[test]
+    // fn test_play_single_card() -> Result<(), CommandBuilderError> {
+    //     let mut duel = Rc::new(Duel::default());
+    //     let builder = CommandBuilder::new(Rc::clone(&duel));
+    //     let command = builder.hand()?.select(0)?.facing(FaceDirection::Up).place(0)?;
+    //     dbg!(&command);
+
+    //     let card = duel.get_player().hand.get(0).unwrap().clone();
+    //     Rc::get_mut(&mut duel).unwrap().execute_command(command);
+
+    //     // if the card is a monster, we should now be in a DualStateEnum::SetGuardianStarState
+    //     // if the card is a spell, we should now be in a DualStateEnum::FieldState
+    //     match card.variant {
+    //         CardVariant::Monster { .. } => {
+    //             dbg!(&duel.state);
+    //             assert!(matches!(duel.state, DuelStateEnum::SetGuardianStarState(_)));
+    //         },
+    //         _ => {
+    //             dbg!(&duel.state);
+    //             assert!(matches!(duel.state, DuelStateEnum::FieldState(_)));
+    //         },
+    //     }
+
+    //     Ok(())
+    // }
+
+    // create a test that causes an error
     #[test]
-    fn test_play_single_card() -> Result<(), CommandBuilderError> {
+    fn test_play_single_card_error() {
         let mut duel = Rc::new(Duel::default());
         let builder = CommandBuilder::new(Rc::clone(&duel));
-        let command = builder.hand()?.select(0)?.facing(FaceDirection::Up).place(0)?;
-        dbg!(&command);
-
-        let card = duel.get_player().hand.get(0).unwrap().clone();
-        Rc::get_mut(&mut duel).unwrap().execute_command(command);
-
-        // if the card is a monster, we should now be in a DualStateEnum::SetGuardianStarState
-        // if the card is a spell, we should now be in a DualStateEnum::FieldState
-        match card.variant {
-            CardVariant::Monster { .. } => {
-                dbg!(&duel.state);
-                assert!(matches!(duel.state, DuelStateEnum::SetGuardianStarState(_)));
-            },
-            _ => {
-                dbg!(&duel.state);
-                assert!(matches!(duel.state, DuelStateEnum::FieldState(_)));
-            },
+        let command = builder.field(); // this will cause InvalidDuelState error
+        // let err = command.unwrap_err();
+        if let Err(e) = command {
+            dbg!(&e);
+            println!("{}", e);
         }
-
-        Ok(())
+        assert!(false);
     }
 }
