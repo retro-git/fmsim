@@ -139,7 +139,7 @@ impl<'a> CommandBuilder<'a, HandSingleSelectedWithFaceDirection> {
         // if its not a faceup magic or ritual, return a OnlyFaceUpMagicOrRitualCanBePlayedFromHand
         let card = &self.duel.get_player().hand[self.state.hand_index];
         if !matches!(card.variant, CardVariant::Magic { .. } | CardVariant::Ritual { .. }) || self.state.face_direction == FaceDirection::Down {
-            return Err(CommandError::OnlyFaceUpMagicOrRitualCanBePlayedFromHand);
+            return Err(CommandError::FieldIndexNotSet);
         }
 
         Ok(HandPlaySingleCmd {
@@ -153,7 +153,7 @@ impl<'a> CommandBuilder<'a, HandSingleSelectedWithFaceDirection> {
         // Return an error if the card is a magic or ritual and the face_direction is FaceDirection::Up.
         let card = &self.duel.get_player().hand[self.state.hand_index];
         if matches!(card.variant, CardVariant::Magic { .. } | CardVariant::Ritual { .. }) && self.state.face_direction == FaceDirection::Up {
-            return Err(CommandError::CannotPlaceFaceUpMagicOrRitual);
+            return Err(CommandError::CannotPlaceFaceUpMagicOrRitualAtFieldIndex);
         }
 
         // if the card is a monster or faceup equip, we need to check that the field_index is within the monster row.
