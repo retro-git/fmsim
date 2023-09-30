@@ -20,9 +20,9 @@ pub enum CommandError {
     #[error("When selecting multiple cards, must pick 2-5 cards.")]
     InvalidNumberOfCardsSelected,
     #[error("Face-up magic or ritual cards cannot be placed on the field.")]
-    CannotPlaceFaceUpMagicOrRitual,
-    #[error("Only face-up magic or ritual cards can be played directly from the hand.")]
-    OnlyFaceUpMagicOrRitualCanBePlayedFromHand,
+    CannotPlaceFaceUpMagicOrRitualAtFieldIndex,
+    #[error("Field index not set.")]
+    FieldIndexNotSet,
     #[error("Out-of-bounds Hand Selection.")]
     OutOfBoundsHandSelection,
     #[error("Out-of-bounds Field Selection.")]
@@ -65,9 +65,12 @@ impl DuelCommand for HandPlaySingleCmd {
         let card = duel.get_player().hand.get(self.hand_index).ok_or(CommandError::OutOfBoundsHandSelection)?;
 
         if matches!(card.variant, CardVariant::Magic { .. } | CardVariant::Ritual { .. }) && self.face_direction == FaceDirection::Up && self.field_index.is_some() {
-            return Err(CommandError::CannotPlaceFaceUpMagicOrRitual);
+            return Err(CommandError::CannotPlaceFaceUpMagicOrRitualAtFieldIndex);
         }
-        if let Some(field_index) = self.field_index {
+        else if self.field_index.is_none() {
+            return Err(CommandError::FieldIndexNotSet);
+        }
+        else if let Some(field_index) = self.field_index {
             if field_index >= duel.get_player().monster_row.len() {
                 return Err(CommandError::OutOfBoundsFieldSelection);
             }
