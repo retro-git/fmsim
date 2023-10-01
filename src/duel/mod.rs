@@ -2,7 +2,6 @@ use derive_builder::Builder;
 use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 
-use self::command::DuelCommand;
 use self::player::Player;
 use self::state::{DuelStateEnum, HandState};
 
@@ -68,10 +67,6 @@ impl Duel {
         } else {
             &mut self.player1
         }
-    }
-
-    fn execute_command(&mut self, mut command: command::DuelCommandEnum) {
-        command.execute(self);
     }
 }
 

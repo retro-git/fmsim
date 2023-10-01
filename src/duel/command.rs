@@ -4,10 +4,10 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use std::collections::HashSet;
 
-use crate::{combine, CardVariant};
+use crate::CardVariant;
 
 use super::{
-    field::{CardMode, FaceDirection, GuardianStarChoice, MonsterRowPosition},
+    field::{CardMode, FaceDirection, GuardianStarChoice},
     state::*,
     Duel,
 };
@@ -289,7 +289,7 @@ pub enum DuelCommandEnum {
 // test creating a HandPlaySingleMonsterCmd with builder
 #[cfg(test)]
 mod tests {
-    use super::*;
+    // use super::*;
 
     // #[test]
     // fn test_create_hand_play_single_monster_cmd_with_builder() {
