@@ -19,7 +19,7 @@ pub struct Card {
     pub name: String,
     pub description: String,
     pub stars: u32,
-    pub card_code: u32,
+    pub password: Option<u32>,
     pub attribute: u32,
     pub abc_sort: u32,
     pub max_sort: u32,
