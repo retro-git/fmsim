@@ -5,3 +5,4 @@ pub mod data;
 pub mod duel;
 
 pub use data::*;
+pub use duel::Duel;

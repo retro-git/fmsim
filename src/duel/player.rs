@@ -8,7 +8,7 @@ use super::{
     field::{MonsterRowPosition, SpellRowPosition},
 };
 
-#[derive(Serialize, Deserialize, Debug, Clone, Builder)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Builder)]
 #[builder(setter(into), default)]
 pub struct Player {
     pub life_points: i32,

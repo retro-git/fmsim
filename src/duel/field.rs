@@ -21,7 +21,7 @@ pub enum GuardianStarChoice {
     B,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct MonsterRowPosition {
     pub card: Card,
     pub face_direction: FaceDirection,
@@ -30,7 +30,7 @@ pub struct MonsterRowPosition {
     pub disabled: bool,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct SpellRowPosition {
     pub card: Card,
     pub face_direction: FaceDirection,

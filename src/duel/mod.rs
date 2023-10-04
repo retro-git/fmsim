@@ -12,14 +12,14 @@ pub mod field;
 pub mod player;
 pub mod state;
 
-#[derive(Serialize, Deserialize, Debug, Clone, Builder)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Builder)]
 #[builder(setter(into), default)]
 pub struct Duel {
-    player1: Player,
-    player2: Player,
-    field_type: FieldType,
-    turn: u32,
-    state: DuelStateEnum,
+    pub player1: Player,
+    pub player2: Player,
+    pub field_type: FieldType,
+    pub turn: u32,
+    pub state: DuelStateEnum,
 }
 
 impl Default for Duel {
@@ -37,7 +37,11 @@ impl Default for Duel {
 }
 
 impl Duel {
-    fn get_player(&self) -> &Player {
+    pub fn command_builder (&self) -> command_builder::CommandBuilder<command_builder::Start> {
+        command_builder::CommandBuilder::new(self)
+    }
+
+    pub fn get_player(&self) -> &Player {
         if self.turn % 2 == 0 {
             &self.player1
         } else {
@@ -70,7 +74,7 @@ impl Duel {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Copy, Clone, FromPrimitive, ToPrimitive)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq, FromPrimitive, ToPrimitive)]
 pub enum FieldType {
     Neutral = 0,
     Forest = 1,
