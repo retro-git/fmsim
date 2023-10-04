@@ -237,9 +237,6 @@ pub struct Field;
 pub struct FieldMonsterSelected {
     monster_index: usize,
 }
-pub struct FieldSpellSelected {
-    spell_index: usize,
-}
 impl<'a> CommandBuilder<'a, Field> {
     pub fn select_monster(
         self,
