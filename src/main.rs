@@ -5,6 +5,7 @@ use dioxus::events::{KeyCode, KeyboardEvent};
 use dioxus::prelude::*;
 use dioxus_desktop::{Config, WindowBuilder};
 use dioxus_tui::TuiContext;
+use fmsim::duel::field::{MonsterRowPosition, SpellRowPosition};
 use fmsim::{Card, Duel};
 
 pub fn default_window() -> WindowBuilder {
@@ -63,22 +64,99 @@ fn HandComponent(cx: Scope, hand: Vec<Card>) -> Element {
     }})
 }
 
-fn DuelComponent(cx: Scope) -> Element {
-    let duel = use_shared_state::<Duel>(cx).unwrap().read();
+#[inline_props]
+fn MonsterRowComponent(cx: Scope, monster_row: Vec<Option<MonsterRowPosition>>) -> Element {
     cx.render(rsx! { div {
         display: "flex",
         justify_content: "center",
         align_items: "center",
-        div {
-            HandComponent {
-                hand: duel.get_player().hand.clone()
-            }
-        }
+        monster_row.iter().map(|monster| {
+            let content = match monster {
+                Some(monster) => rsx! { div {
+                    CardComponent {
+                        card: monster.card.clone()
+                    }
+                }},
+                None => {
+                    rsx! { div {
+                        "empty"
+                    }}
+                }
+            };
+
+            rsx! { div {
+                justify_content: "center",
+                align_items: "center",
+                border: "2px solid grey",
+                margin: "2px",
+                content
+            }}
+        })
     }})
 }
 
+#[inline_props]
+fn SpellRowComponent(cx: Scope, spell_row: Vec<Option<SpellRowPosition>>) -> Element {
+    cx.render(rsx! { div {
+        display: "flex",
+        justify_content: "center",
+        align_items: "center",
+        spell_row.iter().map(|spell| {
+            let content = match spell {
+                Some(spell) => rsx! { div {
+                    CardComponent {
+                        card: spell.card.clone()
+                    }
+                }},
+                None => {
+                    rsx! { div {
+                        "empty"
+                    }}
+                }
+            };
+
+            rsx! { div {
+                justify_content: "center",
+                align_items: "center",
+                border: "2px solid grey",
+                margin: "2px",
+                content
+            }}
+        })
+    }})
+}
+
+fn DuelComponent(cx: Scope) -> Element {
+    let duel = use_shared_state::<Duel>(cx).unwrap();
+    cx.render(rsx! { 
+        div {
+            SpellRowComponent {
+                spell_row: duel.read().get_enemy().spell_row.clone()
+            }
+            MonsterRowComponent {
+                monster_row: duel.read().get_enemy().monster_row.clone()
+            }
+            MonsterRowComponent {
+                monster_row: duel.read().get_player().monster_row.clone()
+            }
+            SpellRowComponent {
+                spell_row: duel.read().get_player().spell_row.clone()
+            }
+            HandComponent {
+                hand: duel.read().get_player().hand.clone()
+            }
+            button {
+                onclick: move |_| {
+                    duel.write().turn += 1;
+                }
+            }
+        }
+    })
+}
+
 fn App(cx: Scope) -> Element {
-    use_shared_state_provider(cx, || fmsim::Duel::default());
+    let duel = fmsim::Duel::default();
+    use_shared_state_provider(cx, || duel);
 
     cx.render(rsx! { DuelComponent {}})
 }

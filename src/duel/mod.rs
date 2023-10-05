@@ -32,6 +32,7 @@ impl Default for Duel {
             state: HandState.into(),
         };
         duel.get_player_mut().draw();
+        duel.get_enemy_mut().draw();
         duel
     }
 }
@@ -49,7 +50,7 @@ impl Duel {
         }
     }
 
-    fn get_enemy(&self) -> &Player {
+    pub fn get_enemy(&self) -> &Player {
         if self.turn % 2 == 0 {
             &self.player2
         } else {
