@@ -216,7 +216,7 @@ impl<'a> CommandBuilder<'a, HandMultipleSelected> {
         for index in &self.state.hand_indices {
             cards.push(self.duel.get_player().hand[*index].clone());
         }
-        let card = crate::combine_cards(cards);
+        let card = crate::combine_cards(cards).last().unwrap().clone();
 
         // if the card is a monster, we need to check that the field_index is within the length of the monster row.
         if let CardVariant::Monster { .. } = card.variant {

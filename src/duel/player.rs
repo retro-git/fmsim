@@ -42,22 +42,22 @@ impl Player {
         }
     }
 
-    pub fn play_hand(&mut self, hand_indices: &Vec<usize>, field_index: usize) -> Card {
-        // take all the cards in the hand at the given indices.
-        // order them by the same order as the indices.
-        // then call combine_cards to combine them into a single card.
+    // pub fn play_hand(&mut self, hand_indices: &Vec<usize>, field_index: usize) -> Card {
+    //     // take all the cards in the hand at the given indices.
+    //     // order them by the same order as the indices.
+    //     // then call combine_cards to combine them into a single card.
 
-        // check monster_row[field_pos]. if there is already a monster there, take it and append it to the start of cards.
-        let existing_position = self.monster_row[field_index].take();
+    //     // check monster_row[field_pos]. if there is already a monster there, take it and append it to the start of cards.
+    //     let existing_position = self.monster_row[field_index].take();
 
-        let mut cards = Vec::new();
-        if let Some(monster) = existing_position {
-            cards.push(monster.card);
-        }
-        for index in hand_indices {
-            cards.push(self.hand.remove(*index));
-        }
+    //     let mut cards = Vec::new();
+    //     if let Some(monster) = existing_position {
+    //         cards.push(monster.card);
+    //     }
+    //     for index in hand_indices {
+    //         cards.push(self.hand.remove(*index));
+    //     }
 
-        combine_cards(cards)
-    }
+    //     combine_cards(cards).last().unwrap().clone()
+    // }
 }

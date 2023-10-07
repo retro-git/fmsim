@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use thiserror::Error;
 
-use crate::CardVariant;
+use crate::{CardVariant, combine, duel::field::{MonsterRowPosition, SpellRowPosition}, combine_cards};
 
 use super::{
     field::{CardMode, FaceDirection, GuardianStarChoice},
@@ -60,7 +60,7 @@ impl DuelCommand for HandPlaySingleCmd {
             return Err(CommandError::InvalidDuelState);
         }
 
-        // Check if the hand index is valid
+        // Check if the hand index is valid and remove the card from the hand
         let card = duel
             .get_player()
             .hand
@@ -77,12 +77,93 @@ impl DuelCommand for HandPlaySingleCmd {
         } else if self.field_index.is_none() {
             return Err(CommandError::FieldIndexNotSet);
         } else if let Some(field_index) = self.field_index {
-            if field_index >= duel.get_player().monster_row.len() {
-                return Err(CommandError::OutOfBoundsFieldSelection);
+            match card.variant {
+                CardVariant::Monster { .. } | CardVariant::Equip { .. } if self.face_direction == FaceDirection::Up => {
+                    if field_index >= duel.get_player().monster_row.len() {
+                        return Err(CommandError::OutOfBoundsFieldSelection);
+                    }
+                    // Check if monster is present at field index for Equip card
+                    if matches!(card.variant, CardVariant::Equip { .. }) && duel.get_player().monster_row[field_index].is_none() {
+                        return Err(CommandError::CannotEquipEmptyPosition);
+                    }
+                },
+                _ => {
+                    if field_index >= duel.get_player().spell_row.len() {
+                        return Err(CommandError::OutOfBoundsFieldSelection);
+                    }
+                },
             }
         }
 
-        todo!()
+        // We need to check if a card is already present (there is a Some) at the field index
+        // If so, we need to combine with the existing card. The result, wrapped in a MonsterRowPosition/SpellRowPosition, is placed at the field index.
+        if let Some(field_index) = self.field_index {
+            match card.variant {
+                CardVariant::Monster { .. } | CardVariant::Equip { .. } if self.face_direction == FaceDirection::Up => {
+                    let existing_position = duel.get_player().monster_row[field_index].clone();
+                    let mut applied_equip = false;
+                    let mut card_mode = CardMode::Attack;
+                    let card_to_play = match existing_position {
+                        Some(existing_card) => {
+                            self.face_direction = FaceDirection::Up;
+                            let ret = combine(card, &existing_card.card);
+                            // destructure ret and existing_card variants as monster to extract attack
+                            if let (CardVariant::Monster { attack: existing_attack, .. }, CardVariant::Monster { attack: new_attack, .. }) = (&existing_card.card.variant, &ret.variant) {
+                                // if the new card is the same but with increased attack, we know we successfully applied an equip.
+                                // in this case, we need to preserve the mode of the existing card and go to FieldState instead of SetGuardianStarState.
+                                if ret.id == existing_card.card.id && new_attack > existing_attack {
+                                    applied_equip = true;
+                                    card_mode = existing_card.card_mode;
+                                }
+                            }
+                            ret
+                        },
+                        None => card.clone(),
+                    };
+                    let monster_row_position = MonsterRowPosition {
+                        card: card_to_play.clone(),
+                        face_direction: self.face_direction,
+                        disabled: false,
+                        card_mode: card_mode,
+                        guardian_star_choice: GuardianStarChoice::A,
+                    };
+
+                    // Remove the card from the hand.
+                    duel.get_player_mut().hand.remove(self.hand_index);
+                    
+                    if !applied_equip { 
+                        duel.get_player_mut().monster_row[field_index] = None;
+                        duel.state = (SetGuardianStarState {
+                        monster_row_position,
+                        monster_row_index: field_index,
+                    }).into() }
+                    else {
+                        duel.get_player_mut().monster_row[field_index] = Some(monster_row_position);
+                        duel.state = FieldState.into();
+                    };
+                },
+                _ => {
+                    let existing_position = duel.get_player().spell_row[field_index].clone();
+                    if existing_position.is_some() {
+                        // let card_to_play = combine(card, &existing_position.as_ref().unwrap().card);
+                        duel.get_player_mut().spell_row[field_index] = None;
+                    }
+                    else {
+                        duel.get_player_mut().spell_row[field_index] = Some(SpellRowPosition {
+                            card: card.clone(),
+                            face_direction: self.face_direction,
+                        });
+                    }
+                },
+            }
+        }
+        else {
+            // FaceUp Magic/Ritual
+            // For now, just do nothing.
+            // TODO: Execute spell effect
+        }
+
+        Ok(())
     }
 }
 
@@ -114,7 +195,96 @@ impl DuelCommand for HandPlayMultipleCmd {
             return Err(CommandError::OutOfBoundsFieldSelection);
         }
 
-        todo!()
+        // Collect all the cards at the specified indices into a vector in the order they were selected, removing them from the hand.
+        let mut cards: Vec<_> = self
+            .hand_indices
+            .iter()
+            .map(|&index| duel.get_player_mut().hand.remove(index))
+            .collect();
+
+        // check if the field_index is occupied. if so, take the card and append it to the beginning of the cards vector.
+        if let Some(existing_card) = &duel.get_player_mut().monster_row[self.field_index] {
+            cards.insert(0, existing_card.card.clone());
+        }
+
+        // combine all the cards into a single card
+        let combined_cards = combine_cards(cards.clone());
+        let combined_card = combined_cards.last().unwrap();
+
+        // match on whether the card is a monster or otherwise
+        match combined_card.variant {
+            // if the result is a monster, and field_index has an existing card:
+            // we need to check if ALL combined_cards were also monsters of the same ID as the existing card and with increased attack.
+            // this signifies that every card was a successfully applied equip to the original card.
+            // in this case, we go to FieldState, preserving the mode of the existing card.
+            // otherwise, we go to SetGuardianStarState.
+            // we can check that combined_cards.len() is one greater than self.hand_indices.len() to ensure that an existing card was combined.
+            // on the other hand, if the result is not a monster, we do nothing for now and go to FieldState.
+            
+            CardVariant::Monster { .. } => {
+                let mut card_mode = CardMode::Attack;
+                let mut guardian_star_choice = GuardianStarChoice::A;
+                let all_successful_equips = if cards.len() == self.hand_indices.len() + 1 {
+                    // loop through the combined cards and check if they are all the same as the existing card, but with increased attack.
+                    let mut ret = true;
+                    let mut previous_card = cards.first().unwrap();
+                    for card in combined_cards.iter() {
+                        if card.id != previous_card.id {
+                            ret = false;
+                            break;
+                        }
+                        if let (CardVariant::Monster { attack: previous_attack, .. }, CardVariant::Monster { attack: new_attack, .. }) = (&previous_card.variant, &card.variant) {
+                            if new_attack <= previous_attack {
+                                ret = false;
+                                break;
+                            }
+                        }
+                        previous_card = card;
+                    }
+                    ret
+                }
+                else {
+                    false
+                };
+
+                if all_successful_equips {
+                    if let Some(monster_row) = duel.get_player().monster_row.get(self.field_index).unwrap() {
+                        card_mode = monster_row.card_mode;
+                        guardian_star_choice = monster_row.guardian_star_choice;
+                    }
+                }
+
+                // create the MonsterRowPosition
+                // if all_successful_equips is true, we place the card and then go to FieldState, preserving the mode of the existing card.
+                // otherwise, we go to SetGuardianStarState.
+                let monster_row_position = MonsterRowPosition {
+                    card: combined_cards.last().unwrap().clone(),
+                    face_direction: FaceDirection::Up,
+                    disabled: false,
+                    card_mode: card_mode,
+                    guardian_star_choice: guardian_star_choice,
+                };
+
+                // Change the duel state based on whether all equips were successful
+                if all_successful_equips {
+                    duel.get_player_mut().monster_row[self.field_index] = Some(monster_row_position);
+                    duel.state = FieldState.into();
+                } else {
+                    duel.get_player_mut().monster_row[self.field_index] = None;
+                    duel.state = SetGuardianStarState {
+                        monster_row_position,
+                        monster_row_index: self.field_index,
+                    }.into();
+                }
+                
+            }
+            _ => {
+                // TODO: Execute spell effect
+                duel.state = FieldState.into();
+            }
+        }
+
+        Ok(())
     }
 }
 
@@ -129,7 +299,16 @@ impl DuelCommand for SetGuardianStarCmd {
             return Err(CommandError::InvalidDuelState);
         }
 
-        todo!()
+        // Edit the monster_row_position's guardian_star_choice to be the selected choice
+        // Then simply place it in the monster_row at the monster_row_index
+        if let DuelStateEnum::SetGuardianStarState(state) = duel.state.clone() {
+            let mut monster_row_position = state.monster_row_position.clone();
+            monster_row_position.guardian_star_choice = self.guardian_star_choice;
+            duel.get_player_mut().monster_row[state.monster_row_index] = Some(monster_row_position);
+            duel.state = FieldState.into();
+        }
+
+        Ok(())
     }
 }
 
@@ -140,6 +319,8 @@ pub struct FieldAttackCmd {
 }
 impl DuelCommand for FieldAttackCmd {
     fn execute(&mut self, duel: &mut Duel) -> Result<(), CommandError> {
+        // TODO: Triggering traps
+
         // Check if the duel is in the correct state (FieldState)
         if !matches!(duel.state, DuelStateEnum::FieldState(_)) {
             return Err(CommandError::InvalidDuelState);
@@ -162,17 +343,86 @@ impl DuelCommand for FieldAttackCmd {
             return Err(CommandError::MonsterNotPresentAtSelectedPosition);
         }
 
-        let enemy = duel.get_enemy();
-        if self.enemy_monster_row_index >= enemy.monster_row.len() {
+        if self.enemy_monster_row_index >= duel.get_enemy_mut().monster_row.len() {
             return Err(CommandError::OutOfBoundsFieldSelection);
         }
-        if enemy.monster_row[self.enemy_monster_row_index].is_none() {
-            if enemy.monster_row.iter().any(|monster| monster.is_some()) {
+        if duel.get_enemy_mut().monster_row[self.enemy_monster_row_index].is_none() {
+            if duel.get_enemy_mut().monster_row.iter().any(|monster| monster.is_some()) {
                 return Err(CommandError::CannotAttackEmptyPositionWhileMonstersPresent);
+            }
+            else {
+                // Extract the CardVariant from the attacking monster.
+                // Negate the life points of the enemy player by the attack of the attacking monster.
+                // Set the attacking monster's disabled to true.
+                let attacking_monster = duel.get_player_mut().monster_row[self.monster_row_index].clone().unwrap();
+                if let CardVariant::Monster { attack, .. } = attacking_monster.card.variant {
+                    duel.get_enemy_mut().life_points -= attack as i32;
+                }
+            }
+        }
+        else {
+            // - Monster attack:
+            // - Select position of a monster to attack with, and position of an enemy monster to attack.
+            // - If the enemy card is in attack mode:
+            //     - Compare attack stats. If stats are equal, both cards are destroyed. If one card is weaker, the weaker card is destroyed, and the difference in attack stat is taken as life point damage.
+            // - If the enemy card is in defense mode:
+            //     - Compare the attacker’s attack stat with the defender’s defense stat.
+            //     - If the attacker has a higher stat, then the defender is destroyed. No life point damage is taken.
+            //     - If the defender has a higher stat, then the attacker is destroyed. The difference between the two stats is taken as life point damage.
+            //     - If the stats are equal, neither card is destroyed. 
+            //     - Any surviving cards after any type of monster attack will be left face up.
+            let enemy_monster = duel.get_enemy_mut().monster_row[self.enemy_monster_row_index].clone().unwrap();
+            let attacking_monster = duel.get_player_mut().monster_row[self.monster_row_index].clone().unwrap();
+
+            match enemy_monster.card_mode {
+                CardMode::Attack => {
+                    if let CardVariant::Monster { attack: enemy_attack, .. } = enemy_monster.card.variant {
+                        if let CardVariant::Monster { attack: attacker_attack, .. } = attacking_monster.card.variant {
+                            if attacker_attack > enemy_attack {
+                                // Attacker wins, enemy monster is destroyed and difference in attack is taken as life point damage
+                                duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] = None;
+                                duel.get_enemy_mut().life_points -= (attacker_attack - enemy_attack) as i32;
+                            } else if attacker_attack < enemy_attack {
+                                // Enemy wins, attacking monster is destroyed and difference in attack is taken as life point damage
+                                duel.get_player_mut().monster_row[self.monster_row_index] = None;
+                                duel.get_player_mut().life_points -= (enemy_attack - attacker_attack) as i32;
+                            } else {
+                                // Both monsters are destroyed
+                                duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] = None;
+                                duel.get_player_mut().monster_row[self.monster_row_index] = None;
+                            }
+                        }
+                    }
+                },
+                CardMode::Defense => {
+                    if let CardVariant::Monster { defense: enemy_defense, .. } = enemy_monster.card.variant {
+                        if let CardVariant::Monster { attack: attacker_attack, .. } = attacking_monster.card.variant {
+                            if attacker_attack > enemy_defense {
+                                // Attacker wins, enemy monster is destroyed
+                                duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] = None;
+                            } else if attacker_attack < enemy_defense {
+                                // Defender wins, attacking monster is destroyed and difference in defense is taken as life point damage
+                                duel.get_player_mut().monster_row[self.monster_row_index] = None;
+                                duel.get_player_mut().life_points -= (enemy_defense - attacker_attack) as i32;
+                            } else {
+                                // Neither monster is destroyed
+                            }
+                        }
+                    }
+                },
             }
         }
 
-        todo!()
+        // Any surviving cards after any type of monster attack will be left face up. Also, the attacking monster is disabled.
+        if let Some(monster) = duel.get_player_mut().monster_row[self.monster_row_index].as_mut() {
+            monster.face_direction = FaceDirection::Up;
+            monster.disabled = true;
+        }
+        if let Some(monster) = duel.get_enemy_mut().monster_row[self.enemy_monster_row_index].as_mut() {
+            monster.face_direction = FaceDirection::Up;
+        }
+
+        Ok(())
     }
 }
 
@@ -201,7 +451,16 @@ impl DuelCommand for FieldChangeModeCmd {
             return Err(CommandError::MonsterNotPresentAtSelectedPosition);
         }
 
-        todo!()
+        // Change the card mode of the monster at monster_index
+        // If the card mode was attack, change it to defense. If it was defense, change it to attack.
+        if let Some(monster) = duel.get_player_mut().monster_row[self.monster_index].as_mut() {
+            monster.card_mode = match monster.card_mode {
+                CardMode::Attack => CardMode::Defense,
+                CardMode::Defense => CardMode::Attack,
+            };
+        }
+        
+        Ok(())
     }
 }
 
@@ -226,7 +485,24 @@ impl DuelCommand for FieldPlaySpellCmd {
             return Err(CommandError::SpellNotPresentAtSelectedPosition);
         }
 
-        todo!()
+        // Take the spell, leaving None in its place
+        let spell = duel.get_player_mut().spell_row[self.spell_row_index].take().unwrap();
+
+        // Match on the spell type. If it is a magic/ritual/trap, do nothing for now.
+        // If it is an equip, go to FieldEquipSelectedState.
+        match spell.card.variant {
+            CardVariant::Equip { .. } => {
+                duel.state = FieldEquipSelectedState {
+                    spell_row_index: self.spell_row_index,
+                }
+                .into();
+            }
+            _ => {
+                // TODO: Execute spell effect
+            }
+        }
+
+        Ok(())
     }
 }
 
@@ -239,7 +515,7 @@ impl DuelCommand for FieldCancelPlayEquipCmd {
             return Err(CommandError::InvalidDuelState);
         }
 
-        // return the duel unmodified, expect the state is set to FieldState.
+        // return the duel unmodified, except the state is set to FieldState.
         duel.state = FieldState.into();
         Ok(())
     }

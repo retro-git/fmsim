@@ -63,12 +63,15 @@ pub fn card_from_id(id: usize) -> Card {
     CARDS.get(id - 1).unwrap().clone()
 }
 
-pub fn combine_cards(cards: Vec<Card>) -> Card {
+pub fn combine_cards(cards: Vec<Card>) -> Vec<Card> {
+    let mut combined_cards = Vec::new();
     let mut combined_card = cards[0].clone();
+    combined_cards.push(combined_card.clone());
     for card in cards.iter().skip(1) {
         combined_card = combine(&combined_card, card);
+        combined_cards.push(combined_card.clone());
     }
-    combined_card
+    combined_cards
 }
 
 pub fn combine(card1: &Card, card2: &Card) -> Card {
