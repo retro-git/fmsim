@@ -128,7 +128,7 @@ fn SpellRowComponent(cx: Scope, spell_row: Vec<Option<SpellRowPosition>>) -> Ele
 
 fn DuelComponent(cx: Scope) -> Element {
     let duel = use_shared_state::<Duel>(cx).unwrap();
-    cx.render(rsx! { 
+    cx.render(rsx! {
         div {
             SpellRowComponent {
                 spell_row: duel.read().get_enemy().spell_row.clone()

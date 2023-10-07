@@ -38,7 +38,7 @@ impl Default for Duel {
 }
 
 impl Duel {
-    pub fn command_builder (&self) -> command_builder::CommandBuilder<command_builder::Start> {
+    pub fn command_builder(&self) -> command_builder::CommandBuilder<command_builder::Start> {
         command_builder::CommandBuilder::new(self)
     }
 
