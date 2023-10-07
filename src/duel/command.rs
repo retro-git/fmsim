@@ -422,6 +422,11 @@ impl DuelCommand for FieldAttackCmd {
             monster.face_direction = FaceDirection::Up;
         }
 
+        // Check both players to see if either has <= 0 life points. If so, set the duel state to EndState.
+        if duel.get_player().life_points <= 0 || duel.get_enemy().life_points <= 0 {
+            duel.state = EndState.into();
+        }
+
         Ok(())
     }
 }
@@ -542,7 +547,43 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
             return Err(CommandError::CannotEquipEmptyPosition);
         }
 
-        todo!()
+        // Apply the equip to the monster at monster_row_index
+        // If it succeeds, go to FieldState. 
+        // Otherwise, go to SetGuardianStarState.
+        // Get the current state
+        let state = match duel.state.clone() {
+            DuelStateEnum::FieldEquipSelectedState(state) => state,
+            _ => unreachable!(),
+        };
+
+        // Take the equip card from the spell row, leaving None in its place
+        let equip_card = duel.get_player_mut().spell_row[state.spell_row_index].take().unwrap();
+
+        // Apply the equip card to the monster by calling combine
+        let mut monster = duel.get_player_mut().monster_row[self.monster_row_index].clone().unwrap();
+        let combined_card = combine(&monster.card, &equip_card.card);
+
+        // If the combined card has a higher attack than the original monster, then the equip was successful.
+        // We need to destructure the card.variant as monster to extract the attack.
+        if let CardVariant::Monster { attack: combined_attack, .. } = combined_card.variant {
+            if let CardVariant::Monster { attack: original_attack, .. } = monster.card.variant {
+                monster.face_direction = FaceDirection::Up;
+                monster.card = combined_card;
+                if combined_attack > original_attack {
+                    duel.get_player_mut().monster_row[self.monster_row_index] = Some(monster);
+                    duel.state = FieldState.into();
+                } else {
+                    // Equip was not successful, go to SetGuardianStarState
+                    duel.get_player_mut().monster_row[self.monster_row_index] = None;
+                    duel.state = SetGuardianStarState {
+                        monster_row_position: monster.clone(),
+                        monster_row_index: self.monster_row_index,
+                    }.into();
+                }
+            }
+        }
+
+        Ok(())
     }
 }
 
