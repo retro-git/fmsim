@@ -810,7 +810,6 @@ impl DuelCommandEnum {
         // To do this, we need to get the hand length. Then, we need to generate all possible combinations of hand indices of length 2 to 5 inclusive.
         // For example, if the hand length is 5, we need to generate all combinations of length 2, 3, 4, and 5.
         // This would include [0, 1], [0, 2], [0, 3], [0, 4], [1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4], [0, 1, 2], [0, 1, 3], [0, 1, 4], [0, 2, 3], [0, 2, 4], [0, 3, 4], [1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4], [0, 1, 2, 3], [0, 1, 2, 4], [0, 1, 3, 4], [0, 2, 3, 4], [1, 2, 3, 4], [0, 1, 2, 3, 4], etc
-
         let hand_length = duel.get_player().hand.len();
         let hand_indices = 0..hand_length;
         let hand_indices_combinations = (2..=5)
@@ -1009,7 +1008,7 @@ mod tests {
         b.iter(|| {
             let commands = DuelCommandEnum::generate_all_valid(&duel);
             let mut max_commands_len = 1650;
-            // for each magic or ritual card in the hand, reduce the max_commands_len by 5#
+            // for each magic/ritual/equip card in the hand, reduce the max_commands_len by 5
             for card in duel.get_player().hand.iter() {
                 if let CardVariant::Magic { .. } = card.variant {
                     max_commands_len -= 5;
@@ -1017,7 +1016,14 @@ mod tests {
                 if let CardVariant::Ritual { .. } = card.variant {
                     max_commands_len -= 5;
                 }
+                if let CardVariant::Equip { .. } = card.variant {
+                    // since its the first turn, there cannot be any valid monsters to equip to yet.
+                    // therefore equip can only be placed facedown in the spell row, so reduce the max_commands_len by 5.
+                    max_commands_len -= 5;
+                }
             }
+            //dbg print the hand
+            dbg!(&duel.get_player().hand);
             assert_eq!(commands.len(), max_commands_len);
         });
     }
