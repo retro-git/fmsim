@@ -4,7 +4,6 @@ use itertools::{iproduct, Itertools};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use thiserror::Error;
-use test::Bencher;
 
 use crate::{
     combine, combine_cards,
@@ -976,6 +975,7 @@ impl DuelCommandEnum {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use test::Bencher;
 
     // create a default duel, generate all valid moves, and dbg print them
     #[test]

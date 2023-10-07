@@ -1,7 +1,7 @@
 use derive_builder::Builder;
 use serde::{Deserialize, Serialize};
 
-use crate::{combine_cards, Card};
+use crate::Card;
 
 use super::{
     deck::generate_random_deck,

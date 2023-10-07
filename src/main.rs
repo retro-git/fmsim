@@ -1,10 +1,8 @@
 // todo remove deprecated
 #![allow(non_snake_case)]
 
-use dioxus::events::{KeyCode, KeyboardEvent};
 use dioxus::prelude::*;
-use dioxus_desktop::{Config, WindowBuilder};
-use dioxus_tui::TuiContext;
+use dioxus_desktop::WindowBuilder;
 use fmsim::duel::field::{MonsterRowPosition, SpellRowPosition};
 use fmsim::{Card, Duel};
 
