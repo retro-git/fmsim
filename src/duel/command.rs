@@ -3,6 +3,7 @@ use enum_dispatch::enum_dispatch;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use thiserror::Error;
+use itertools::{Itertools, iproduct};
 
 use crate::{CardVariant, combine, duel::field::{MonsterRowPosition, SpellRowPosition}, combine_cards};
 
@@ -698,23 +699,216 @@ pub enum DuelCommandEnum {
     EndTurnCmd,
 }
 
-// test creating a HandPlaySingleMonsterCmd with builder
+impl DuelCommandEnum {
+    fn generate_all_valid(duel: &Duel) -> Vec<DuelCommandEnum> {
+        // To generate all HandPlaySingleCmds, we need to generate all possible combinations (cartesian product) of hand_index, face_direction, and field_index.
+        // hand_index ranges between 0 and the number of cards in the hand.
+        // FaceDirection is FaceDirection::Up or FaceDirection::Down.
+        // field_index ranges between 0 and 4 inclusive wrapped in Some, or None.
+        // then, we need to call check_valid on each of these combinations. some will be invalid, so we need to filter those out.
+        // for cartesian product, we can use itertools
+
+        let hand_indices = 0..duel.get_player().hand.len();
+        let face_directions = vec![FaceDirection::Up, FaceDirection::Down];
+        let field_indices = (0..5).map(Some).chain(std::iter::once(None));
+
+        let hand_play_single_cmds = iproduct!(hand_indices, face_directions, field_indices)
+            .filter_map(|(hand_index, face_direction, field_index)| {
+                let cmd = HandPlaySingleCmd {
+                    hand_index,
+                    face_direction,
+                    field_index,
+                };
+                if cmd.check_valid(duel).is_ok() {
+                    Some(DuelCommandEnum::HandPlaySingleCmd(cmd))
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+        // To generate all HandPlayMultipleCmd:
+        // We need to start by generating all possible combinations of hand indices.
+        // To do this, we need to get the hand length. Then, we need to generate all possible combinations of hand indices of length 2 to 5 inclusive.
+        // For example, if the hand length is 5, we need to generate all combinations of length 2, 3, 4, and 5.
+        // This would include [0, 1], [0, 2], [0, 3], [0, 4], [1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4], [0, 1, 2], [0, 1, 3], [0, 1, 4], [0, 2, 3], [0, 2, 4], [0, 3, 4], [1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4], [0, 1, 2, 3], [0, 1, 2, 4], [0, 1, 3, 4], [0, 2, 3, 4], [1, 2, 3, 4], [0, 1, 2, 3, 4], etc
+
+        let hand_length = duel.get_player().hand.len();
+        let hand_indices = 0..hand_length;
+        let hand_indices_combinations = (2..=5)
+            .flat_map(|n| hand_indices.clone().combinations(n))
+            .collect::<Vec<_>>();
+
+        // now, get the cartesian product of hand_indices_combinations and field_indices
+        // this type, None is not an option for field_index
+        let field_indices = 0..5;
+        let hand_play_multiple_cmds = iproduct!(hand_indices_combinations, field_indices)
+            .filter_map(|(hand_indices, field_index)| {
+                let cmd = HandPlayMultipleCmd {
+                    hand_indices,
+                    field_index,
+                };
+                if cmd.check_valid(duel).is_ok() {
+                    Some(DuelCommandEnum::HandPlayMultipleCmd(cmd))
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+        // To generate all SetGuardianStarCmd:
+        // We need to generate all possible combinations of guardian_star_choice.
+        // This is simply Up or Down.
+        let guardian_star_choices = vec![GuardianStarChoice::A, GuardianStarChoice::B];
+
+        let set_guardian_star_cmds = guardian_star_choices
+            .into_iter()
+            .filter_map(|guardian_star_choice| {
+                let cmd = SetGuardianStarCmd { guardian_star_choice };
+                if cmd.check_valid(duel).is_ok() {
+                    Some(DuelCommandEnum::SetGuardianStarCmd(cmd))
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+        // To generate all FieldAttackCmd:
+        // We need to generate all possible combinations of monster_row_index and enemy_monster_row_index.
+        // monster_row_index ranges between 0 and 4 inclusive.
+        // enemy_monster_row_index ranges between 0 and 4 inclusive.
+        // We need to filter out invalid combinations.
+        let monster_row_indices = 0..5;
+        let enemy_monster_row_indices = 0..5;
+
+        let field_attack_cmds = iproduct!(monster_row_indices, enemy_monster_row_indices)
+            .filter_map(|(monster_row_index, enemy_monster_row_index)| {
+                let cmd = FieldAttackCmd {
+                    monster_row_index,
+                    enemy_monster_row_index,
+                };
+                if cmd.check_valid(duel).is_ok() {
+                    Some(DuelCommandEnum::FieldAttackCmd(cmd))
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+        // To generate all FieldChangeModeCmd:
+        // We need to generate all possible combinations of monster_row_index.
+        // monster_row_index ranges between 0 and 4 inclusive.
+        // We need to filter out invalid combinations.
+        let monster_row_indices = 0..5;
+        let field_change_mode_cmds = monster_row_indices
+            .into_iter()
+            .filter_map(|monster_row_index| {
+                let cmd = FieldChangeModeCmd {
+                    monster_index: monster_row_index,
+                };
+                if cmd.check_valid(duel).is_ok() {
+                    Some(DuelCommandEnum::FieldChangeModeCmd(cmd))
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+        // To generate all FieldPlaySpellCmd:
+        // We need to generate all possible combinations of spell_row_index.
+        // spell_row_index ranges between 0 and 4 inclusive.
+        // We need to filter out invalid combinations.
+        let spell_row_indices = 0..5;
+        let field_play_spell_cmds = spell_row_indices
+            .into_iter()
+            .filter_map(|spell_row_index| {
+                let cmd = FieldPlaySpellCmd {
+                    spell_row_index,
+                };
+                if cmd.check_valid(duel).is_ok() {
+                    Some(DuelCommandEnum::FieldPlaySpellCmd(cmd))
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+        // To generate all FieldCancelPlayEquipCmd:
+        // There is only one possibility, but we also need to check if it is valid
+        let field_cancel_play_equip_cmds = vec![DuelCommandEnum::FieldCancelPlayEquipCmd(
+            FieldCancelPlayEquipCmd,
+        )];
+        let field_cancel_play_equip_cmds = field_cancel_play_equip_cmds
+            .into_iter()
+            .filter_map(|cmd| {
+                if cmd.check_valid(duel).is_ok() {
+                    Some(cmd)
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+        // To generate all FieldPlayEquipPickMonsterCmd:
+        // We need to generate all possible combinations of monster_row_index.
+        // monster_row_index ranges between 0 and 4 inclusive.
+        // We need to filter out invalid combinations.
+        let monster_row_indices = 0..5;
+        let field_play_equip_pick_monster_cmds = monster_row_indices
+            .into_iter()
+            .filter_map(|monster_row_index| {
+                let cmd = FieldPlayEquipPickMonsterCmd {
+                    monster_row_index,
+                };
+                if cmd.check_valid(duel).is_ok() {
+                    Some(DuelCommandEnum::FieldPlayEquipPickMonsterCmd(cmd))
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+        // To generate all EndTurnCmd:
+        // There is only one possibility, but we also need to check if it is valid
+        let end_turn_cmds = vec![DuelCommandEnum::EndTurnCmd(EndTurnCmd)];
+        let end_turn_cmds = end_turn_cmds
+            .into_iter()
+            .filter_map(|cmd| {
+                if cmd.check_valid(duel).is_ok() {
+                    Some(cmd)
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+
+        // Combine all the commands into a single vector
+        let mut commands = Vec::new();
+        commands.extend(hand_play_single_cmds);
+        commands.extend(hand_play_multiple_cmds);
+        commands.extend(set_guardian_star_cmds);
+        commands.extend(field_attack_cmds);
+        commands.extend(field_change_mode_cmds);
+        commands.extend(field_play_spell_cmds);
+        commands.extend(field_cancel_play_equip_cmds);
+        commands.extend(field_play_equip_pick_monster_cmds);
+        commands.extend(end_turn_cmds);
+
+        commands
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    // use super::*;
+    use super::*;
 
-    // #[test]
-    // fn test_create_hand_play_single_monster_cmd_with_builder() {
-    //     let mut builder = HandPlaySingleMonsterCmdBuilder::default();
-    //     let hand_index = 0;
-    //     let field_index = 1;
-    //     let face_direction = FaceDirection::Up;
+    // create a default duel, then dbg print all the valid commands
+    #[test]
+    fn test_generate_all_valid() {
+        let duel = Duel::default();
+        let commands = DuelCommandEnum::generate_all_valid(&duel);
+        dbg!(commands);
 
-    //     builder.hand_index(hand_index).field_index(field_index).face_direction(face_direction);
-    //     let command = builder.build().unwrap();
-
-    //     assert_eq!(command.hand_index, hand_index);
-    //     assert_eq!(command.field_index, field_index);
-    //     assert_eq!(command.face_direction, face_direction);
-    // }
+        assert!(false);
+    }
 }
