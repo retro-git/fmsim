@@ -4,6 +4,7 @@ use itertools::{iproduct, Itertools};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use thiserror::Error;
+use test::Bencher;
 
 use crate::{
     combine, combine_cards,
@@ -813,7 +814,7 @@ impl DuelCommandEnum {
         let hand_length = duel.get_player().hand.len();
         let hand_indices = 0..hand_length;
         let hand_indices_combinations = (2..=5)
-            .flat_map(|n| hand_indices.clone().combinations(n))
+            .flat_map(|n| hand_indices.clone().permutations(n))
             .collect::<Vec<_>>();
 
         // now, get the cartesian product of hand_indices_combinations and field_indices
@@ -977,13 +978,47 @@ impl DuelCommandEnum {
 mod tests {
     use super::*;
 
-    // create a default duel, then dbg print all the valid commands
+    // create a default duel, generate all valid moves, and dbg print them
     #[test]
     fn test_generate_all_valid() {
         let duel = Duel::default();
         let commands = DuelCommandEnum::generate_all_valid(&duel);
-        dbg!(commands);
+        // dbg!(&commands);
+        // dbg!(&commands.len());
+        // print first 100 commands
+        for command in commands.iter().take(100) {
+            dbg!(command);
+        }
+        dbg!(&commands.len());
 
-        assert!(false);
+        // if the commands len is 1650, assert that all the cards in the hand must be monsters
+        if commands.len() == 1650 {
+            for card in duel.get_player().hand.iter() {
+                if let CardVariant::Monster { .. } = card.variant {
+                } else {
+                    assert!(false);
+                }
+            }
+        }
+    }
+
+    // create a default duel, then benchmark the generation of all valid commands
+    #[bench]
+    fn bench_generate_all_valid(b: &mut Bencher) {
+        let duel = Duel::default();
+        b.iter(|| {
+            let commands = DuelCommandEnum::generate_all_valid(&duel);
+            let mut max_commands_len = 1650;
+            // for each magic or ritual card in the hand, reduce the max_commands_len by 5#
+            for card in duel.get_player().hand.iter() {
+                if let CardVariant::Magic { .. } = card.variant {
+                    max_commands_len -= 5;
+                }
+                if let CardVariant::Ritual { .. } = card.variant {
+                    max_commands_len -= 5;
+                }
+            }
+            assert_eq!(commands.len(), max_commands_len);
+        });
     }
 }
