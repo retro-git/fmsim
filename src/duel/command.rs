@@ -32,6 +32,8 @@ pub enum CommandError {
     MonsterNotPresentAtSelectedPosition,
     #[error("Spell not present at the selected position.")]
     SpellNotPresentAtSelectedPosition,
+    #[error("Cannot attack with a monster on the first turn.")]
+    CannotAttackOnFirstTurn,
     #[error("Cannot attack empty position while enemy monsters are present.")]
     CannotAttackEmptyPositionWhileMonstersPresent,
     #[error("The selected monster is disabled.")]
@@ -324,6 +326,11 @@ impl DuelCommand for FieldAttackCmd {
         // Check if the duel is in the correct state (FieldState)
         if !matches!(duel.state, DuelStateEnum::FieldState(_)) {
             return Err(CommandError::InvalidDuelState);
+        }
+
+        // Check if it's the first turn. If so, the player cannot attack.
+        if duel.turn == 0 {
+            return Err(CommandError::CannotAttackOnFirstTurn);
         }
 
         // Check that monster_row_index contains a monster, and that it is not disabled
