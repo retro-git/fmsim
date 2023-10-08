@@ -3,7 +3,10 @@
 
 use dioxus::prelude::*;
 use dioxus_desktop::WindowBuilder;
+use fmsim::duel::command::DuelCommand;
+use fmsim::duel::command_strategy::{CommandStrategy, RandomCommandStrategy};
 use fmsim::duel::field::{MonsterRowPosition, SpellRowPosition};
+use fmsim::duel::state::DuelStateEnum;
 use fmsim::{Card, Duel};
 
 pub fn default_window() -> WindowBuilder {
@@ -145,7 +148,12 @@ fn DuelComponent(cx: Scope) -> Element {
             }
             button {
                 onclick: move |_| {
-                    duel.write().turn += 1;
+                    if !matches!(duel.read().state, DuelStateEnum::EndState(_)) {
+                        let strategy = RandomCommandStrategy;
+                        let command = strategy.get_command(&duel.read());
+                        let mut duel_ref = duel.write();
+                        command.execute(&mut *duel_ref).unwrap();
+                    }
                 }
             }
         }

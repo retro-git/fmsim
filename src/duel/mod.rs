@@ -2,11 +2,13 @@ use derive_builder::Builder;
 use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 
+use self::command::DuelCommandEnum;
 use self::player::Player;
 use self::state::{DuelStateEnum, HandState};
 
 pub mod command;
 pub mod command_builder;
+pub mod command_strategy;
 pub mod deck;
 pub mod field;
 pub mod player;
@@ -32,7 +34,6 @@ impl Default for Duel {
             state: HandState.into(),
         };
         duel.get_player_mut().draw();
-        duel.get_enemy_mut().draw();
         duel
     }
 }
@@ -40,6 +41,10 @@ impl Default for Duel {
 impl Duel {
     pub fn command_builder(&self) -> command_builder::CommandBuilder<command_builder::Start> {
         command_builder::CommandBuilder::new(self)
+    }
+
+    pub fn generate_all_valid_commands(&self) -> Vec<DuelCommandEnum> {
+        DuelCommandEnum::generate_all_valid(self)
     }
 
     pub fn get_player(&self) -> &Player {
