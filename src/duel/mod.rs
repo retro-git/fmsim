@@ -3,7 +3,6 @@ use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 
 use self::command::DuelCommandEnum;
-use self::command_builder::Hand;
 use self::player::Player;
 use self::state::{DuelStateEnum, HandState};
 
