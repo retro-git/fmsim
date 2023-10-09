@@ -431,7 +431,6 @@ impl DuelCommand for FieldAttackCmd {
         self.check_valid(duel)?;
 
         // TODO: Triggering traps
-
         if duel.get_enemy_mut().monster_row[self.enemy_monster_row_index].is_none() {
             if duel
                 .get_enemy_mut()
@@ -469,6 +468,7 @@ impl DuelCommand for FieldAttackCmd {
                 .clone()
                 .unwrap();
 
+            // TODO: Alter attack/defence based on the field
             match enemy_monster.card_mode {
                 CardMode::Attack => {
                     if let CardVariant::Monster {
