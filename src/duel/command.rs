@@ -459,7 +459,6 @@ impl DuelCommand for FieldAttackCmd {
                 .clone()
                 .unwrap();
 
-            // TODO: Alter attack/defence based on the field and guardian star
             let (mut attacker_attack, mut _attacker_defense) = attacking_monster
                 .card
                 .get_stats_with_terrain(duel.terrain_type)
