@@ -8,7 +8,7 @@ use thiserror::Error;
 use crate::{
     combine, combine_cards,
     duel::field::{MonsterRowPosition, SpellRowPosition},
-    guardian_star_relation, AdvantageRelation, CardVariant, Card,
+    guardian_star_relation, AdvantageRelation, CardVariant, Card, card_from_id,
 };
 
 use super::{
@@ -21,11 +21,48 @@ fn execute_spell(card: Card, duel: &mut Duel) {
     match card.variant {
         CardVariant::Magic => {
         },
-        CardVariant::Ritual { .. } => {
+        CardVariant::Ritual { card1_id, card2_id, card3_id, result_card_id } => {
+            // Loop through the player's monster row and check if the three cards are present.
+            // If so, remove all of them from the field. Then, enter SetGuardianStarState with the ritual card.
+            let monster_row = duel.get_player_mut().monster_row.clone();
+            let mut found_cards = vec![];
+            let mut found_card_ids = HashSet::new();
+            for (index, monster_row_position) in monster_row.iter().enumerate() {
+                if let Some(monster_row_position) = monster_row_position {
+                    let card_id = monster_row_position.card.id;
+                    if (card_id == card1_id || card_id == card2_id || card_id == card3_id) && !found_card_ids.contains(&card_id) {
+                        found_cards.push(index);
+                        found_card_ids.insert(card_id);
+                    }
+                }
+            }
+
+            if found_cards.len() == 3 {
+                // Remove the cards from the field
+                found_cards.iter().sorted_by(|a, b| b.cmp(a)).for_each(|&index| {
+                    duel.get_player_mut().monster_row[index] = None;
+                });
+
+                let ritual_card = card_from_id(result_card_id);
+
+                // Create the monster_row_pos to hold the ritual card
+                let monster_row_pos = MonsterRowPosition {
+                    card: ritual_card,
+                    face_direction: FaceDirection::Up,
+                    disabled: false,
+                    card_mode: CardMode::Attack,
+                    guardian_star_choice: GuardianStarChoice::A,
+                };
+
+                // Go to SetGuardianStarState
+                duel.state = SetGuardianStarState {
+                    monster_row_position: monster_row_pos,
+                    monster_row_index: found_cards[0],
+                }.into();
+            }
         },
-        CardVariant::Equip { .. } => {
-        },
-        CardVariant::Trap => {
+        CardVariant::Equip { .. } | CardVariant::Trap => {
+            // Do nothing
         },
         _ => panic!("execute_spell: Called on a monster card."),
     }
@@ -197,8 +234,8 @@ impl DuelCommand for HandPlaySingleCmd {
                     if existing_position.is_some() {
                         // TODO: Execute spell effect
                         let card = combine(&card, &existing_position.as_ref().unwrap().card);
-                        execute_spell(card, duel);
                         duel.get_player_mut().spell_row[field_index] = None;
+                        execute_spell(card, duel);
                     } else {
                         duel.get_player_mut().spell_row[field_index] = Some(SpellRowPosition {
                             card: card.clone(),
@@ -346,7 +383,7 @@ impl DuelCommand for HandPlayMultipleCmd {
             _ => {
                 // TODO: Execute spell effect
                 execute_spell(combined_card.clone(), duel);
-                duel.state = FieldState.into();
+                // duel.state = FieldState.into();
             }
         }
 
@@ -1029,7 +1066,10 @@ mod tests {
         if commands.len() == 1650 {
             for card in duel.get_player().hand.iter() {
                 if let CardVariant::Monster { .. } = card.variant {
+                } else if let CardVariant::Trap { .. } = card.variant {
                 } else {
+                    // dbg print the hand
+                    dbg!(&duel.get_player().hand);
                     assert!(false);
                 }
             }
