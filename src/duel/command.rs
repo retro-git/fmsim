@@ -8,7 +8,7 @@ use thiserror::Error;
 use crate::{
     combine, combine_cards,
     duel::field::{MonsterRowPosition, SpellRowPosition},
-    guardian_star_relation, AdvantageRelation, CardVariant,
+    guardian_star_relation, AdvantageRelation, CardVariant, Card,
 };
 
 use super::{
@@ -16,6 +16,20 @@ use super::{
     state::*,
     Duel,
 };
+
+fn execute_spell(card: Card, duel: &mut Duel) {
+    match card.variant {
+        CardVariant::Magic => {
+        },
+        CardVariant::Ritual { .. } => {
+        },
+        CardVariant::Equip { .. } => {
+        },
+        CardVariant::Trap => {
+        },
+        _ => panic!("execute_spell: Called on a monster card."),
+    }
+}
 
 #[derive(Error, Debug)]
 pub enum CommandError {
@@ -37,6 +51,8 @@ pub enum CommandError {
     MonsterNotPresentAtSelectedPosition,
     #[error("Spell not present at the selected position.")]
     SpellNotPresentAtSelectedPosition,
+    #[error("Spell not present at the selected position.")]
+    EquipNotPresentAtSelectedPosition,
     #[error("Cannot attack with a monster on the first turn.")]
     CannotAttackOnFirstTurn,
     #[error("Cannot attack empty position while enemy monsters are present.")]
@@ -114,7 +130,7 @@ impl DuelCommand for HandPlaySingleCmd {
         self.check_valid(duel)?;
 
         // Check if the hand index is valid and remove the card from the hand
-        let card = duel.get_player().hand.get(self.hand_index).unwrap();
+        let card = duel.get_player_mut().hand.remove(self.hand_index);
 
         // We need to check if a card is already present (there is a Some) at the field index
         // If so, we need to combine with the existing card. The result, wrapped in a MonsterRowPosition/SpellRowPosition, is placed at the field index.
@@ -130,7 +146,7 @@ impl DuelCommand for HandPlaySingleCmd {
                     let card_to_play = match existing_position {
                         Some(existing_card) => {
                             face_direction = FaceDirection::Up;
-                            let ret = combine(card, &existing_card.card);
+                            let ret = combine(&card, &existing_card.card);
                             // destructure ret and existing_card variants as monster to extract attack
                             if let (
                                 CardVariant::Monster {
@@ -162,7 +178,7 @@ impl DuelCommand for HandPlaySingleCmd {
                     };
 
                     // Remove the card from the hand.
-                    duel.get_player_mut().hand.remove(self.hand_index);
+                    // duel.get_player_mut().hand.remove(self.hand_index);
 
                     if !applied_equip {
                         duel.get_player_mut().monster_row[field_index] = None;
@@ -179,7 +195,9 @@ impl DuelCommand for HandPlaySingleCmd {
                 _ => {
                     let existing_position = duel.get_player().spell_row[field_index].clone();
                     if existing_position.is_some() {
-                        // let card_to_play = combine(card, &existing_position.as_ref().unwrap().card);
+                        // TODO: Execute spell effect
+                        let card = combine(&card, &existing_position.as_ref().unwrap().card);
+                        execute_spell(card, duel);
                         duel.get_player_mut().spell_row[field_index] = None;
                     } else {
                         duel.get_player_mut().spell_row[field_index] = Some(SpellRowPosition {
@@ -193,6 +211,7 @@ impl DuelCommand for HandPlaySingleCmd {
             // FaceUp Magic/Ritual
             // For now, just do nothing.
             // TODO: Execute spell effect
+            execute_spell(card, duel);
         }
 
         Ok(())
@@ -326,6 +345,7 @@ impl DuelCommand for HandPlayMultipleCmd {
             }
             _ => {
                 // TODO: Execute spell effect
+                execute_spell(combined_card.clone(), duel);
                 duel.state = FieldState.into();
             }
         }
@@ -609,9 +629,9 @@ impl DuelCommand for FieldPlaySpellCmd {
     fn execute(&self, duel: &mut Duel) -> Result<(), CommandError> {
         self.check_valid(duel)?;
 
-        // Take the spell, leaving None in its place
-        let spell = duel.get_player_mut().spell_row[self.spell_row_index]
-            .take()
+        // Get a reference to the spell without taking it
+        let spell = duel.get_player().spell_row[self.spell_row_index]
+            .as_ref()
             .unwrap();
 
         // Match on the spell type. If it is a magic/ritual/trap, do nothing for now.
@@ -624,7 +644,11 @@ impl DuelCommand for FieldPlaySpellCmd {
                 .into();
             }
             _ => {
+                // leave None in the spell row
+                let card = spell.card.clone();
+                duel.get_player_mut().spell_row[self.spell_row_index] = None;
                 // TODO: Execute spell effect
+                execute_spell(card, duel);
             }
         }
 
@@ -659,8 +683,21 @@ pub struct FieldPlayEquipPickMonsterCmd {
 impl DuelCommand for FieldPlayEquipPickMonsterCmd {
     fn check_valid(&self, duel: &Duel) -> Result<(), CommandError> {
         // Check for FieldEquipSelectedState
-        if !matches!(duel.state, DuelStateEnum::FieldEquipSelectedState(_)) {
-            return Err(CommandError::InvalidDuelState);
+        // extract the state from the FieldEquipSelectedState
+        let state = match duel.state.clone() {
+            DuelStateEnum::FieldEquipSelectedState(state) => state,
+            _ => return Err(CommandError::InvalidDuelState),
+        };
+
+        // Check that the state.spell_row_index contains an equip
+        let spell = duel
+            .get_player()
+            .spell_row
+            .get(state.spell_row_index)
+            .ok_or(CommandError::OutOfBoundsFieldSelection)?;
+
+        if spell.is_none() {
+            return Err(CommandError::EquipNotPresentAtSelectedPosition);
         }
 
         // Check that monster_row_index contains a monster
