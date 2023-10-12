@@ -11,7 +11,7 @@ use super::{
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Builder)]
 #[builder(setter(into), default)]
 pub struct Player {
-    pub life_points: i32,
+    pub life_points: u32,
     pub deck: Vec<Card>,
     pub hand: Vec<Card>,
     pub hand_size: usize,
@@ -40,6 +40,11 @@ impl Player {
             let card = self.deck.pop().unwrap();
             self.hand.push(card);
         }
+    }
+
+    // life points must be kept within the range 0 to 8000.
+    pub fn modify_life_points(&mut self, amount: i32) {
+        self.life_points = (self.life_points as i32 + amount).max(0).min(8000) as u32;
     }
 
     // pub fn play_hand(&mut self, hand_indices: &Vec<usize>, field_index: usize) -> Card {

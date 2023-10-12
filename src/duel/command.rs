@@ -8,7 +8,7 @@ use thiserror::Error;
 use crate::{
     combine, combine_cards,
     duel::field::{MonsterRowPosition, SpellRowPosition},
-    CardVariant,
+    guardian_star_relation, AdvantageRelation, CardVariant,
 };
 
 use super::{
@@ -270,32 +270,22 @@ impl DuelCommand for HandPlayMultipleCmd {
                 let mut card_mode = CardMode::Attack;
                 let mut guardian_star_choice = GuardianStarChoice::A;
                 let all_successful_equips = if cards.len() == self.hand_indices.len() + 1 {
-                    // loop through the combined cards and check if they are all the same as the existing card, but with increased attack.
-                    let mut ret = true;
-                    let mut previous_card = cards.first().unwrap();
-                    for card in combined_cards.iter() {
-                        if card.id != previous_card.id {
-                            ret = false;
-                            break;
+                    // Create a new iterator to iterate through windows of combined_cards.
+                    // Use the windows function and check a predicate holds for all windows.
+                    // This predicate will ensure that in each window, the two cards have the same id and the latter card has a higher attack + defense stat compared to the previous.
+                    // We can get the attack and defense stats as a (attack, defense) tuple with the cards get_stats_no_terrain function.
+                    combined_cards.windows(2).all(|window| {
+                        let (prev_card, curr_card) = (&window[0], &window[1]);
+                        if prev_card.id != curr_card.id {
+                            false
+                        } else {
+                            let (prev_attack, prev_defense) =
+                                prev_card.get_stats_no_terrain().unwrap();
+                            let (curr_attack, curr_defense) =
+                                curr_card.get_stats_no_terrain().unwrap();
+                            curr_attack > prev_attack && curr_defense > prev_defense
                         }
-                        if let (
-                            CardVariant::Monster {
-                                attack: previous_attack,
-                                ..
-                            },
-                            CardVariant::Monster {
-                                attack: new_attack, ..
-                            },
-                        ) = (&previous_card.variant, &card.variant)
-                        {
-                            if new_attack <= previous_attack {
-                                ret = false;
-                                break;
-                            }
-                        }
-                        previous_card = card;
-                    }
-                    ret
+                    })
                 } else {
                     false
                 };
@@ -447,7 +437,8 @@ impl DuelCommand for FieldAttackCmd {
                     .clone()
                     .unwrap();
                 if let CardVariant::Monster { attack, .. } = attacking_monster.card.variant {
-                    duel.get_enemy_mut().life_points -= attack as i32;
+                    let damage = -(attack as i32);
+                    duel.get_enemy_mut().modify_life_points(damage);
                 }
             }
         } else {
@@ -468,63 +459,63 @@ impl DuelCommand for FieldAttackCmd {
                 .clone()
                 .unwrap();
 
-            // TODO: Alter attack/defence based on the field
+            // TODO: Alter attack/defence based on the field and guardian star
+            let (mut attacker_attack, mut _attacker_defense) = attacking_monster
+                .card
+                .get_stats_with_terrain(duel.terrain_type)
+                .unwrap();
+            let (mut enemy_attack, mut enemy_defense) = enemy_monster
+                .card
+                .get_stats_with_terrain(duel.terrain_type)
+                .unwrap();
+
+            // for both monsters, use guardian_star_relation function to check if advantageous (+500), disadvantageous (-500), or neutral (no change)
+            let (attacker_gs, enemy_gs) = (
+                attacking_monster.get_selected_gs(),
+                enemy_monster.get_selected_gs(),
+            );
+            match guardian_star_relation(attacker_gs, enemy_gs) {
+                AdvantageRelation::Advantaged => {
+                    attacker_attack += 500;
+                    _attacker_defense += 500;
+                }
+                AdvantageRelation::Disadvantaged => {
+                    enemy_attack += 500;
+                    enemy_defense += 500;
+                }
+                AdvantageRelation::Neutral => {
+                    // no change
+                }
+            }
+
             match enemy_monster.card_mode {
                 CardMode::Attack => {
-                    if let CardVariant::Monster {
-                        attack: enemy_attack,
-                        ..
-                    } = enemy_monster.card.variant
-                    {
-                        if let CardVariant::Monster {
-                            attack: attacker_attack,
-                            ..
-                        } = attacking_monster.card.variant
-                        {
-                            if attacker_attack > enemy_attack {
-                                // Attacker wins, enemy monster is destroyed and difference in attack is taken as life point damage
-                                duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] =
-                                    None;
-                                duel.get_enemy_mut().life_points -=
-                                    (attacker_attack - enemy_attack) as i32;
-                            } else if attacker_attack < enemy_attack {
-                                // Enemy wins, attacking monster is destroyed and difference in attack is taken as life point damage
-                                duel.get_player_mut().monster_row[self.monster_row_index] = None;
-                                duel.get_player_mut().life_points -=
-                                    (enemy_attack - attacker_attack) as i32;
-                            } else {
-                                // Both monsters are destroyed
-                                duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] =
-                                    None;
-                                duel.get_player_mut().monster_row[self.monster_row_index] = None;
-                            }
-                        }
+                    let damage = (attacker_attack as i32 - enemy_attack as i32).abs();
+                    if attacker_attack > enemy_attack {
+                        // Attacker wins, enemy monster is destroyed and difference in attack is taken as life point damage
+                        duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] = None;
+                        duel.get_enemy_mut().modify_life_points(-damage);
+                    } else if attacker_attack < enemy_attack {
+                        // Enemy wins, attacking monster is destroyed and difference in attack is taken as life point damage
+                        duel.get_player_mut().monster_row[self.monster_row_index] = None;
+                        duel.get_player_mut().modify_life_points(-damage);
+                    } else {
+                        // Both monsters are destroyed
+                        duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] = None;
+                        duel.get_player_mut().monster_row[self.monster_row_index] = None;
                     }
                 }
                 CardMode::Defense => {
-                    if let CardVariant::Monster {
-                        defense: enemy_defense,
-                        ..
-                    } = enemy_monster.card.variant
-                    {
-                        if let CardVariant::Monster {
-                            attack: attacker_attack,
-                            ..
-                        } = attacking_monster.card.variant
-                        {
-                            if attacker_attack > enemy_defense {
-                                // Attacker wins, enemy monster is destroyed
-                                duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] =
-                                    None;
-                            } else if attacker_attack < enemy_defense {
-                                // Defender wins, attacking monster is destroyed and difference in defense is taken as life point damage
-                                duel.get_player_mut().monster_row[self.monster_row_index] = None;
-                                duel.get_player_mut().life_points -=
-                                    (enemy_defense - attacker_attack) as i32;
-                            } else {
-                                // Neither monster is destroyed
-                            }
-                        }
+                    if attacker_attack > enemy_defense {
+                        // Attacker wins, enemy monster is destroyed
+                        duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] = None;
+                    } else if attacker_attack < enemy_defense {
+                        // Defender wins, attacking monster is destroyed and difference in defense is taken as life point damage
+                        let damage = (enemy_defense as i32 - attacker_attack as i32).abs();
+                        duel.get_player_mut().monster_row[self.monster_row_index] = None;
+                        duel.get_player_mut().modify_life_points(-damage);
+                    } else {
+                        // Neither monster is destroyed
                     }
                 }
             }

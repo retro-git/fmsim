@@ -2,7 +2,7 @@ use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use crate::{GuardianStarType, CARDS};
+use crate::{monster_terrain_relation, AdvantageRelation, GuardianStarType, TerrainType, CARDS};
 
 fn from_primitive<'de, D, T>(deserializer: D) -> Result<T, D::Error>
 where
@@ -59,6 +59,66 @@ pub enum CardVariant {
     Trap,
 }
 
+impl Card {
+    pub fn get_base_stats(&self) -> Option<(u32, u32)> {
+        // we need to get_card_from_id to get the base stats of the card
+        // the stats on our card may have been modified e.g. by equips
+        let base_card = card_from_id(self.id);
+        match &base_card.variant {
+            CardVariant::Monster {
+                attack, defense, ..
+            } => Some((*attack, *defense)),
+            _ => None,
+        }
+    }
+
+    pub fn get_stats_no_terrain(&self) -> Option<(u32, u32)> {
+        match &self.variant {
+            CardVariant::Monster {
+                attack, defense, ..
+            } => Some((*attack, *defense)),
+            _ => None,
+        }
+    }
+
+    pub fn get_stats_with_terrain(&self, terrain_type: TerrainType) -> Option<(u32, u32)> {
+        // use monster_terrain_relation to check if advantageous (+500), disadvantageous (-500), or neutral (no change)
+        match &self.variant {
+            CardVariant::Monster {
+                attack,
+                defense,
+                monster_type,
+                ..
+            } => {
+                let terrain_boost = match monster_terrain_relation(*monster_type, terrain_type) {
+                    AdvantageRelation::Advantaged => 500,
+                    AdvantageRelation::Disadvantaged => -500,
+                    AdvantageRelation::Neutral => 0,
+                };
+                Some((
+                    (*attack as i32 + terrain_boost).max(0) as u32,
+                    (*defense as i32 + terrain_boost).max(0) as u32,
+                ))
+            }
+            _ => None,
+        }
+    }
+
+    pub fn modify_stats(&mut self, delta: i32) {
+        // panic if not a Monster
+        // modify attack and defense by delta, but do not let them go below 0
+        match &mut self.variant {
+            CardVariant::Monster {
+                attack, defense, ..
+            } => {
+                *attack = (*attack as i32 + delta).max(0) as u32;
+                *defense = (*defense as i32 + delta).max(0) as u32;
+            }
+            _ => panic!("Attempted to modify stats of a non-Monster card"),
+        }
+    }
+}
+
 pub fn card_from_id(id: usize) -> Card {
     CARDS.get(id - 1).unwrap().clone()
 }
@@ -111,17 +171,13 @@ pub fn equip(card1: &Card, card2: &Card) -> Option<Card> {
     let mut monster_clone = monster_card.clone();
     if let CardVariant::Equip { equips } = &equip_card.variant {
         if equips.contains(&monster_clone.id) {
-            if let CardVariant::Monster {
-                attack, defense, ..
-            } = &mut monster_clone.variant
-            {
+            if let CardVariant::Monster { .. } = &mut monster_clone.variant {
                 let boost_amount = if equip_card.name == "Megamorph" {
                     1000
                 } else {
                     500
                 };
-                *attack += boost_amount;
-                *defense += boost_amount;
+                monster_clone.modify_stats(boost_amount);
             }
         } else {
             return None;

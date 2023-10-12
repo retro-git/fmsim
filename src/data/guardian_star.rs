@@ -1,7 +1,7 @@
 use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 
-use crate::{AdvantageRelation, MonsterType};
+use crate::AdvantageRelation;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, FromPrimitive, ToPrimitive, Copy, Clone)]
 pub enum GuardianStarType {
@@ -29,12 +29,12 @@ pub enum GuardianStarType {
 // Neptune	        Mars	        Pluto
 // Pluto	        Neptune	        Uranus
 
-fn guardian_star_relation(
+pub fn guardian_star_relation(
     guardian_star_a: GuardianStarType,
     guardian_star_b: GuardianStarType,
 ) -> AdvantageRelation {
-    use GuardianStarType::*;
     use AdvantageRelation::*;
+    use GuardianStarType::*;
     match (guardian_star_a, guardian_star_b) {
         (Sun, Moon) => Advantaged,
         (Mercury, Sun) => Advantaged,
