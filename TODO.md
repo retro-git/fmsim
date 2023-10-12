@@ -3,8 +3,6 @@ DUEL:
 -rituals
 -traps
 -magics
--field stat boosts
--guardian star stat boosts
 
 -enemy ai
 
