@@ -19,8 +19,8 @@
             "monster_type": 0,
             "attack": 3000,
             "defense": 2500,
-            "guardian_star_a": 8,
-            "guardian_star_b": 1,
+            "guardian_star_a": 7,
+            "guardian_star_b": 0,
             "level": 8
         }
     },
@@ -268,8 +268,8 @@
             "monster_type": 1,
             "attack": 800,
             "defense": 2000,
-            "guardian_star_a": 8,
-            "guardian_star_b": 2,
+            "guardian_star_a": 7,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -304,8 +304,8 @@
             "monster_type": 4,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -640,8 +640,8 @@
             "monster_type": 0,
             "attack": 1200,
             "defense": 700,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -707,8 +707,8 @@
             "monster_type": 7,
             "attack": 1000,
             "defense": 500,
-            "guardian_star_a": 3,
-            "guardian_star_b": 8,
+            "guardian_star_a": 2,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -744,8 +744,8 @@
             "monster_type": 7,
             "attack": 1300,
             "defense": 1400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -1078,8 +1078,8 @@
             "monster_type": 0,
             "attack": 1400,
             "defense": 1200,
-            "guardian_star_a": 3,
-            "guardian_star_b": 9,
+            "guardian_star_a": 2,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -1268,8 +1268,8 @@
             "monster_type": 19,
             "attack": 800,
             "defense": 600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 2
         }
     },
@@ -1446,8 +1446,8 @@
             "monster_type": 2,
             "attack": 500,
             "defense": 200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 1
         }
     },
@@ -1712,8 +1712,8 @@
             "monster_type": 0,
             "attack": 1500,
             "defense": 800,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -1916,8 +1916,8 @@
             "monster_type": 10,
             "attack": 1750,
             "defense": 2030,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 6
         }
     },
@@ -1972,8 +1972,8 @@
             "monster_type": 3,
             "attack": 1800,
             "defense": 1500,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -2038,8 +2038,8 @@
             "monster_type": 6,
             "attack": 1200,
             "defense": 1400,
-            "guardian_star_a": 3,
-            "guardian_star_b": 10,
+            "guardian_star_a": 2,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -2063,8 +2063,8 @@
             "monster_type": 4,
             "attack": 1800,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 5
         }
     },
@@ -2218,8 +2218,8 @@
             "monster_type": 3,
             "attack": 1800,
             "defense": 1600,
-            "guardian_star_a": 1,
-            "guardian_star_b": 8,
+            "guardian_star_a": 0,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -2310,8 +2310,8 @@
             "monster_type": 1,
             "attack": 500,
             "defense": 400,
-            "guardian_star_a": 10,
-            "guardian_star_b": 8,
+            "guardian_star_a": 9,
+            "guardian_star_b": 7,
             "level": 2
         }
     },
@@ -2404,8 +2404,8 @@
             "monster_type": 1,
             "attack": 200,
             "defense": 300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 1
         }
     },
@@ -2498,8 +2498,8 @@
             "monster_type": 1,
             "attack": 200,
             "defense": 300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 1
         }
     },
@@ -2592,8 +2592,8 @@
             "monster_type": 1,
             "attack": 200,
             "defense": 300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 1
         }
     },
@@ -2686,8 +2686,8 @@
             "monster_type": 1,
             "attack": 200,
             "defense": 300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 5,
+            "guardian_star_a": 6,
+            "guardian_star_b": 4,
             "level": 1
         }
     },
@@ -2780,8 +2780,8 @@
             "monster_type": 1,
             "attack": 1000,
             "defense": 1000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -2807,8 +2807,8 @@
             "monster_type": 7,
             "attack": 2500,
             "defense": 1200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 6
         }
     },
@@ -2864,8 +2864,8 @@
             "monster_type": 5,
             "attack": 1400,
             "defense": 700,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -3037,8 +3037,8 @@
             "monster_type": 2,
             "attack": 300,
             "defense": 200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 1
         }
     },
@@ -3073,8 +3073,8 @@
             "monster_type": 7,
             "attack": 1300,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -3100,8 +3100,8 @@
             "monster_type": 4,
             "attack": 1700,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -3125,8 +3125,8 @@
             "monster_type": 4,
             "attack": 1200,
             "defense": 1500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -3289,8 +3289,8 @@
             "monster_type": 18,
             "attack": 800,
             "defense": 1200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -3314,8 +3314,8 @@
             "monster_type": 4,
             "attack": 600,
             "defense": 1000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -3459,8 +3459,8 @@
             "monster_type": 2,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -3716,8 +3716,8 @@
             "monster_type": 0,
             "attack": 1500,
             "defense": 1200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -3776,8 +3776,8 @@
             "monster_type": 10,
             "attack": 1600,
             "defense": 1200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -3801,8 +3801,8 @@
             "monster_type": 3,
             "attack": 2200,
             "defense": 1500,
-            "guardian_star_a": 8,
-            "guardian_star_b": 3,
+            "guardian_star_a": 7,
+            "guardian_star_b": 2,
             "level": 6
         }
     },
@@ -3893,8 +3893,8 @@
             "monster_type": 1,
             "attack": 600,
             "defense": 1500,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -3918,8 +3918,8 @@
             "monster_type": 1,
             "attack": 2500,
             "defense": 2100,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 7
         }
     },
@@ -3985,8 +3985,8 @@
             "monster_type": 2,
             "attack": 1500,
             "defense": 1200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -4024,8 +4024,8 @@
             "monster_type": 0,
             "attack": 2600,
             "defense": 2100,
-            "guardian_star_a": 3,
-            "guardian_star_b": 7,
+            "guardian_star_a": 2,
+            "guardian_star_b": 6,
             "level": 7
         }
     },
@@ -4051,8 +4051,8 @@
             "monster_type": 3,
             "attack": 2300,
             "defense": 2100,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 7
         }
     },
@@ -4111,8 +4111,8 @@
             "monster_type": 0,
             "attack": 2000,
             "defense": 1500,
-            "guardian_star_a": 3,
-            "guardian_star_b": 5,
+            "guardian_star_a": 2,
+            "guardian_star_b": 4,
             "level": 5
         }
     },
@@ -4290,8 +4290,8 @@
             "monster_type": 17,
             "attack": 200,
             "defense": 1800,
-            "guardian_star_a": 1,
-            "guardian_star_b": 9,
+            "guardian_star_a": 0,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -4442,8 +4442,8 @@
             "monster_type": 3,
             "attack": 1400,
             "defense": 1200,
-            "guardian_star_a": 8,
-            "guardian_star_b": 4,
+            "guardian_star_a": 7,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -4501,8 +4501,8 @@
             "monster_type": 1,
             "attack": 1200,
             "defense": 2200,
-            "guardian_star_a": 10,
-            "guardian_star_b": 1,
+            "guardian_star_a": 9,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -4564,8 +4564,8 @@
             "monster_type": 3,
             "attack": 1500,
             "defense": 1200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 2,
+            "guardian_star_a": 3,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -4604,8 +4604,8 @@
             "monster_type": 1,
             "attack": 1600,
             "defense": 1000,
-            "guardian_star_a": 8,
-            "guardian_star_b": 5,
+            "guardian_star_a": 7,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -4767,8 +4767,8 @@
             "monster_type": 15,
             "attack": 1000,
             "defense": 500,
-            "guardian_star_a": 5,
-            "guardian_star_b": 8,
+            "guardian_star_a": 4,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -4963,8 +4963,8 @@
             "monster_type": 5,
             "attack": 1200,
             "defense": 1500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -5159,8 +5159,8 @@
             "monster_type": 5,
             "attack": 1200,
             "defense": 600,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -5198,8 +5198,8 @@
             "monster_type": 7,
             "attack": 1000,
             "defense": 600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -5225,8 +5225,8 @@
             "monster_type": 9,
             "attack": 1200,
             "defense": 1500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -5265,8 +5265,8 @@
             "monster_type": 9,
             "attack": 500,
             "defense": 700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -5294,8 +5294,8 @@
             "monster_type": 11,
             "attack": 1500,
             "defense": 1200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -5321,8 +5321,8 @@
             "monster_type": 9,
             "attack": 1500,
             "defense": 2000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -5348,8 +5348,8 @@
             "monster_type": 9,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -5375,8 +5375,8 @@
             "monster_type": 9,
             "attack": 1200,
             "defense": 1400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -5402,8 +5402,8 @@
             "monster_type": 9,
             "attack": 1500,
             "defense": 1200,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -5442,8 +5442,8 @@
             "monster_type": 9,
             "attack": 500,
             "defense": 400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 2
         }
     },
@@ -5467,8 +5467,8 @@
             "monster_type": 9,
             "attack": 2600,
             "defense": 2500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 8
         }
     },
@@ -5507,8 +5507,8 @@
             "monster_type": 7,
             "attack": 300,
             "defense": 200,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 1
         }
     },
@@ -5601,8 +5601,8 @@
             "monster_type": 10,
             "attack": 1200,
             "defense": 800,
-            "guardian_star_a": 7,
-            "guardian_star_b": 5,
+            "guardian_star_a": 6,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -5663,8 +5663,8 @@
             "monster_type": 12,
             "attack": 1600,
             "defense": 800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -5858,8 +5858,8 @@
             "monster_type": 5,
             "attack": 1200,
             "defense": 800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -6028,8 +6028,8 @@
             "monster_type": 6,
             "attack": 1300,
             "defense": 1400,
-            "guardian_star_a": 3,
-            "guardian_star_b": 6,
+            "guardian_star_a": 2,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -6108,8 +6108,8 @@
             "monster_type": 6,
             "attack": 1950,
             "defense": 2100,
-            "guardian_star_a": 3,
-            "guardian_star_b": 1,
+            "guardian_star_a": 2,
+            "guardian_star_b": 0,
             "level": 6
         }
     },
@@ -6135,8 +6135,8 @@
             "monster_type": 4,
             "attack": 1300,
             "defense": 1100,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -6329,8 +6329,8 @@
             "monster_type": 5,
             "attack": 1200,
             "defense": 800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -6392,8 +6392,8 @@
             "monster_type": 3,
             "attack": 1500,
             "defense": 1200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -6417,8 +6417,8 @@
             "monster_type": 9,
             "attack": 3500,
             "defense": 3000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 8
         }
     },
@@ -6541,8 +6541,8 @@
             "monster_type": 4,
             "attack": 1800,
             "defense": 1500,
-            "guardian_star_a": 1,
-            "guardian_star_b": 10,
+            "guardian_star_a": 0,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -6579,8 +6579,8 @@
             "monster_type": 0,
             "attack": 2400,
             "defense": 2000,
-            "guardian_star_a": 1,
-            "guardian_star_b": 7,
+            "guardian_star_a": 0,
+            "guardian_star_b": 6,
             "level": 7
         }
     },
@@ -6648,8 +6648,8 @@
             "monster_type": 16,
             "attack": 1200,
             "defense": 1400,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -6701,8 +6701,8 @@
             "monster_type": 16,
             "attack": 1200,
             "defense": 1500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -6741,8 +6741,8 @@
             "monster_type": 9,
             "attack": 0,
             "defense": 2000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -6889,8 +6889,8 @@
             "monster_type": 13,
             "attack": 1800,
             "defense": 1500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -6992,8 +6992,8 @@
             "monster_type": 18,
             "attack": 1300,
             "defense": 2000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -7168,8 +7168,8 @@
             "monster_type": 19,
             "attack": 800,
             "defense": 600,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -7197,8 +7197,8 @@
             "monster_type": 11,
             "attack": 1100,
             "defense": 1200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -7226,8 +7226,8 @@
             "monster_type": 11,
             "attack": 1300,
             "defense": 1200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -7288,8 +7288,8 @@
             "monster_type": 3,
             "attack": 1700,
             "defense": 1150,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -7313,8 +7313,8 @@
             "monster_type": 10,
             "attack": 1800,
             "defense": 2000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 6
         }
     },
@@ -7373,8 +7373,8 @@
             "monster_type": 10,
             "attack": 1500,
             "defense": 800,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -7619,8 +7619,8 @@
             "monster_type": 10,
             "attack": 1600,
             "defense": 1200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -7658,8 +7658,8 @@
             "monster_type": 0,
             "attack": 2400,
             "defense": 2000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 7
         }
     },
@@ -7702,8 +7702,8 @@
             "monster_type": 7,
             "attack": 920,
             "defense": 1930,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -7737,8 +7737,8 @@
             "monster_type": 7,
             "attack": 1380,
             "defense": 1930,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 5
         }
     },
@@ -7764,8 +7764,8 @@
             "monster_type": 7,
             "attack": 2000,
             "defense": 1530,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 5
         }
     },
@@ -7792,8 +7792,8 @@
             "monster_type": 7,
             "attack": 1380,
             "defense": 1530,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -7820,8 +7820,8 @@
             "monster_type": 7,
             "attack": 1610,
             "defense": 1460,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -7860,8 +7860,8 @@
             "monster_type": 7,
             "attack": 1150,
             "defense": 2150,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -7987,8 +7987,8 @@
             "monster_type": 16,
             "attack": 1000,
             "defense": 2000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -8054,8 +8054,8 @@
             "monster_type": 8,
             "attack": 1800,
             "defense": 2000,
-            "guardian_star_a": 8,
-            "guardian_star_b": 6,
+            "guardian_star_a": 7,
+            "guardian_star_b": 5,
             "level": 6
         }
     },
@@ -8210,8 +8210,8 @@
             "monster_type": 5,
             "attack": 1300,
             "defense": 1550,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -8235,8 +8235,8 @@
             "monster_type": 4,
             "attack": 2000,
             "defense": 1700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 6
         }
     },
@@ -8297,8 +8297,8 @@
             "monster_type": 3,
             "attack": 1500,
             "defense": 1700,
-            "guardian_star_a": 4,
-            "guardian_star_b": 2,
+            "guardian_star_a": 3,
+            "guardian_star_b": 1,
             "level": 5
         }
     },
@@ -8542,8 +8542,8 @@
             "monster_type": 0,
             "attack": 1600,
             "defense": 1400,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -8580,8 +8580,8 @@
             "monster_type": 7,
             "attack": 1350,
             "defense": 1400,
-            "guardian_star_a": 10,
-            "guardian_star_b": 2,
+            "guardian_star_a": 9,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -8643,8 +8643,8 @@
             "monster_type": 2,
             "attack": 1500,
             "defense": 0,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -8900,8 +8900,8 @@
             "monster_type": 2,
             "attack": 1600,
             "defense": 0,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -9017,8 +9017,8 @@
             "monster_type": 2,
             "attack": 1350,
             "defense": 0,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -9060,8 +9060,8 @@
             "monster_type": 2,
             "attack": 1800,
             "defense": 2000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 6
         }
     },
@@ -9216,8 +9216,8 @@
             "monster_type": 3,
             "attack": 700,
             "defense": 1000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -9359,8 +9359,8 @@
             "monster_type": 17,
             "attack": 700,
             "defense": 600,
-            "guardian_star_a": 1,
-            "guardian_star_b": 3,
+            "guardian_star_a": 0,
+            "guardian_star_b": 2,
             "level": 2
         }
     },
@@ -9402,8 +9402,8 @@
             "monster_type": 7,
             "attack": 900,
             "defense": 400,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -9503,8 +9503,8 @@
             "monster_type": 7,
             "attack": 800,
             "defense": 1300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -9591,8 +9591,8 @@
             "monster_type": 1,
             "attack": 600,
             "defense": 500,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -9651,8 +9651,8 @@
             "monster_type": 10,
             "attack": 500,
             "defense": 400,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 2
         }
     },
@@ -9688,8 +9688,8 @@
             "monster_type": 1,
             "attack": 1700,
             "defense": 1400,
-            "guardian_star_a": 3,
-            "guardian_star_b": 8,
+            "guardian_star_a": 2,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -9832,8 +9832,8 @@
             "monster_type": 3,
             "attack": 800,
             "defense": 600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 2
         }
     },
@@ -10002,8 +10002,8 @@
             "monster_type": 2,
             "attack": 700,
             "defense": 900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -10148,8 +10148,8 @@
             "monster_type": 8,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 8,
-            "guardian_star_b": 10,
+            "guardian_star_a": 7,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -10290,8 +10290,8 @@
             "monster_type": 3,
             "attack": 1100,
             "defense": 1000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -10360,8 +10360,8 @@
             "monster_type": 8,
             "attack": 1600,
             "defense": 1400,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 5
         }
     },
@@ -10399,8 +10399,8 @@
             "monster_type": 7,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -10593,8 +10593,8 @@
             "monster_type": 5,
             "attack": 800,
             "defense": 900,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -10651,8 +10651,8 @@
             "monster_type": 1,
             "attack": 1000,
             "defense": 700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 1,
+            "guardian_star_a": 7,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -10720,8 +10720,8 @@
             "monster_type": 1,
             "attack": 1300,
             "defense": 1100,
-            "guardian_star_a": 7,
-            "guardian_star_b": 5,
+            "guardian_star_a": 6,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -10747,8 +10747,8 @@
             "monster_type": 9,
             "attack": 900,
             "defense": 800,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -10804,8 +10804,8 @@
             "monster_type": 6,
             "attack": 1400,
             "defense": 1200,
-            "guardian_star_a": 3,
-            "guardian_star_b": 9,
+            "guardian_star_a": 2,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -10945,8 +10945,8 @@
             "monster_type": 3,
             "attack": 1000,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -10980,8 +10980,8 @@
             "monster_type": 7,
             "attack": 1300,
             "defense": 900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -11121,8 +11121,8 @@
             "monster_type": 3,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 10,
-            "guardian_star_b": 3,
+            "guardian_star_a": 9,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -11313,8 +11313,8 @@
             "monster_type": 5,
             "attack": 700,
             "defense": 1700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -11599,8 +11599,8 @@
             "monster_type": 0,
             "attack": 900,
             "defense": 300,
-            "guardian_star_a": 3,
-            "guardian_star_b": 10,
+            "guardian_star_a": 2,
+            "guardian_star_b": 9,
             "level": 2
         }
     },
@@ -11762,8 +11762,8 @@
             "monster_type": 19,
             "attack": 300,
             "defense": 400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 1
         }
     },
@@ -11806,8 +11806,8 @@
             "monster_type": 14,
             "attack": 1700,
             "defense": 1400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 5
         }
     },
@@ -11867,8 +11867,8 @@
             "monster_type": 6,
             "attack": 1500,
             "defense": 1100,
-            "guardian_star_a": 8,
-            "guardian_star_b": 2,
+            "guardian_star_a": 7,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -11892,8 +11892,8 @@
             "monster_type": 8,
             "attack": 1800,
             "defense": 1500,
-            "guardian_star_a": 8,
-            "guardian_star_b": 3,
+            "guardian_star_a": 7,
+            "guardian_star_b": 2,
             "level": 5
         }
     },
@@ -11953,8 +11953,8 @@
             "monster_type": 3,
             "attack": 1700,
             "defense": 1200,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -12107,8 +12107,8 @@
             "monster_type": 1,
             "attack": 1200,
             "defense": 1700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 4,
+            "guardian_star_a": 7,
+            "guardian_star_b": 3,
             "level": 5
         }
     },
@@ -12268,8 +12268,8 @@
             "monster_type": 1,
             "attack": 800,
             "defense": 700,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -12335,8 +12335,8 @@
             "monster_type": 8,
             "attack": 600,
             "defense": 400,
-            "guardian_star_a": 8,
-            "guardian_star_b": 5,
+            "guardian_star_a": 7,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -12375,8 +12375,8 @@
             "monster_type": 16,
             "attack": 1600,
             "defense": 1400,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 5
         }
     },
@@ -12498,8 +12498,8 @@
             "monster_type": 2,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -12613,8 +12613,8 @@
             "monster_type": 17,
             "attack": 1100,
             "defense": 800,
-            "guardian_star_a": 1,
-            "guardian_star_b": 4,
+            "guardian_star_a": 0,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -12680,8 +12680,8 @@
             "monster_type": 8,
             "attack": 700,
             "defense": 700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 6,
+            "guardian_star_a": 7,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -12824,8 +12824,8 @@
             "monster_type": 2,
             "attack": 600,
             "defense": 600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -12861,8 +12861,8 @@
             "monster_type": 7,
             "attack": 1400,
             "defense": 1300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -12899,8 +12899,8 @@
             "monster_type": 7,
             "attack": 500,
             "defense": 500,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 2
         }
     },
@@ -13208,8 +13208,8 @@
             "monster_type": 3,
             "attack": 1100,
             "defense": 900,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -13351,8 +13351,8 @@
             "monster_type": 2,
             "attack": 900,
             "defense": 700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 5,
+            "guardian_star_a": 7,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -13399,8 +13399,8 @@
             "monster_type": 16,
             "attack": 1000,
             "defense": 1000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -13445,8 +13445,8 @@
             "monster_type": 9,
             "attack": 700,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -13583,8 +13583,8 @@
             "monster_type": 1,
             "attack": 900,
             "defense": 1000,
-            "guardian_star_a": 1,
-            "guardian_star_b": 5,
+            "guardian_star_a": 0,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -13636,8 +13636,8 @@
             "monster_type": 1,
             "attack": 800,
             "defense": 900,
-            "guardian_star_a": 10,
-            "guardian_star_b": 4,
+            "guardian_star_a": 9,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -13689,8 +13689,8 @@
             "monster_type": 1,
             "attack": 700,
             "defense": 900,
-            "guardian_star_a": 3,
-            "guardian_star_b": 7,
+            "guardian_star_a": 2,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -13742,8 +13742,8 @@
             "monster_type": 1,
             "attack": 700,
             "defense": 700,
-            "guardian_star_a": 10,
-            "guardian_star_b": 5,
+            "guardian_star_a": 9,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -13884,8 +13884,8 @@
             "monster_type": 2,
             "attack": 900,
             "defense": 1300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 5,
+            "guardian_star_a": 6,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -14037,8 +14037,8 @@
             "monster_type": 3,
             "attack": 600,
             "defense": 900,
-            "guardian_star_a": 4,
-            "guardian_star_b": 2,
+            "guardian_star_a": 3,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -14077,8 +14077,8 @@
             "monster_type": 7,
             "attack": 800,
             "defense": 700,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -14113,8 +14113,8 @@
             "monster_type": 7,
             "attack": 1400,
             "defense": 1200,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -14152,8 +14152,8 @@
             "monster_type": 16,
             "attack": 1700,
             "defense": 1400,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 5
         }
     },
@@ -14284,8 +14284,8 @@
             "monster_type": 3,
             "attack": 1200,
             "defense": 1300,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -14334,8 +14334,8 @@
             "monster_type": 16,
             "attack": 500,
             "defense": 700,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -14471,8 +14471,8 @@
             "monster_type": 2,
             "attack": 900,
             "defense": 1200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -14658,8 +14658,8 @@
             "monster_type": 2,
             "attack": 700,
             "defense": 500,
-            "guardian_star_a": 1,
-            "guardian_star_b": 8,
+            "guardian_star_a": 0,
+            "guardian_star_b": 7,
             "level": 2
         }
     },
@@ -14742,8 +14742,8 @@
             "monster_type": 5,
             "attack": 800,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -14882,8 +14882,8 @@
             "monster_type": 3,
             "attack": 300,
             "defense": 1200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -15069,8 +15069,8 @@
             "monster_type": 19,
             "attack": 700,
             "defense": 600,
-            "guardian_star_a": 1,
-            "guardian_star_b": 9,
+            "guardian_star_a": 0,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -15217,8 +15217,8 @@
             "monster_type": 19,
             "attack": 800,
             "defense": 600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 2
         }
     },
@@ -15280,8 +15280,8 @@
             "monster_type": 5,
             "attack": 500,
             "defense": 800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -15407,8 +15407,8 @@
             "monster_type": 3,
             "attack": 1000,
             "defense": 500,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -15545,8 +15545,8 @@
             "monster_type": 3,
             "attack": 500,
             "defense": 1000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -15578,8 +15578,8 @@
             "monster_type": 7,
             "attack": 1250,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -15635,8 +15635,8 @@
             "monster_type": 5,
             "attack": 1300,
             "defense": 1300,
-            "guardian_star_a": 3,
-            "guardian_star_b": 5,
+            "guardian_star_a": 2,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -15672,8 +15672,8 @@
             "monster_type": 7,
             "attack": 1300,
             "defense": 1000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -15816,8 +15816,8 @@
             "monster_type": 3,
             "attack": 1400,
             "defense": 700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 10,
+            "guardian_star_a": 7,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -15942,8 +15942,8 @@
             "monster_type": 3,
             "attack": 1000,
             "defense": 1500,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -16079,8 +16079,8 @@
             "monster_type": 18,
             "attack": 400,
             "defense": 200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 1
         }
     },
@@ -16330,8 +16330,8 @@
             "monster_type": 0,
             "attack": 1500,
             "defense": 1250,
-            "guardian_star_a": 1,
-            "guardian_star_b": 10,
+            "guardian_star_a": 0,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -16367,8 +16367,8 @@
             "monster_type": 7,
             "attack": 1200,
             "defense": 800,
-            "guardian_star_a": 7,
-            "guardian_star_b": 5,
+            "guardian_star_a": 6,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -16433,8 +16433,8 @@
             "monster_type": 8,
             "attack": 800,
             "defense": 2000,
-            "guardian_star_a": 8,
-            "guardian_star_b": 1,
+            "guardian_star_a": 7,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -16461,8 +16461,8 @@
             "monster_type": 7,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 10,
-            "guardian_star_b": 6,
+            "guardian_star_a": 9,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -16661,8 +16661,8 @@
             "monster_type": 3,
             "attack": 700,
             "defense": 1300,
-            "guardian_star_a": 1,
-            "guardian_star_b": 7,
+            "guardian_star_a": 0,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -16701,8 +16701,8 @@
             "monster_type": 7,
             "attack": 600,
             "defense": 1000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -16751,8 +16751,8 @@
             "monster_type": 1,
             "attack": 900,
             "defense": 200,
-            "guardian_star_a": 3,
-            "guardian_star_b": 6,
+            "guardian_star_a": 2,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -16819,8 +16819,8 @@
             "monster_type": 7,
             "attack": 1000,
             "defense": 700,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -16937,8 +16937,8 @@
             "monster_type": 17,
             "attack": 800,
             "defense": 600,
-            "guardian_star_a": 1,
-            "guardian_star_b": 3,
+            "guardian_star_a": 0,
+            "guardian_star_b": 2,
             "level": 2
         }
     },
@@ -17055,8 +17055,8 @@
             "monster_type": 16,
             "attack": 800,
             "defense": 1000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -17095,8 +17095,8 @@
             "monster_type": 7,
             "attack": 1000,
             "defense": 800,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -17172,8 +17172,8 @@
             "monster_type": 1,
             "attack": 700,
             "defense": 600,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -17395,8 +17395,8 @@
             "monster_type": 19,
             "attack": 800,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -17425,8 +17425,8 @@
             "monster_type": 7,
             "attack": 1000,
             "defense": 1000,
-            "guardian_star_a": 3,
-            "guardian_star_b": 1,
+            "guardian_star_a": 2,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -17559,8 +17559,8 @@
             "monster_type": 3,
             "attack": 500,
             "defense": 700,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 2
         }
     },
@@ -17612,8 +17612,8 @@
             "monster_type": 1,
             "attack": 600,
             "defense": 800,
-            "guardian_star_a": 8,
-            "guardian_star_b": 2,
+            "guardian_star_a": 7,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -17661,8 +17661,8 @@
             "monster_type": 1,
             "attack": 600,
             "defense": 900,
-            "guardian_star_a": 10,
-            "guardian_star_b": 8,
+            "guardian_star_a": 9,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -17793,8 +17793,8 @@
             "monster_type": 3,
             "attack": 600,
             "defense": 500,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 2
         }
     },
@@ -17850,8 +17850,8 @@
             "monster_type": 6,
             "attack": 1100,
             "defense": 1400,
-            "guardian_star_a": 10,
-            "guardian_star_b": 1,
+            "guardian_star_a": 9,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -17918,8 +17918,8 @@
             "monster_type": 5,
             "attack": 700,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -18086,8 +18086,8 @@
             "monster_type": 5,
             "attack": 800,
             "defense": 900,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -18280,8 +18280,8 @@
             "monster_type": 5,
             "attack": 900,
             "defense": 700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -18357,8 +18357,8 @@
             "monster_type": 1,
             "attack": 1000,
             "defense": 800,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -18488,8 +18488,8 @@
             "monster_type": 15,
             "attack": 600,
             "defense": 600,
-            "guardian_star_a": 5,
-            "guardian_star_b": 9,
+            "guardian_star_a": 4,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -18619,8 +18619,8 @@
             "monster_type": 8,
             "attack": 400,
             "defense": 300,
-            "guardian_star_a": 8,
-            "guardian_star_b": 3,
+            "guardian_star_a": 7,
+            "guardian_star_b": 2,
             "level": 1
         }
     },
@@ -18717,8 +18717,8 @@
             "monster_type": 16,
             "attack": 1000,
             "defense": 1500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -18749,8 +18749,8 @@
             "monster_type": 7,
             "attack": 1200,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -18869,8 +18869,8 @@
             "monster_type": 3,
             "attack": 900,
             "defense": 500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -18915,8 +18915,8 @@
             "monster_type": 16,
             "attack": 1000,
             "defense": 1200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -19031,8 +19031,8 @@
             "monster_type": 2,
             "attack": 500,
             "defense": 400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 2
         }
     },
@@ -19122,8 +19122,8 @@
             "monster_type": 8,
             "attack": 800,
             "defense": 500,
-            "guardian_star_a": 8,
-            "guardian_star_b": 4,
+            "guardian_star_a": 7,
+            "guardian_star_b": 3,
             "level": 2
         }
     },
@@ -19168,8 +19168,8 @@
             "monster_type": 16,
             "attack": 900,
             "defense": 800,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -19404,8 +19404,8 @@
             "monster_type": 0,
             "attack": 600,
             "defense": 700,
-            "guardian_star_a": 3,
-            "guardian_star_b": 8,
+            "guardian_star_a": 2,
+            "guardian_star_b": 7,
             "level": 2
         }
     },
@@ -19561,8 +19561,8 @@
             "monster_type": 5,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -19730,8 +19730,8 @@
             "monster_type": 5,
             "attack": 400,
             "defense": 600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 2
         }
     },
@@ -19845,8 +19845,8 @@
             "monster_type": 2,
             "attack": 600,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -19870,8 +19870,8 @@
             "monster_type": 7,
             "attack": 1700,
             "defense": 1400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -19915,8 +19915,8 @@
             "monster_type": 16,
             "attack": 900,
             "defense": 800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -19962,8 +19962,8 @@
             "monster_type": 16,
             "attack": 900,
             "defense": 700,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -20011,8 +20011,8 @@
             "monster_type": 6,
             "attack": 600,
             "defense": 500,
-            "guardian_star_a": 3,
-            "guardian_star_b": 9,
+            "guardian_star_a": 2,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -20098,8 +20098,8 @@
             "monster_type": 8,
             "attack": 600,
             "defense": 900,
-            "guardian_star_a": 8,
-            "guardian_star_b": 5,
+            "guardian_star_a": 7,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -20131,8 +20131,8 @@
             "monster_type": 9,
             "attack": 700,
             "defense": 700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 2
         }
     },
@@ -20241,8 +20241,8 @@
             "monster_type": 17,
             "attack": 600,
             "defense": 500,
-            "guardian_star_a": 1,
-            "guardian_star_b": 4,
+            "guardian_star_a": 0,
+            "guardian_star_b": 3,
             "level": 2
         }
     },
@@ -20365,8 +20365,8 @@
             "monster_type": 15,
             "attack": 700,
             "defense": 600,
-            "guardian_star_a": 5,
-            "guardian_star_b": 10,
+            "guardian_star_a": 4,
+            "guardian_star_b": 9,
             "level": 2
         }
     },
@@ -20427,8 +20427,8 @@
             "monster_type": 5,
             "attack": 700,
             "defense": 600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 2
         }
     },
@@ -20472,8 +20472,8 @@
             "monster_type": 1,
             "attack": 1200,
             "defense": 2000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -20643,8 +20643,8 @@
             "monster_type": 3,
             "attack": 800,
             "defense": 400,
-            "guardian_star_a": 1,
-            "guardian_star_b": 8,
+            "guardian_star_a": 0,
+            "guardian_star_b": 7,
             "level": 2
         }
     },
@@ -20790,8 +20790,8 @@
             "monster_type": 2,
             "attack": 1000,
             "defense": 800,
-            "guardian_star_a": 1,
-            "guardian_star_b": 5,
+            "guardian_star_a": 0,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -20899,8 +20899,8 @@
             "monster_type": 1,
             "attack": 1200,
             "defense": 1400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -20924,8 +20924,8 @@
             "monster_type": 0,
             "attack": 3200,
             "defense": 2500,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 9
         }
     },
@@ -20989,8 +20989,8 @@
             "monster_type": 10,
             "attack": 900,
             "defense": 700,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -21021,8 +21021,8 @@
             "monster_type": 4,
             "attack": 1050,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -21091,8 +21091,8 @@
             "monster_type": 1,
             "attack": 900,
             "defense": 1400,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -21124,8 +21124,8 @@
             "monster_type": 9,
             "attack": 700,
             "defense": 1400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -21158,8 +21158,8 @@
             "monster_type": 7,
             "attack": 800,
             "defense": 600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -21183,8 +21183,8 @@
             "monster_type": 16,
             "attack": 2100,
             "defense": 1800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 6
         }
     },
@@ -21305,8 +21305,8 @@
             "monster_type": 3,
             "attack": 500,
             "defense": 1100,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -21378,8 +21378,8 @@
             "monster_type": 3,
             "attack": 1400,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -21490,8 +21490,8 @@
             "monster_type": 3,
             "attack": 900,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -21534,8 +21534,8 @@
             "monster_type": 16,
             "attack": 600,
             "defense": 700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 2
         }
     },
@@ -21637,8 +21637,8 @@
             "monster_type": 2,
             "attack": 1000,
             "defense": 900,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -21724,8 +21724,8 @@
             "monster_type": 8,
             "attack": 700,
             "defense": 600,
-            "guardian_star_a": 8,
-            "guardian_star_b": 6,
+            "guardian_star_a": 7,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -21797,8 +21797,8 @@
             "monster_type": 12,
             "attack": 1500,
             "defense": 1200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -21909,8 +21909,8 @@
             "monster_type": 3,
             "attack": 800,
             "defense": 1200,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -21943,8 +21943,8 @@
             "monster_type": 7,
             "attack": 600,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -21978,8 +21978,8 @@
             "monster_type": 7,
             "attack": 1300,
             "defense": 1100,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -22084,8 +22084,8 @@
             "monster_type": 3,
             "attack": 1600,
             "defense": 800,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -22194,8 +22194,8 @@
             "monster_type": 3,
             "attack": 900,
             "defense": 1200,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -22306,8 +22306,8 @@
             "monster_type": 3,
             "attack": 1000,
             "defense": 1200,
-            "guardian_star_a": 5,
-            "guardian_star_b": 7,
+            "guardian_star_a": 4,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -22412,8 +22412,8 @@
             "monster_type": 18,
             "attack": 500,
             "defense": 500,
-            "guardian_star_a": 4,
-            "guardian_star_b": 2,
+            "guardian_star_a": 3,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -22533,8 +22533,8 @@
             "monster_type": 19,
             "attack": 800,
             "defense": 600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -22669,8 +22669,8 @@
             "monster_type": 3,
             "attack": 900,
             "defense": 700,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -22703,8 +22703,8 @@
             "monster_type": 7,
             "attack": 700,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -22788,8 +22788,8 @@
             "monster_type": 2,
             "attack": 1200,
             "defense": 1200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -22890,8 +22890,8 @@
             "monster_type": 7,
             "attack": 600,
             "defense": 600,
-            "guardian_star_a": 1,
-            "guardian_star_b": 9,
+            "guardian_star_a": 0,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -22997,8 +22997,8 @@
             "monster_type": 16,
             "attack": 900,
             "defense": 700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -23133,8 +23133,8 @@
             "monster_type": 18,
             "attack": 900,
             "defense": 1000,
-            "guardian_star_a": 1,
-            "guardian_star_b": 10,
+            "guardian_star_a": 0,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -23167,8 +23167,8 @@
             "monster_type": 7,
             "attack": 800,
             "defense": 400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -23199,8 +23199,8 @@
             "monster_type": 4,
             "attack": 1100,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -23305,8 +23305,8 @@
             "monster_type": 12,
             "attack": 900,
             "defense": 800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -23443,8 +23443,8 @@
             "monster_type": 5,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -23539,8 +23539,8 @@
             "monster_type": 16,
             "attack": 1400,
             "defense": 1200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -23643,8 +23643,8 @@
             "monster_type": 3,
             "attack": 800,
             "defense": 1200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -23788,8 +23788,8 @@
             "monster_type": 12,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -23887,8 +23887,8 @@
             "monster_type": 5,
             "attack": 1100,
             "defense": 900,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -24019,8 +24019,8 @@
             "monster_type": 1,
             "attack": 800,
             "defense": 1000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -24053,8 +24053,8 @@
             "monster_type": 7,
             "attack": 500,
             "defense": 750,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 2
         }
     },
@@ -24191,8 +24191,8 @@
             "monster_type": 5,
             "attack": 500,
             "defense": 2000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -24292,8 +24292,8 @@
             "monster_type": 3,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 10,
-            "guardian_star_b": 1,
+            "guardian_star_a": 9,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -24389,8 +24389,8 @@
             "monster_type": 18,
             "attack": 800,
             "defense": 1200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -24433,8 +24433,8 @@
             "monster_type": 16,
             "attack": 1000,
             "defense": 1100,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -24501,8 +24501,8 @@
             "monster_type": 1,
             "attack": 1000,
             "defense": 1300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -24617,8 +24617,8 @@
             "monster_type": 8,
             "attack": 750,
             "defense": 1100,
-            "guardian_star_a": 9,
-            "guardian_star_b": 10,
+            "guardian_star_a": 8,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -24652,8 +24652,8 @@
             "monster_type": 7,
             "attack": 700,
             "defense": 600,
-            "guardian_star_a": 10,
-            "guardian_star_b": 2,
+            "guardian_star_a": 9,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -24753,8 +24753,8 @@
             "monster_type": 3,
             "attack": 800,
             "defense": 1300,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -24848,8 +24848,8 @@
             "monster_type": 18,
             "attack": 700,
             "defense": 1400,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -24957,8 +24957,8 @@
             "monster_type": 8,
             "attack": 500,
             "defense": 1300,
-            "guardian_star_a": 8,
-            "guardian_star_b": 1,
+            "guardian_star_a": 7,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -25001,8 +25001,8 @@
             "monster_type": 16,
             "attack": 800,
             "defense": 700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -25124,8 +25124,8 @@
             "monster_type": 3,
             "attack": 900,
             "defense": 700,
-            "guardian_star_a": 3,
-            "guardian_star_b": 10,
+            "guardian_star_a": 2,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -25224,8 +25224,8 @@
             "monster_type": 3,
             "attack": 1000,
             "defense": 500,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -25291,8 +25291,8 @@
             "monster_type": 1,
             "attack": 700,
             "defense": 500,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -25328,8 +25328,8 @@
             "monster_type": 7,
             "attack": 1100,
             "defense": 900,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -25372,8 +25372,8 @@
             "monster_type": 16,
             "attack": 1000,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -25409,8 +25409,8 @@
             "monster_type": 7,
             "attack": 900,
             "defense": 600,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -25504,8 +25504,8 @@
             "monster_type": 6,
             "attack": 1300,
             "defense": 900,
-            "guardian_star_a": 1,
-            "guardian_star_b": 7,
+            "guardian_star_a": 0,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -25611,8 +25611,8 @@
             "monster_type": 19,
             "attack": 600,
             "defense": 1500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -25718,8 +25718,8 @@
             "monster_type": 19,
             "attack": 500,
             "defense": 1600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -25828,8 +25828,8 @@
             "monster_type": 14,
             "attack": 1500,
             "defense": 1000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -25882,8 +25882,8 @@
             "monster_type": 8,
             "attack": 1000,
             "defense": 1000,
-            "guardian_star_a": 8,
-            "guardian_star_b": 3,
+            "guardian_star_a": 7,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -25922,8 +25922,8 @@
             "monster_type": 7,
             "attack": 300,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -25954,8 +25954,8 @@
             "monster_type": 9,
             "attack": 300,
             "defense": 200,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 1
         }
     },
@@ -25991,8 +25991,8 @@
             "monster_type": 7,
             "attack": 1000,
             "defense": 900,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -26124,8 +26124,8 @@
             "monster_type": 3,
             "attack": 800,
             "defense": 1500,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -26153,8 +26153,8 @@
             "monster_type": 7,
             "attack": 1500,
             "defense": 1000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -26297,8 +26297,8 @@
             "monster_type": 5,
             "attack": 800,
             "defense": 1000,
-            "guardian_star_a": 10,
-            "guardian_star_b": 3,
+            "guardian_star_a": 9,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -26371,8 +26371,8 @@
             "monster_type": 14,
             "attack": 1100,
             "defense": 700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 2,
+            "guardian_star_a": 7,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -26412,8 +26412,8 @@
             "monster_type": 1,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 10,
-            "guardian_star_b": 4,
+            "guardian_star_a": 9,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -26446,8 +26446,8 @@
             "monster_type": 11,
             "attack": 700,
             "defense": 600,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 2
         }
     },
@@ -26503,8 +26503,8 @@
             "monster_type": 14,
             "attack": 1500,
             "defense": 1800,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -26533,8 +26533,8 @@
             "monster_type": 4,
             "attack": 1200,
             "defense": 1400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -26568,8 +26568,8 @@
             "monster_type": 7,
             "attack": 600,
             "defense": 1400,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -26611,8 +26611,8 @@
             "monster_type": 16,
             "attack": 400,
             "defense": 300,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 1
         }
     },
@@ -26706,8 +26706,8 @@
             "monster_type": 3,
             "attack": 1100,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -26781,8 +26781,8 @@
             "monster_type": 17,
             "attack": 1300,
             "defense": 1000,
-            "guardian_star_a": 1,
-            "guardian_star_b": 3,
+            "guardian_star_a": 0,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -26861,8 +26861,8 @@
             "monster_type": 16,
             "attack": 400,
             "defense": 1000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 2
         }
     },
@@ -26955,8 +26955,8 @@
             "monster_type": 3,
             "attack": 1100,
             "defense": 1100,
-            "guardian_star_a": 8,
-            "guardian_star_b": 4,
+            "guardian_star_a": 7,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -27047,8 +27047,8 @@
             "monster_type": 3,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 3,
-            "guardian_star_b": 7,
+            "guardian_star_a": 2,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -27074,8 +27074,8 @@
             "monster_type": 7,
             "attack": 600,
             "defense": 1300,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -27245,8 +27245,8 @@
             "monster_type": 0,
             "attack": 700,
             "defense": 1300,
-            "guardian_star_a": 3,
-            "guardian_star_b": 5,
+            "guardian_star_a": 2,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -27311,8 +27311,8 @@
             "monster_type": 14,
             "attack": 1400,
             "defense": 1200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -27483,8 +27483,8 @@
             "monster_type": 0,
             "attack": 900,
             "defense": 900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -27605,8 +27605,8 @@
             "monster_type": 3,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 8,
-            "guardian_star_b": 5,
+            "guardian_star_a": 7,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -27646,8 +27646,8 @@
             "monster_type": 6,
             "attack": 800,
             "defense": 800,
-            "guardian_star_a": 3,
-            "guardian_star_b": 6,
+            "guardian_star_a": 2,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -31479,8 +31479,8 @@
             "monster_type": 2,
             "attack": 1300,
             "defense": 1500,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -31589,8 +31589,8 @@
             "monster_type": 3,
             "attack": 1400,
             "defense": 1400,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -31741,8 +31741,8 @@
             "monster_type": 13,
             "attack": 1500,
             "defense": 1200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -31828,8 +31828,8 @@
             "monster_type": 3,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -31879,8 +31879,8 @@
             "monster_type": 14,
             "attack": 1500,
             "defense": 1800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 5
         }
     },
@@ -31904,8 +31904,8 @@
             "monster_type": 5,
             "attack": 2300,
             "defense": 2100,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 7
         }
     },
@@ -32082,8 +32082,8 @@
             "monster_type": 0,
             "attack": 1600,
             "defense": 1800,
-            "guardian_star_a": 1,
-            "guardian_star_b": 4,
+            "guardian_star_a": 0,
+            "guardian_star_b": 3,
             "level": 5
         }
     },
@@ -32118,8 +32118,8 @@
             "monster_type": 0,
             "attack": 2500,
             "defense": 2300,
-            "guardian_star_a": 8,
-            "guardian_star_b": 6,
+            "guardian_star_a": 7,
+            "guardian_star_b": 5,
             "level": 7
         }
     },
@@ -32188,8 +32188,8 @@
             "monster_type": 2,
             "attack": 1100,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -32213,8 +32213,8 @@
             "monster_type": 7,
             "attack": 2800,
             "defense": 2300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 8
         }
     },
@@ -32252,8 +32252,8 @@
             "monster_type": 16,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -32346,8 +32346,8 @@
             "monster_type": 3,
             "attack": 0,
             "defense": 3000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -32429,8 +32429,8 @@
             "monster_type": 1,
             "attack": 1400,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -32454,8 +32454,8 @@
             "monster_type": 3,
             "attack": 3000,
             "defense": 2500,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 8
         }
     },
@@ -32479,8 +32479,8 @@
             "monster_type": 7,
             "attack": 2100,
             "defense": 1800,
-            "guardian_star_a": 10,
-            "guardian_star_b": 5,
+            "guardian_star_a": 9,
+            "guardian_star_b": 4,
             "level": 6
         }
     },
@@ -32559,8 +32559,8 @@
             "monster_type": 18,
             "attack": 0,
             "defense": 3000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 2,
+            "guardian_star_a": 3,
+            "guardian_star_b": 1,
             "level": 5
         }
     },
@@ -32586,8 +32586,8 @@
             "monster_type": 9,
             "attack": 2200,
             "defense": 100,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -32632,8 +32632,8 @@
             "monster_type": 2,
             "attack": 1600,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 5
         }
     },
@@ -32668,8 +32668,8 @@
             "monster_type": 3,
             "attack": 1600,
             "defense": 3000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 7
         }
     },
@@ -32693,8 +32693,8 @@
             "monster_type": 14,
             "attack": 2400,
             "defense": 2400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 7
         }
     },
@@ -32737,8 +32737,8 @@
             "monster_type": 15,
             "attack": 2600,
             "defense": 2200,
-            "guardian_star_a": 5,
-            "guardian_star_b": 1,
+            "guardian_star_a": 4,
+            "guardian_star_b": 0,
             "level": 7
         }
     },
@@ -32762,8 +32762,8 @@
             "monster_type": 1,
             "attack": 2400,
             "defense": 2200,
-            "guardian_star_a": 3,
-            "guardian_star_b": 1,
+            "guardian_star_a": 2,
+            "guardian_star_b": 0,
             "level": 7
         }
     },
@@ -32787,8 +32787,8 @@
             "monster_type": 16,
             "attack": 2500,
             "defense": 2400,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 7
         }
     },
@@ -32812,8 +32812,8 @@
             "monster_type": 3,
             "attack": 3750,
             "defense": 3400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 11
         }
     },
@@ -32839,8 +32839,8 @@
             "monster_type": 9,
             "attack": 1800,
             "defense": 1500,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 5
         }
     },
@@ -32871,8 +32871,8 @@
             "monster_type": 3,
             "attack": 1800,
             "defense": 1600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 5
         }
     },
@@ -32896,8 +32896,8 @@
             "monster_type": 7,
             "attack": 1600,
             "defense": 1200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -32921,8 +32921,8 @@
             "monster_type": 3,
             "attack": 2000,
             "defense": 1600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 6
         }
     },
@@ -32950,8 +32950,8 @@
             "monster_type": 7,
             "attack": 1800,
             "defense": 1000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -32975,8 +32975,8 @@
             "monster_type": 0,
             "attack": 4500,
             "defense": 3800,
-            "guardian_star_a": 8,
-            "guardian_star_b": 10,
+            "guardian_star_a": 7,
+            "guardian_star_b": 9,
             "level": 12
         }
     },
@@ -33009,8 +33009,8 @@
             "monster_type": 11,
             "attack": 800,
             "defense": 1600,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -33034,8 +33034,8 @@
             "monster_type": 4,
             "attack": 1800,
             "defense": 1600,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -33082,8 +33082,8 @@
             "monster_type": 0,
             "attack": 2000,
             "defense": 1300,
-            "guardian_star_a": 3,
-            "guardian_star_b": 8,
+            "guardian_star_a": 2,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -33132,8 +33132,8 @@
             "monster_type": 5,
             "attack": 1100,
             "defense": 1500,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -33157,8 +33157,8 @@
             "monster_type": 7,
             "attack": 2300,
             "defense": 2000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 7
         }
     },
@@ -33205,8 +33205,8 @@
             "monster_type": 0,
             "attack": 2000,
             "defense": 2500,
-            "guardian_star_a": 3,
-            "guardian_star_b": 9,
+            "guardian_star_a": 2,
+            "guardian_star_b": 8,
             "level": 7
         }
     },
@@ -33276,8 +33276,8 @@
             "monster_type": 1,
             "attack": 400,
             "defense": 300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 1
         }
     },
@@ -33315,8 +33315,8 @@
             "monster_type": 14,
             "attack": 1750,
             "defense": 2000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 6
         }
     },
@@ -33346,8 +33346,8 @@
             "monster_type": 3,
             "attack": 1850,
             "defense": 1500,
-            "guardian_star_a": 8,
-            "guardian_star_b": 1,
+            "guardian_star_a": 7,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -33385,8 +33385,8 @@
             "monster_type": 14,
             "attack": 2200,
             "defense": 2500,
-            "guardian_star_a": 1,
-            "guardian_star_b": 5,
+            "guardian_star_a": 0,
+            "guardian_star_b": 4,
             "level": 7
         }
     },
@@ -33412,8 +33412,8 @@
             "monster_type": 7,
             "attack": 2600,
             "defense": 1900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 7
         }
     },
@@ -33437,8 +33437,8 @@
             "monster_type": 14,
             "attack": 3000,
             "defense": 2300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 8
         }
     },
@@ -33476,8 +33476,8 @@
             "monster_type": 16,
             "attack": 250,
             "defense": 200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 1
         }
     },
@@ -33538,8 +33538,8 @@
             "monster_type": 14,
             "attack": 250,
             "defense": 300,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 1
         }
     },
@@ -33650,8 +33650,8 @@
             "monster_type": 8,
             "attack": 300,
             "defense": 200,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 1
         }
     },
@@ -33715,8 +33715,8 @@
             "monster_type": 8,
             "attack": 1550,
             "defense": 1650,
-            "guardian_star_a": 3,
-            "guardian_star_b": 10,
+            "guardian_star_a": 2,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -33746,8 +33746,8 @@
             "monster_type": 9,
             "attack": 300,
             "defense": 350,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 1
         }
     },
@@ -33784,8 +33784,8 @@
             "monster_type": 16,
             "attack": 300,
             "defense": 250,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 1
         }
     },
@@ -33873,8 +33873,8 @@
             "monster_type": 3,
             "attack": 250,
             "defense": 250,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 1
         }
     },
@@ -33898,8 +33898,8 @@
             "monster_type": 11,
             "attack": 1800,
             "defense": 1500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -33923,8 +33923,8 @@
             "monster_type": 7,
             "attack": 2150,
             "defense": 1950,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 6
         }
     },
@@ -33953,8 +33953,8 @@
             "monster_type": 7,
             "attack": 250,
             "defense": 350,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 1
         }
     },
@@ -34026,8 +34026,8 @@
             "monster_type": 5,
             "attack": 1750,
             "defense": 1550,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -34068,8 +34068,8 @@
             "monster_type": 5,
             "attack": 1350,
             "defense": 1600,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -34126,8 +34126,8 @@
             "monster_type": 14,
             "attack": 1450,
             "defense": 1500,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 5
         }
     },
@@ -34187,8 +34187,8 @@
             "monster_type": 14,
             "attack": 1000,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -34226,8 +34226,8 @@
             "monster_type": 14,
             "attack": 2200,
             "defense": 2000,
-            "guardian_star_a": 1,
-            "guardian_star_b": 8,
+            "guardian_star_a": 0,
+            "guardian_star_b": 7,
             "level": 6
         }
     },
@@ -34262,8 +34262,8 @@
             "monster_type": 14,
             "attack": 1750,
             "defense": 1900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 6
         }
     },
@@ -34369,8 +34369,8 @@
             "monster_type": 14,
             "attack": 1850,
             "defense": 1700,
-            "guardian_star_a": 1,
-            "guardian_star_b": 9,
+            "guardian_star_a": 0,
+            "guardian_star_b": 8,
             "level": 6
         }
     },
@@ -34430,8 +34430,8 @@
             "monster_type": 14,
             "attack": 400,
             "defense": 500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 2
         }
     },
@@ -34491,8 +34491,8 @@
             "monster_type": 14,
             "attack": 300,
             "defense": 350,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 1
         }
     },
@@ -34552,8 +34552,8 @@
             "monster_type": 14,
             "attack": 1200,
             "defense": 1400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -34602,8 +34602,8 @@
             "monster_type": 14,
             "attack": 1500,
             "defense": 1700,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -34663,8 +34663,8 @@
             "monster_type": 14,
             "attack": 900,
             "defense": 1200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -34688,8 +34688,8 @@
             "monster_type": 14,
             "attack": 1850,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -34749,8 +34749,8 @@
             "monster_type": 14,
             "attack": 850,
             "defense": 1800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -34837,8 +34837,8 @@
             "monster_type": 14,
             "attack": 800,
             "defense": 900,
-            "guardian_star_a": 1,
-            "guardian_star_b": 10,
+            "guardian_star_a": 0,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -34898,8 +34898,8 @@
             "monster_type": 14,
             "attack": 900,
             "defense": 1600,
-            "guardian_star_a": 10,
-            "guardian_star_b": 6,
+            "guardian_star_a": 9,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -34934,8 +34934,8 @@
             "monster_type": 14,
             "attack": 1700,
             "defense": 1800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 5
         }
     },
@@ -34995,8 +34995,8 @@
             "monster_type": 14,
             "attack": 700,
             "defense": 500,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -35056,8 +35056,8 @@
             "monster_type": 14,
             "attack": 750,
             "defense": 700,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 2
         }
     },
@@ -35117,8 +35117,8 @@
             "monster_type": 14,
             "attack": 500,
             "defense": 400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 2
         }
     },
@@ -35153,8 +35153,8 @@
             "monster_type": 14,
             "attack": 1650,
             "defense": 1800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 5
         }
     },
@@ -35225,8 +35225,8 @@
             "monster_type": 0,
             "attack": 1900,
             "defense": 1800,
-            "guardian_star_a": 3,
-            "guardian_star_b": 4,
+            "guardian_star_a": 2,
+            "guardian_star_b": 3,
             "level": 6
         }
     },
@@ -35373,8 +35373,8 @@
             "monster_type": 15,
             "attack": 1600,
             "defense": 1500,
-            "guardian_star_a": 5,
-            "guardian_star_b": 2,
+            "guardian_star_a": 4,
+            "guardian_star_b": 1,
             "level": 5
         }
     },
@@ -35448,8 +35448,8 @@
             "monster_type": 18,
             "attack": 2000,
             "defense": 2300,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 7
         }
     },
@@ -35482,8 +35482,8 @@
             "monster_type": 0,
             "attack": 2300,
             "defense": 2000,
-            "guardian_star_a": 8,
-            "guardian_star_b": 2,
+            "guardian_star_a": 7,
+            "guardian_star_b": 1,
             "level": 7
         }
     },
@@ -35567,8 +35567,8 @@
             "monster_type": 1,
             "attack": 300,
             "defense": 400,
-            "guardian_star_a": 8,
-            "guardian_star_b": 3,
+            "guardian_star_a": 7,
+            "guardian_star_b": 2,
             "level": 1
         }
     },
@@ -35658,8 +35658,8 @@
             "monster_type": 8,
             "attack": 950,
             "defense": 700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 4,
+            "guardian_star_a": 7,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -35732,8 +35732,8 @@
             "monster_type": 16,
             "attack": 1400,
             "defense": 1000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -35813,8 +35813,8 @@
             "monster_type": 16,
             "attack": 1150,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -35895,8 +35895,8 @@
             "monster_type": 16,
             "attack": 1100,
             "defense": 700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -35982,8 +35982,8 @@
             "monster_type": 1,
             "attack": 1450,
             "defense": 1200,
-            "guardian_star_a": 8,
-            "guardian_star_b": 5,
+            "guardian_star_a": 7,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -36054,8 +36054,8 @@
             "monster_type": 3,
             "attack": 1750,
             "defense": 1500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -36135,8 +36135,8 @@
             "monster_type": 16,
             "attack": 1250,
             "defense": 1000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -36194,8 +36194,8 @@
             "monster_type": 12,
             "attack": 500,
             "defense": 400,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -36219,8 +36219,8 @@
             "monster_type": 12,
             "attack": 1900,
             "defense": 1600,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -36262,8 +36262,8 @@
             "monster_type": 14,
             "attack": 1600,
             "defense": 1900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 5
         }
     },
@@ -36303,8 +36303,8 @@
             "monster_type": 12,
             "attack": 1650,
             "defense": 1700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -36328,8 +36328,8 @@
             "monster_type": 12,
             "attack": 1800,
             "defense": 800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -36360,8 +36360,8 @@
             "monster_type": 14,
             "attack": 1800,
             "defense": 1500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -36394,8 +36394,8 @@
             "monster_type": 13,
             "attack": 2250,
             "defense": 1900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 6
         }
     },
@@ -36441,8 +36441,8 @@
             "monster_type": 13,
             "attack": 2000,
             "defense": 1700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 6
         }
     },
@@ -36478,8 +36478,8 @@
             "monster_type": 16,
             "attack": 450,
             "defense": 500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -36515,8 +36515,8 @@
             "monster_type": 16,
             "attack": 1300,
             "defense": 1000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -36552,8 +36552,8 @@
             "monster_type": 16,
             "attack": 1050,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -36577,8 +36577,8 @@
             "monster_type": 16,
             "attack": 1800,
             "defense": 800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -36701,8 +36701,8 @@
             "monster_type": 13,
             "attack": 1600,
             "defense": 1300,
-            "guardian_star_a": 5,
-            "guardian_star_b": 7,
+            "guardian_star_a": 4,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -36759,8 +36759,8 @@
             "monster_type": 16,
             "attack": 1250,
             "defense": 2100,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 5
         }
     },
@@ -36813,8 +36813,8 @@
             "monster_type": 16,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -36848,8 +36848,8 @@
             "monster_type": 16,
             "attack": 650,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -36883,8 +36883,8 @@
             "monster_type": 16,
             "attack": 600,
             "defense": 700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 2
         }
     },
@@ -36931,8 +36931,8 @@
             "monster_type": 18,
             "attack": 2000,
             "defense": 2200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 2,
+            "guardian_star_a": 3,
+            "guardian_star_b": 1,
             "level": 6
         }
     },
@@ -36984,8 +36984,8 @@
             "monster_type": 18,
             "attack": 1500,
             "defense": 1000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -37046,8 +37046,8 @@
             "monster_type": 18,
             "attack": 1000,
             "defense": 1300,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -37101,8 +37101,8 @@
             "monster_type": 18,
             "attack": 1300,
             "defense": 1200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -37160,8 +37160,8 @@
             "monster_type": 18,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -37194,8 +37194,8 @@
             "monster_type": 15,
             "attack": 1900,
             "defense": 1400,
-            "guardian_star_a": 5,
-            "guardian_star_b": 10,
+            "guardian_star_a": 4,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -37254,8 +37254,8 @@
             "monster_type": 15,
             "attack": 1200,
             "defense": 1300,
-            "guardian_star_a": 5,
-            "guardian_star_b": 3,
+            "guardian_star_a": 4,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -37300,8 +37300,8 @@
             "monster_type": 15,
             "attack": 1400,
             "defense": 1500,
-            "guardian_star_a": 5,
-            "guardian_star_b": 2,
+            "guardian_star_a": 4,
+            "guardian_star_b": 1,
             "level": 5
         }
     },
@@ -37368,8 +37368,8 @@
             "monster_type": 15,
             "attack": 1100,
             "defense": 800,
-            "guardian_star_a": 5,
-            "guardian_star_b": 9,
+            "guardian_star_a": 4,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -37414,8 +37414,8 @@
             "monster_type": 15,
             "attack": 1500,
             "defense": 1300,
-            "guardian_star_a": 5,
-            "guardian_star_b": 8,
+            "guardian_star_a": 4,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -37485,8 +37485,8 @@
             "monster_type": 15,
             "attack": 800,
             "defense": 900,
-            "guardian_star_a": 5,
-            "guardian_star_b": 1,
+            "guardian_star_a": 4,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -37520,8 +37520,8 @@
             "monster_type": 6,
             "attack": 1800,
             "defense": 1500,
-            "guardian_star_a": 3,
-            "guardian_star_b": 7,
+            "guardian_star_a": 2,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -37552,8 +37552,8 @@
             "monster_type": 6,
             "attack": 2100,
             "defense": 1800,
-            "guardian_star_a": 3,
-            "guardian_star_b": 5,
+            "guardian_star_a": 2,
+            "guardian_star_b": 4,
             "level": 6
         }
     },
@@ -37587,8 +37587,8 @@
             "monster_type": 6,
             "attack": 1550,
             "defense": 1200,
-            "guardian_star_a": 3,
-            "guardian_star_b": 8,
+            "guardian_star_a": 2,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -37612,8 +37612,8 @@
             "monster_type": 6,
             "attack": 2300,
             "defense": 1800,
-            "guardian_star_a": 1,
-            "guardian_star_b": 7,
+            "guardian_star_a": 0,
+            "guardian_star_b": 6,
             "level": 6
         }
     },
@@ -37648,8 +37648,8 @@
             "monster_type": 6,
             "attack": 1200,
             "defense": 2000,
-            "guardian_star_a": 3,
-            "guardian_star_b": 9,
+            "guardian_star_a": 2,
+            "guardian_star_b": 8,
             "level": 5
         }
     },
@@ -37720,8 +37720,8 @@
             "monster_type": 3,
             "attack": 300,
             "defense": 300,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 1
         }
     },
@@ -37769,8 +37769,8 @@
             "monster_type": 2,
             "attack": 1300,
             "defense": 1400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -37794,8 +37794,8 @@
             "monster_type": 7,
             "attack": 2200,
             "defense": 1800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 6
         }
     },
@@ -37819,8 +37819,8 @@
             "monster_type": 7,
             "attack": 2100,
             "defense": 1600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 6
         }
     },
@@ -37865,8 +37865,8 @@
             "monster_type": 17,
             "attack": 1900,
             "defense": 1500,
-            "guardian_star_a": 1,
-            "guardian_star_b": 10,
+            "guardian_star_a": 0,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -37897,8 +37897,8 @@
             "monster_type": 16,
             "attack": 1100,
             "defense": 1300,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -37930,8 +37930,8 @@
             "monster_type": 11,
             "attack": 300,
             "defense": 250,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 1
         }
     },
@@ -37959,8 +37959,8 @@
             "monster_type": 9,
             "attack": 600,
             "defense": 800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 2
         }
     },
@@ -37986,8 +37986,8 @@
             "monster_type": 9,
             "attack": 950,
             "defense": 700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -38013,8 +38013,8 @@
             "monster_type": 9,
             "attack": 1000,
             "defense": 800,
-            "guardian_star_a": 3,
-            "guardian_star_b": 6,
+            "guardian_star_a": 2,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -38040,8 +38040,8 @@
             "monster_type": 9,
             "attack": 800,
             "defense": 900,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -38078,8 +38078,8 @@
             "monster_type": 9,
             "attack": 1250,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -38158,8 +38158,8 @@
             "monster_type": 5,
             "attack": 850,
             "defense": 800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -38183,8 +38183,8 @@
             "monster_type": 10,
             "attack": 1900,
             "defense": 1500,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -38212,8 +38212,8 @@
             "monster_type": 5,
             "attack": 2000,
             "defense": 1700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 6
         }
     },
@@ -38244,8 +38244,8 @@
             "monster_type": 16,
             "attack": 300,
             "defense": 350,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 1
         }
     },
@@ -38272,8 +38272,8 @@
             "monster_type": 9,
             "attack": 550,
             "defense": 400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -38308,8 +38308,8 @@
             "monster_type": 1,
             "attack": 650,
             "defense": 500,
-            "guardian_star_a": 8,
-            "guardian_star_b": 2,
+            "guardian_star_a": 7,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -38359,8 +38359,8 @@
             "monster_type": 5,
             "attack": 1800,
             "defense": 1400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -38429,8 +38429,8 @@
             "monster_type": 19,
             "attack": 400,
             "defense": 500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -38490,8 +38490,8 @@
             "monster_type": 19,
             "attack": 1100,
             "defense": 600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -38519,8 +38519,8 @@
             "monster_type": 7,
             "attack": 750,
             "defense": 700,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 2
         }
     },
@@ -38553,8 +38553,8 @@
             "monster_type": 6,
             "attack": 1700,
             "defense": 1500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -38599,8 +38599,8 @@
             "monster_type": 8,
             "attack": 500,
             "defense": 700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 6,
+            "guardian_star_a": 7,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -38628,8 +38628,8 @@
             "monster_type": 1,
             "attack": 1550,
             "defense": 1400,
-            "guardian_star_a": 8,
-            "guardian_star_b": 10,
+            "guardian_star_a": 7,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -38704,8 +38704,8 @@
             "monster_type": 12,
             "attack": 1550,
             "defense": 1700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -38732,8 +38732,8 @@
             "monster_type": 1,
             "attack": 1750,
             "defense": 1500,
-            "guardian_star_a": 8,
-            "guardian_star_b": 1,
+            "guardian_star_a": 7,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -38773,8 +38773,8 @@
             "monster_type": 5,
             "attack": 1000,
             "defense": 1200,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -38805,8 +38805,8 @@
             "monster_type": 16,
             "attack": 900,
             "defense": 1700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -38830,8 +38830,8 @@
             "monster_type": 7,
             "attack": 1550,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -38858,8 +38858,8 @@
             "monster_type": 9,
             "attack": 250,
             "defense": 300,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 1
         }
     },
@@ -38883,8 +38883,8 @@
             "monster_type": 7,
             "attack": 2000,
             "defense": 2100,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 6
         }
     },
@@ -38911,8 +38911,8 @@
             "monster_type": 9,
             "attack": 450,
             "defense": 600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -38960,8 +38960,8 @@
             "monster_type": 3,
             "attack": 1300,
             "defense": 1100,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -39016,8 +39016,8 @@
             "monster_type": 16,
             "attack": 700,
             "defense": 900,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -39047,8 +39047,8 @@
             "monster_type": 7,
             "attack": 400,
             "defense": 300,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 1
         }
     },
@@ -39108,8 +39108,8 @@
             "monster_type": 18,
             "attack": 800,
             "defense": 1000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 2,
+            "guardian_star_a": 3,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -39136,8 +39136,8 @@
             "monster_type": 9,
             "attack": 650,
             "defense": 600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 2
         }
     },
@@ -39172,8 +39172,8 @@
             "monster_type": 12,
             "attack": 1600,
             "defense": 1200,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -39203,8 +39203,8 @@
             "monster_type": 14,
             "attack": 1800,
             "defense": 1400,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -39228,8 +39228,8 @@
             "monster_type": 10,
             "attack": 2200,
             "defense": 2000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 6
         }
     },
@@ -39290,8 +39290,8 @@
             "monster_type": 19,
             "attack": 900,
             "defense": 500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 2
         }
     },
@@ -39346,8 +39346,8 @@
             "monster_type": 19,
             "attack": 1400,
             "defense": 1300,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -39397,8 +39397,8 @@
             "monster_type": 14,
             "attack": 1400,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -39432,8 +39432,8 @@
             "monster_type": 14,
             "attack": 1650,
             "defense": 1600,
-            "guardian_star_a": 8,
-            "guardian_star_b": 3,
+            "guardian_star_a": 7,
+            "guardian_star_b": 2,
             "level": 5
         }
     },
@@ -39486,8 +39486,8 @@
             "monster_type": 14,
             "attack": 1300,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -39545,8 +39545,8 @@
             "monster_type": 18,
             "attack": 1100,
             "defense": 1400,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -39605,8 +39605,8 @@
             "monster_type": 18,
             "attack": 600,
             "defense": 300,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 2
         }
     },
@@ -39658,8 +39658,8 @@
             "monster_type": 18,
             "attack": 1300,
             "defense": 1600,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -39695,8 +39695,8 @@
             "monster_type": 16,
             "attack": 1450,
             "defense": 2200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 6
         }
     },
@@ -39749,8 +39749,8 @@
             "monster_type": 16,
             "attack": 1600,
             "defense": 1500,
-            "guardian_star_a": 1,
-            "guardian_star_b": 3,
+            "guardian_star_a": 0,
+            "guardian_star_b": 2,
             "level": 5
         }
     },
@@ -39780,8 +39780,8 @@
             "monster_type": 16,
             "attack": 1900,
             "defense": 1700,
-            "guardian_star_a": 3,
-            "guardian_star_b": 1,
+            "guardian_star_a": 2,
+            "guardian_star_b": 0,
             "level": 6
         }
     },
@@ -39809,8 +39809,8 @@
             "monster_type": 6,
             "attack": 1900,
             "defense": 1700,
-            "guardian_star_a": 3,
-            "guardian_star_b": 10,
+            "guardian_star_a": 2,
+            "guardian_star_b": 9,
             "level": 6
         }
     },
@@ -39839,8 +39839,8 @@
             "monster_type": 6,
             "attack": 2000,
             "defense": 1900,
-            "guardian_star_a": 3,
-            "guardian_star_b": 7,
+            "guardian_star_a": 2,
+            "guardian_star_b": 6,
             "level": 6
         }
     },
@@ -39864,8 +39864,8 @@
             "monster_type": 7,
             "attack": 1800,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -39896,8 +39896,8 @@
             "monster_type": 16,
             "attack": 550,
             "defense": 500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 2
         }
     },
@@ -39924,8 +39924,8 @@
             "monster_type": 1,
             "attack": 1300,
             "defense": 1800,
-            "guardian_star_a": 4,
-            "guardian_star_b": 2,
+            "guardian_star_a": 3,
+            "guardian_star_b": 1,
             "level": 5
         }
     },
@@ -39949,8 +39949,8 @@
             "monster_type": 7,
             "attack": 1750,
             "defense": 1900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 6
         }
     },
@@ -40020,8 +40020,8 @@
             "monster_type": 5,
             "attack": 300,
             "defense": 250,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 1
         }
     },
@@ -40085,8 +40085,8 @@
             "monster_type": 5,
             "attack": 1600,
             "defense": 1800,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -40110,8 +40110,8 @@
             "monster_type": 17,
             "attack": 2100,
             "defense": 1800,
-            "guardian_star_a": 1,
-            "guardian_star_b": 5,
+            "guardian_star_a": 0,
+            "guardian_star_b": 4,
             "level": 6
         }
     },
@@ -40172,8 +40172,8 @@
             "monster_type": 1,
             "attack": 950,
             "defense": 1000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -40197,8 +40197,8 @@
             "monster_type": 18,
             "attack": 2100,
             "defense": 1700,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 6
         }
     },
@@ -40236,8 +40236,8 @@
             "monster_type": 1,
             "attack": 1900,
             "defense": 900,
-            "guardian_star_a": 8,
-            "guardian_star_b": 4,
+            "guardian_star_a": 7,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -40261,8 +40261,8 @@
             "monster_type": 9,
             "attack": 1900,
             "defense": 1700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 6
         }
     },
@@ -40289,8 +40289,8 @@
             "monster_type": 9,
             "attack": 850,
             "defense": 750,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -40314,8 +40314,8 @@
             "monster_type": 9,
             "attack": 1150,
             "defense": 1400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -40345,8 +40345,8 @@
             "monster_type": 11,
             "attack": 800,
             "defense": 600,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 2
         }
     },
@@ -40401,8 +40401,8 @@
             "monster_type": 15,
             "attack": 750,
             "defense": 600,
-            "guardian_star_a": 5,
-            "guardian_star_b": 7,
+            "guardian_star_a": 4,
+            "guardian_star_b": 6,
             "level": 2
         }
     },
@@ -40431,8 +40431,8 @@
             "monster_type": 6,
             "attack": 900,
             "defense": 800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -40480,8 +40480,8 @@
             "monster_type": 2,
             "attack": 1100,
             "defense": 700,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -40528,8 +40528,8 @@
             "monster_type": 8,
             "attack": 900,
             "defense": 400,
-            "guardian_star_a": 8,
-            "guardian_star_b": 5,
+            "guardian_star_a": 7,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -40567,8 +40567,8 @@
             "monster_type": 5,
             "attack": 450,
             "defense": 500,
-            "guardian_star_a": 3,
-            "guardian_star_b": 5,
+            "guardian_star_a": 2,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -40605,8 +40605,8 @@
             "monster_type": 12,
             "attack": 1400,
             "defense": 1600,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -40644,8 +40644,8 @@
             "monster_type": 12,
             "attack": 1350,
             "defense": 800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -40693,8 +40693,8 @@
             "monster_type": 14,
             "attack": 900,
             "defense": 500,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 2
         }
     },
@@ -40769,8 +40769,8 @@
             "monster_type": 2,
             "attack": 1700,
             "defense": 1900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 6
         }
     },
@@ -40812,8 +40812,8 @@
             "monster_type": 12,
             "attack": 1250,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -40869,8 +40869,8 @@
             "monster_type": 19,
             "attack": 350,
             "defense": 300,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 1
         }
     },
@@ -40917,8 +40917,8 @@
             "monster_type": 2,
             "attack": 400,
             "defense": 300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 1
         }
     },
@@ -40947,8 +40947,8 @@
             "monster_type": 16,
             "attack": 700,
             "defense": 500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -40977,8 +40977,8 @@
             "monster_type": 16,
             "attack": 1350,
             "defense": 1000,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -41007,8 +41007,8 @@
             "monster_type": 1,
             "attack": 2000,
             "defense": 800,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -41037,8 +41037,8 @@
             "monster_type": 6,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 3,
-            "guardian_star_b": 6,
+            "guardian_star_a": 2,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -41084,8 +41084,8 @@
             "monster_type": 3,
             "attack": 1250,
             "defense": 800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -41114,8 +41114,8 @@
             "monster_type": 3,
             "attack": 1550,
             "defense": 1800,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -41190,8 +41190,8 @@
             "monster_type": 0,
             "attack": 1700,
             "defense": 1900,
-            "guardian_star_a": 1,
-            "guardian_star_b": 4,
+            "guardian_star_a": 0,
+            "guardian_star_b": 3,
             "level": 6
         }
     },
@@ -41236,8 +41236,8 @@
             "monster_type": 2,
             "attack": 800,
             "defense": 600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -41279,8 +41279,8 @@
             "monster_type": 14,
             "attack": 1400,
             "defense": 1800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -41331,8 +41331,8 @@
             "monster_type": 18,
             "attack": 400,
             "defense": 400,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 2
         }
     },
@@ -41374,8 +41374,8 @@
             "monster_type": 3,
             "attack": 1250,
             "defense": 700,
-            "guardian_star_a": 10,
-            "guardian_star_b": 8,
+            "guardian_star_a": 9,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -41399,8 +41399,8 @@
             "monster_type": 7,
             "attack": 950,
             "defense": 1400,
-            "guardian_star_a": 10,
-            "guardian_star_b": 1,
+            "guardian_star_a": 9,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -41469,8 +41469,8 @@
             "monster_type": 0,
             "attack": 1200,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -41497,8 +41497,8 @@
             "monster_type": 9,
             "attack": 750,
             "defense": 600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -41524,8 +41524,8 @@
             "monster_type": 7,
             "attack": 550,
             "defense": 400,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 2
         }
     },
@@ -41549,8 +41549,8 @@
             "monster_type": 2,
             "attack": 2200,
             "defense": 1800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 6
         }
     },
@@ -41574,8 +41574,8 @@
             "monster_type": 12,
             "attack": 2100,
             "defense": 1300,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -41599,8 +41599,8 @@
             "monster_type": 11,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -41647,8 +41647,8 @@
             "monster_type": 19,
             "attack": 1200,
             "defense": 900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -41677,8 +41677,8 @@
             "monster_type": 10,
             "attack": 1000,
             "defense": 850,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -41706,8 +41706,8 @@
             "monster_type": 11,
             "attack": 900,
             "defense": 800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -41736,8 +41736,8 @@
             "monster_type": 10,
             "attack": 1300,
             "defense": 800,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -41763,8 +41763,8 @@
             "monster_type": 0,
             "attack": 2100,
             "defense": 1800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 6
         }
     },
@@ -41788,8 +41788,8 @@
             "monster_type": 3,
             "attack": 2100,
             "defense": 1700,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 6
         }
     },
@@ -41818,8 +41818,8 @@
             "monster_type": 10,
             "attack": 1100,
             "defense": 700,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -41868,8 +41868,8 @@
             "monster_type": 1,
             "attack": 1100,
             "defense": 1200,
-            "guardian_star_a": 7,
-            "guardian_star_b": 5,
+            "guardian_star_a": 6,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -41913,8 +41913,8 @@
             "monster_type": 5,
             "attack": 1800,
             "defense": 1900,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 6
         }
     },
@@ -41938,8 +41938,8 @@
             "monster_type": 9,
             "attack": 1100,
             "defense": 1000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -41967,8 +41967,8 @@
             "monster_type": 6,
             "attack": 1850,
             "defense": 1600,
-            "guardian_star_a": 3,
-            "guardian_star_b": 1,
+            "guardian_star_a": 2,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -41996,8 +41996,8 @@
             "monster_type": 1,
             "attack": 1350,
             "defense": 1200,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -42044,8 +42044,8 @@
             "monster_type": 19,
             "attack": 750,
             "defense": 400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 2
         }
     },
@@ -42083,8 +42083,8 @@
             "monster_type": 14,
             "attack": 1100,
             "defense": 900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -42113,8 +42113,8 @@
             "monster_type": 6,
             "attack": 1450,
             "defense": 1000,
-            "guardian_star_a": 3,
-            "guardian_star_b": 8,
+            "guardian_star_a": 2,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -42149,8 +42149,8 @@
             "monster_type": 8,
             "attack": 1800,
             "defense": 1700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 6,
+            "guardian_star_a": 7,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -42177,8 +42177,8 @@
             "monster_type": 16,
             "attack": 950,
             "defense": 1500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -42215,8 +42215,8 @@
             "monster_type": 8,
             "attack": 1000,
             "defense": 1100,
-            "guardian_star_a": 8,
-            "guardian_star_b": 10,
+            "guardian_star_a": 7,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -42254,8 +42254,8 @@
             "monster_type": 14,
             "attack": 800,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 3
         }
     },
@@ -42293,8 +42293,8 @@
             "monster_type": 3,
             "attack": 650,
             "defense": 900,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 3
         }
     },
@@ -42326,8 +42326,8 @@
             "monster_type": 5,
             "attack": 1300,
             "defense": 1400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -42373,8 +42373,8 @@
             "monster_type": 19,
             "attack": 900,
             "defense": 1100,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 3
         }
     },
@@ -42421,8 +42421,8 @@
             "monster_type": 19,
             "attack": 500,
             "defense": 600,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -42446,8 +42446,8 @@
             "monster_type": 11,
             "attack": 800,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -42492,8 +42492,8 @@
             "monster_type": 18,
             "attack": 700,
             "defense": 600,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 2
         }
     },
@@ -42543,8 +42543,8 @@
             "monster_type": 8,
             "attack": 850,
             "defense": 900,
-            "guardian_star_a": 8,
-            "guardian_star_b": 1,
+            "guardian_star_a": 7,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -42574,8 +42574,8 @@
             "monster_type": 16,
             "attack": 1400,
             "defense": 1800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -42604,8 +42604,8 @@
             "monster_type": 19,
             "attack": 2000,
             "defense": 1800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 6
         }
     },
@@ -42632,8 +42632,8 @@
             "monster_type": 6,
             "attack": 1300,
             "defense": 1400,
-            "guardian_star_a": 10,
-            "guardian_star_b": 2,
+            "guardian_star_a": 9,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -42662,8 +42662,8 @@
             "monster_type": 2,
             "attack": 1600,
             "defense": 1200,
-            "guardian_star_a": 9,
-            "guardian_star_b": 5,
+            "guardian_star_a": 8,
+            "guardian_star_b": 4,
             "level": 4
         }
     },
@@ -42709,8 +42709,8 @@
             "monster_type": 5,
             "attack": 1500,
             "defense": 1200,
-            "guardian_star_a": 2,
-            "guardian_star_b": 6,
+            "guardian_star_a": 1,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -42757,8 +42757,8 @@
             "monster_type": 5,
             "attack": 600,
             "defense": 550,
-            "guardian_star_a": 3,
-            "guardian_star_b": 9,
+            "guardian_star_a": 2,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -42784,8 +42784,8 @@
             "monster_type": 16,
             "attack": 1550,
             "defense": 800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -42822,8 +42822,8 @@
             "monster_type": 7,
             "attack": 1050,
             "defense": 1200,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -42862,8 +42862,8 @@
             "monster_type": 8,
             "attack": 700,
             "defense": 1400,
-            "guardian_star_a": 8,
-            "guardian_star_b": 2,
+            "guardian_star_a": 7,
+            "guardian_star_b": 1,
             "level": 3
         }
     },
@@ -42890,8 +42890,8 @@
             "monster_type": 16,
             "attack": 750,
             "defense": 500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 2
         }
     },
@@ -42940,8 +42940,8 @@
             "monster_type": 0,
             "attack": 1100,
             "defense": 1200,
-            "guardian_star_a": 8,
-            "guardian_star_b": 3,
+            "guardian_star_a": 7,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -42986,8 +42986,8 @@
             "monster_type": 5,
             "attack": 750,
             "defense": 800,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 3
         }
     },
@@ -43013,8 +43013,8 @@
             "monster_type": 16,
             "attack": 950,
             "defense": 800,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -43040,8 +43040,8 @@
             "monster_type": 16,
             "attack": 850,
             "defense": 700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -43072,8 +43072,8 @@
             "monster_type": 5,
             "attack": 1250,
             "defense": 1300,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 4
         }
     },
@@ -43110,8 +43110,8 @@
             "monster_type": 8,
             "attack": 1300,
             "defense": 1100,
-            "guardian_star_a": 8,
-            "guardian_star_b": 4,
+            "guardian_star_a": 7,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -43137,8 +43137,8 @@
             "monster_type": 9,
             "attack": 600,
             "defense": 700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 2
         }
     },
@@ -43176,8 +43176,8 @@
             "monster_type": 15,
             "attack": 850,
             "defense": 800,
-            "guardian_star_a": 5,
-            "guardian_star_b": 8,
+            "guardian_star_a": 4,
+            "guardian_star_b": 7,
             "level": 3
         }
     },
@@ -43201,8 +43201,8 @@
             "monster_type": 7,
             "attack": 650,
             "defense": 500,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 2
         }
     },
@@ -43236,8 +43236,8 @@
             "monster_type": 1,
             "attack": 1100,
             "defense": 800,
-            "guardian_star_a": 8,
-            "guardian_star_b": 5,
+            "guardian_star_a": 7,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -43261,8 +43261,8 @@
             "monster_type": 15,
             "attack": 2800,
             "defense": 2100,
-            "guardian_star_a": 5,
-            "guardian_star_b": 9,
+            "guardian_star_a": 4,
+            "guardian_star_b": 8,
             "level": 7
         }
     },
@@ -43286,8 +43286,8 @@
             "monster_type": 9,
             "attack": 1600,
             "defense": 1400,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -43311,8 +43311,8 @@
             "monster_type": 16,
             "attack": 850,
             "defense": 1400,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 4
         }
     },
@@ -43348,8 +43348,8 @@
             "monster_type": 8,
             "attack": 1100,
             "defense": 1200,
-            "guardian_star_a": 8,
-            "guardian_star_b": 6,
+            "guardian_star_a": 7,
+            "guardian_star_b": 5,
             "level": 4
         }
     },
@@ -43373,8 +43373,8 @@
             "monster_type": 12,
             "attack": 1700,
             "defense": 1600,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -43401,8 +43401,8 @@
             "monster_type": 3,
             "attack": 1900,
             "defense": 1700,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 6
         }
     },
@@ -43426,8 +43426,8 @@
             "monster_type": 1,
             "attack": 1650,
             "defense": 1900,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -43464,8 +43464,8 @@
             "monster_type": 19,
             "attack": 1000,
             "defense": 1200,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 4
         }
     },
@@ -43497,8 +43497,8 @@
             "monster_type": 3,
             "attack": 1650,
             "defense": 1300,
-            "guardian_star_a": 7,
-            "guardian_star_b": 2,
+            "guardian_star_a": 6,
+            "guardian_star_b": 1,
             "level": 5
         }
     },
@@ -43530,8 +43530,8 @@
             "monster_type": 1,
             "attack": 1600,
             "defense": 1500,
-            "guardian_star_a": 8,
-            "guardian_star_b": 10,
+            "guardian_star_a": 7,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -43566,8 +43566,8 @@
             "monster_type": 18,
             "attack": 1200,
             "defense": 1300,
-            "guardian_star_a": 4,
-            "guardian_star_b": 2,
+            "guardian_star_a": 3,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -43591,8 +43591,8 @@
             "monster_type": 16,
             "attack": 1650,
             "defense": 1300,
-            "guardian_star_a": 6,
-            "guardian_star_b": 7,
+            "guardian_star_a": 5,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -43622,8 +43622,8 @@
             "monster_type": 16,
             "attack": 1600,
             "defense": 1100,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -43654,8 +43654,8 @@
             "monster_type": 12,
             "attack": 1300,
             "defense": 1400,
-            "guardian_star_a": 6,
-            "guardian_star_b": 1,
+            "guardian_star_a": 5,
+            "guardian_star_b": 0,
             "level": 4
         }
     },
@@ -43681,8 +43681,8 @@
             "monster_type": 4,
             "attack": 1900,
             "defense": 2000,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 6
         }
     },
@@ -43712,8 +43712,8 @@
             "monster_type": 1,
             "attack": 550,
             "defense": 500,
-            "guardian_star_a": 7,
-            "guardian_star_b": 3,
+            "guardian_star_a": 6,
+            "guardian_star_b": 2,
             "level": 2
         }
     },
@@ -43748,8 +43748,8 @@
             "monster_type": 5,
             "attack": 950,
             "defense": 1100,
-            "guardian_star_a": 2,
-            "guardian_star_b": 5,
+            "guardian_star_a": 1,
+            "guardian_star_b": 4,
             "level": 3
         }
     },
@@ -43773,8 +43773,8 @@
             "monster_type": 11,
             "attack": 1400,
             "defense": 1100,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 4
         }
     },
@@ -43803,8 +43803,8 @@
             "monster_type": 1,
             "attack": 1500,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 10,
+            "guardian_star_a": 8,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -43834,8 +43834,8 @@
             "monster_type": 18,
             "attack": 1600,
             "defense": 1500,
-            "guardian_star_a": 4,
-            "guardian_star_b": 8,
+            "guardian_star_a": 3,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -43864,8 +43864,8 @@
             "monster_type": 8,
             "attack": 1400,
             "defense": 1700,
-            "guardian_star_a": 8,
-            "guardian_star_b": 1,
+            "guardian_star_a": 7,
+            "guardian_star_b": 0,
             "level": 5
         }
     },
@@ -43889,8 +43889,8 @@
             "monster_type": 16,
             "attack": 1150,
             "defense": 1300,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 4
         }
     },
@@ -43919,8 +43919,8 @@
             "monster_type": 3,
             "attack": 350,
             "defense": 300,
-            "guardian_star_a": 4,
-            "guardian_star_b": 9,
+            "guardian_star_a": 3,
+            "guardian_star_b": 8,
             "level": 1
         }
     },
@@ -43948,8 +43948,8 @@
             "monster_type": 6,
             "attack": 1600,
             "defense": 1200,
-            "guardian_star_a": 3,
-            "guardian_star_b": 10,
+            "guardian_star_a": 2,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -43978,8 +43978,8 @@
             "monster_type": 19,
             "attack": 1500,
             "defense": 1800,
-            "guardian_star_a": 2,
-            "guardian_star_b": 8,
+            "guardian_star_a": 1,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -44006,8 +44006,8 @@
             "monster_type": 19,
             "attack": 1800,
             "defense": 1500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 9,
+            "guardian_star_a": 1,
+            "guardian_star_b": 8,
             "level": 5
         }
     },
@@ -44031,8 +44031,8 @@
             "monster_type": 16,
             "attack": 1850,
             "defense": 1300,
-            "guardian_star_a": 6,
-            "guardian_star_b": 8,
+            "guardian_star_a": 5,
+            "guardian_star_b": 7,
             "level": 5
         }
     },
@@ -44056,8 +44056,8 @@
             "monster_type": 9,
             "attack": 900,
             "defense": 700,
-            "guardian_star_a": 2,
-            "guardian_star_b": 10,
+            "guardian_star_a": 1,
+            "guardian_star_b": 9,
             "level": 3
         }
     },
@@ -44085,8 +44085,8 @@
             "monster_type": 3,
             "attack": 1350,
             "defense": 1700,
-            "guardian_star_a": 4,
-            "guardian_star_b": 10,
+            "guardian_star_a": 3,
+            "guardian_star_b": 9,
             "level": 5
         }
     },
@@ -44115,8 +44115,8 @@
             "monster_type": 5,
             "attack": 1150,
             "defense": 900,
-            "guardian_star_a": 10,
-            "guardian_star_b": 3,
+            "guardian_star_a": 9,
+            "guardian_star_b": 2,
             "level": 3
         }
     },
@@ -44143,8 +44143,8 @@
             "monster_type": 14,
             "attack": 1350,
             "defense": 1000,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -44170,8 +44170,8 @@
             "monster_type": 17,
             "attack": 400,
             "defense": 450,
-            "guardian_star_a": 1,
-            "guardian_star_b": 5,
+            "guardian_star_a": 0,
+            "guardian_star_b": 4,
             "level": 2
         }
     },
@@ -44195,8 +44195,8 @@
             "monster_type": 14,
             "attack": 1900,
             "defense": 2200,
-            "guardian_star_a": 4,
-            "guardian_star_b": 7,
+            "guardian_star_a": 3,
+            "guardian_star_b": 6,
             "level": 6
         }
     },
@@ -44220,8 +44220,8 @@
             "monster_type": 16,
             "attack": 1300,
             "defense": 700,
-            "guardian_star_a": 6,
-            "guardian_star_b": 9,
+            "guardian_star_a": 5,
+            "guardian_star_b": 8,
             "level": 3
         }
     },
@@ -44245,8 +44245,8 @@
             "monster_type": 16,
             "attack": 1500,
             "defense": 900,
-            "guardian_star_a": 6,
-            "guardian_star_b": 10,
+            "guardian_star_a": 5,
+            "guardian_star_b": 9,
             "level": 4
         }
     },
@@ -44272,8 +44272,8 @@
             "monster_type": 14,
             "attack": 1600,
             "defense": 1300,
-            "guardian_star_a": 9,
-            "guardian_star_b": 6,
+            "guardian_star_a": 8,
+            "guardian_star_b": 5,
             "level": 5
         }
     },
@@ -44297,8 +44297,8 @@
             "monster_type": 3,
             "attack": 1450,
             "defense": 1000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 4,
+            "guardian_star_a": 6,
+            "guardian_star_b": 3,
             "level": 4
         }
     },
@@ -44322,8 +44322,8 @@
             "monster_type": 7,
             "attack": 1650,
             "defense": 1600,
-            "guardian_star_a": 9,
-            "guardian_star_b": 7,
+            "guardian_star_a": 8,
+            "guardian_star_b": 6,
             "level": 5
         }
     },
@@ -46827,8 +46827,8 @@
             "monster_type": 3,
             "attack": 1950,
             "defense": 1850,
-            "guardian_star_a": 8,
-            "guardian_star_b": 3,
+            "guardian_star_a": 7,
+            "guardian_star_b": 2,
             "level": 6
         }
     },
@@ -46852,8 +46852,8 @@
             "monster_type": 3,
             "attack": 2000,
             "defense": 1850,
-            "guardian_star_a": 9,
-            "guardian_star_b": 1,
+            "guardian_star_a": 8,
+            "guardian_star_b": 0,
             "level": 6
         }
     },
@@ -46877,8 +46877,8 @@
             "monster_type": 4,
             "attack": 2750,
             "defense": 2500,
-            "guardian_star_a": 2,
-            "guardian_star_b": 7,
+            "guardian_star_a": 1,
+            "guardian_star_b": 6,
             "level": 8
         }
     },
@@ -46902,8 +46902,8 @@
             "monster_type": 3,
             "attack": 2050,
             "defense": 2500,
-            "guardian_star_a": 8,
-            "guardian_star_b": 2,
+            "guardian_star_a": 7,
+            "guardian_star_b": 1,
             "level": 7
         }
     },
@@ -46927,8 +46927,8 @@
             "monster_type": 0,
             "attack": 2850,
             "defense": 2350,
-            "guardian_star_a": 9,
-            "guardian_star_b": 2,
+            "guardian_star_a": 8,
+            "guardian_star_b": 1,
             "level": 8
         }
     },
@@ -46952,8 +46952,8 @@
             "monster_type": 0,
             "attack": 2350,
             "defense": 2400,
-            "guardian_star_a": 7,
-            "guardian_star_b": 5,
+            "guardian_star_a": 6,
+            "guardian_star_b": 4,
             "level": 7
         }
     },
@@ -46977,8 +46977,8 @@
             "monster_type": 1,
             "attack": 2650,
             "defense": 2250,
-            "guardian_star_a": 7,
-            "guardian_star_b": 6,
+            "guardian_star_a": 6,
+            "guardian_star_b": 5,
             "level": 7
         }
     },
@@ -47002,8 +47002,8 @@
             "monster_type": 1,
             "attack": 2900,
             "defense": 2450,
-            "guardian_star_a": 10,
-            "guardian_star_b": 4,
+            "guardian_star_a": 9,
+            "guardian_star_b": 3,
             "level": 8
         }
     },
@@ -47027,8 +47027,8 @@
             "monster_type": 7,
             "attack": 2450,
             "defense": 2000,
-            "guardian_star_a": 7,
-            "guardian_star_b": 9,
+            "guardian_star_a": 6,
+            "guardian_star_b": 8,
             "level": 7
         }
     },
@@ -47052,8 +47052,8 @@
             "monster_type": 16,
             "attack": 2550,
             "defense": 2500,
-            "guardian_star_a": 6,
-            "guardian_star_b": 2,
+            "guardian_star_a": 5,
+            "guardian_star_b": 1,
             "level": 8
         }
     },
@@ -47077,8 +47077,8 @@
             "monster_type": 0,
             "attack": 2200,
             "defense": 2350,
-            "guardian_star_a": 8,
-            "guardian_star_b": 4,
+            "guardian_star_a": 7,
+            "guardian_star_b": 3,
             "level": 7
         }
     },
@@ -47104,8 +47104,8 @@
             "monster_type": 0,
             "attack": 1800,
             "defense": 2000,
-            "guardian_star_a": 4,
-            "guardian_star_b": 6,
+            "guardian_star_a": 3,
+            "guardian_star_b": 5,
             "level": 6
         }
     },
@@ -47129,8 +47129,8 @@
             "monster_type": 0,
             "attack": 3500,
             "defense": 2000,
-            "guardian_star_a": 1,
-            "guardian_star_b": 8,
+            "guardian_star_a": 0,
+            "guardian_star_b": 7,
             "level": 8
         }
     },
@@ -47154,8 +47154,8 @@
             "monster_type": 5,
             "attack": 2250,
             "defense": 1800,
-            "guardian_star_a": 1,
-            "guardian_star_b": 9,
+            "guardian_star_a": 0,
+            "guardian_star_b": 8,
             "level": 6
         }
     },
@@ -47179,8 +47179,8 @@
             "monster_type": 7,
             "attack": 2000,
             "defense": 2350,
-            "guardian_star_a": 9,
-            "guardian_star_b": 3,
+            "guardian_star_a": 8,
+            "guardian_star_b": 2,
             "level": 7
         }
     },
@@ -47204,8 +47204,8 @@
             "monster_type": 3,
             "attack": 2550,
             "defense": 2150,
-            "guardian_star_a": 9,
-            "guardian_star_b": 4,
+            "guardian_star_a": 8,
+            "guardian_star_b": 3,
             "level": 7
         }
     },
@@ -47229,8 +47229,8 @@
             "monster_type": 9,
             "attack": 2450,
             "defense": 2550,
-            "guardian_star_a": 2,
-            "guardian_star_b": 4,
+            "guardian_star_a": 1,
+            "guardian_star_b": 3,
             "level": 8
         }
     },
@@ -47254,8 +47254,8 @@
             "monster_type": 12,
             "attack": 2350,
             "defense": 2150,
-            "guardian_star_a": 6,
-            "guardian_star_b": 3,
+            "guardian_star_a": 5,
+            "guardian_star_b": 2,
             "level": 7
         }
     },
@@ -47279,8 +47279,8 @@
             "monster_type": 2,
             "attack": 1900,
             "defense": 1850,
-            "guardian_star_a": 4,
-            "guardian_star_b": 1,
+            "guardian_star_a": 3,
+            "guardian_star_b": 0,
             "level": 6
         }
     },
@@ -47304,8 +47304,8 @@
             "monster_type": 1,
             "attack": 2000,
             "defense": 1800,
-            "guardian_star_a": 10,
-            "guardian_star_b": 5,
+            "guardian_star_a": 9,
+            "guardian_star_b": 4,
             "level": 6
         }
     },
@@ -47352,8 +47352,8 @@
             "monster_type": 1,
             "attack": 2800,
             "defense": 2600,
-            "guardian_star_a": 7,
-            "guardian_star_b": 1,
+            "guardian_star_a": 6,
+            "guardian_star_b": 0,
             "level": 8
         }
     }

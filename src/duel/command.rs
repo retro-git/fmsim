@@ -242,11 +242,11 @@ impl DuelCommand for HandPlayMultipleCmd {
 
         // remove all hand_indices from the hand. note that hand_indices is not sorted.
         self.hand_indices
-        .iter()
-        .sorted_by(|a, b| b.cmp(a))
-        .for_each(|&index| {
-            duel.get_player_mut().hand.remove(index);
-        });
+            .iter()
+            .sorted_by(|a, b| b.cmp(a))
+            .for_each(|&index| {
+                duel.get_player_mut().hand.remove(index);
+            });
 
         // check if the field_index is occupied. if so, take the card and append it to the beginning of the cards vector.
         if let Some(existing_card) = &duel.get_player_mut().monster_row[self.field_index] {

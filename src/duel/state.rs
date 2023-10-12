@@ -4,8 +4,7 @@ use serde::{Deserialize, Serialize};
 use super::field::MonsterRowPosition;
 
 #[enum_dispatch]
-pub trait DuelState {
-}
+pub trait DuelState {}
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct HandState;
@@ -40,5 +39,5 @@ pub enum DuelStateEnum {
     FieldState, // The hand phase is done and the user can perform field actions (such as attacking, toggling between attack/defense, etc.)
     FieldEquipSelectedState, // The user selected an equip card on the spell row. Now awaiting them to pick the monster to equip to.
     SetGuardianStarState, // Happens when a monster is played from the hand, or when an equip is played on an existing monster but the equip fails.
-    EndState,                         // The game is over.
+    EndState,             // The game is over.
 }

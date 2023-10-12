@@ -2,7 +2,7 @@ use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use crate::CARDS;
+use crate::{GuardianStarType, CARDS};
 
 fn from_primitive<'de, D, T>(deserializer: D) -> Result<T, D::Error>
 where
@@ -128,21 +128,6 @@ pub fn equip(card1: &Card, card2: &Card) -> Option<Card> {
         }
     }
     Some(monster_clone)
-}
-
-#[derive(Serialize, Deserialize, Debug, PartialEq, FromPrimitive, ToPrimitive, Copy, Clone)]
-pub enum GuardianStarType {
-    NoStar = 0,
-    Mars = 1,
-    Jupiter = 2,
-    Saturn = 3,
-    Uranus = 4,
-    Pluto = 5,
-    Neptune = 6,
-    Mercury = 7,
-    Sun = 8,
-    Moon = 9,
-    Venus = 10,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, FromPrimitive, ToPrimitive, Copy, Clone)]

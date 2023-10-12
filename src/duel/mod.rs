@@ -1,6 +1,7 @@
 use derive_builder::Builder;
-use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
+
+use crate::TerrainType;
 
 use self::command::DuelCommandEnum;
 use self::player::Player;
@@ -19,7 +20,7 @@ pub mod state;
 pub struct Duel {
     pub player1: Player,
     pub player2: Player,
-    pub field_type: FieldType,
+    pub terrain_type: TerrainType,
     pub turn: u32,
     pub state: DuelStateEnum,
 }
@@ -29,7 +30,7 @@ impl Default for Duel {
         let mut duel = Self {
             player1: Player::default(),
             player2: Player::default(),
-            field_type: FieldType::Neutral,
+            terrain_type: TerrainType::Default,
             turn: 0,
             state: HandState.into(),
         };
@@ -78,17 +79,6 @@ impl Duel {
             &mut self.player1
         }
     }
-}
-
-#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq, FromPrimitive, ToPrimitive)]
-pub enum FieldType {
-    Neutral = 0,
-    Forest = 1,
-    Mountain = 2,
-    Sogen = 3,
-    Umi = 4,
-    Wasteland = 5,
-    Yami = 6,
 }
 
 #[cfg(test)]

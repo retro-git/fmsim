@@ -1,10 +1,20 @@
 pub mod card;
 pub mod duelist;
+pub mod guardian_star;
+pub mod terrain;
 
 pub use card::*;
 pub use duelist::*;
+pub use guardian_star::*;
+pub use terrain::*;
 
 use std::sync::LazyLock;
+
+pub enum AdvantageRelation {
+    Neutral,
+    Advantaged,
+    Disadvantaged,
+}
 
 pub static CARDS: LazyLock<Vec<Card>> = LazyLock::new(|| {
     let card_data = include_bytes!("../../data/cards.json");
