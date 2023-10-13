@@ -24,10 +24,9 @@ fn execute_spell(card: Card, duel: &mut Duel) {
         CardVariant::Ritual { card1_id, card2_id, card3_id, result_card_id } => {
             // Loop through the player's monster row and check if the three cards are present.
             // If so, remove all of them from the field. Then, enter SetGuardianStarState with the ritual card.
-            let monster_row = duel.get_player_mut().monster_row.clone();
             let mut found_cards = vec![];
             let mut found_card_ids = HashSet::new();
-            for (index, monster_row_position) in monster_row.iter().enumerate() {
+            for (index, monster_row_position) in duel.get_player_mut().monster_row.iter().enumerate() {
                 if let Some(monster_row_position) = monster_row_position {
                     let card_id = monster_row_position.card.id;
                     if (card_id == card1_id || card_id == card2_id || card_id == card3_id) && !found_card_ids.contains(&card_id) {
@@ -39,9 +38,9 @@ fn execute_spell(card: Card, duel: &mut Duel) {
 
             if found_cards.len() == 3 {
                 // Remove the cards from the field
-                found_cards.iter().sorted_by(|a, b| b.cmp(a)).for_each(|&index| {
-                    duel.get_player_mut().monster_row[index] = None;
-                });
+                for index in &found_cards {
+                    duel.get_player_mut().monster_row[*index] = None;
+                }
 
                 let ritual_card = card_from_id(result_card_id);
 
