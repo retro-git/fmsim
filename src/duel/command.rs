@@ -6,9 +6,9 @@ use std::collections::HashSet;
 use thiserror::Error;
 
 use crate::{
-    combine, combine_cards,
+    card_from_id, combine, combine_cards,
     duel::field::{MonsterRowPosition, SpellRowPosition},
-    guardian_star_relation, AdvantageRelation, CardVariant, Card, card_from_id,
+    guardian_star_relation, AdvantageRelation, Card, CardVariant,
 };
 
 use super::{
@@ -20,9 +20,15 @@ use super::{
 fn execute_spell(card: Card, duel: &mut Duel) {
     match card.variant {
         CardVariant::Magic => {
+            // TODO: Implement
             duel.state = FieldState.into();
-        },
-        CardVariant::Ritual { card1_id, card2_id, card3_id, result_card_id } => {
+        }
+        CardVariant::Ritual {
+            card1_id,
+            card2_id,
+            card3_id,
+            result_card_id,
+        } => {
             // Loop through the player's monster row and check if the three cards are present.
             // If so, remove all of them from the field. Then, enter SetGuardianStarState with the ritual card.
             let mut found_cards = vec![];
@@ -30,7 +36,9 @@ fn execute_spell(card: Card, duel: &mut Duel) {
             for (index, monster_row_position) in duel.get_player().monster_row.iter().enumerate() {
                 if let Some(monster_row_position) = monster_row_position {
                     let card_id = monster_row_position.card.id;
-                    if (card_id == card1_id || card_id == card2_id || card_id == card3_id) && !found_card_ids.contains(&card_id) {
+                    if (card_id == card1_id || card_id == card2_id || card_id == card3_id)
+                        && !found_card_ids.contains(&card_id)
+                    {
                         found_cards.push(index);
                         found_card_ids.insert(card_id);
                     }
@@ -58,14 +66,19 @@ fn execute_spell(card: Card, duel: &mut Duel) {
                 duel.state = SetGuardianStarState {
                     monster_row_position: monster_row_pos,
                     monster_row_index: found_cards[0],
-                }.into();
+                }
+                .into();
             }
-        },
+        }
         CardVariant::Equip { .. } | CardVariant::Trap => {
             // Do nothing
-        },
+        }
         _ => panic!("execute_spell: Called on a monster card."),
     }
+}
+
+fn reverse_trap(duel: &mut Duel) {
+    // TODO: Implement
 }
 
 #[derive(Error, Debug)]
@@ -226,15 +239,18 @@ impl DuelCommand for HandPlaySingleCmd {
                         .into()
                     } else {
                         duel.get_player_mut().monster_row[field_index] = Some(monster_row_position);
+
+                        reverse_trap(duel);
+
                         duel.state = FieldState.into();
                     };
                 }
                 _ => {
                     let existing_position = duel.get_player().spell_row[field_index].clone();
                     if existing_position.is_some() {
-                        // TODO: Execute spell effect
                         let card = combine(&card, &existing_position.as_ref().unwrap().card);
                         duel.get_player_mut().spell_row[field_index] = None;
+
                         execute_spell(card, duel);
                     } else {
                         duel.get_player_mut().spell_row[field_index] = Some(SpellRowPosition {
@@ -246,8 +262,6 @@ impl DuelCommand for HandPlaySingleCmd {
             }
         } else {
             // FaceUp Magic/Ritual
-            // For now, just do nothing.
-            // TODO: Execute spell effect
             execute_spell(card, duel);
         }
 
@@ -370,6 +384,9 @@ impl DuelCommand for HandPlayMultipleCmd {
                 if all_successful_equips {
                     duel.get_player_mut().monster_row[self.field_index] =
                         Some(monster_row_position);
+
+                    reverse_trap(duel);
+
                     duel.state = FieldState.into();
                 } else {
                     duel.get_player_mut().monster_row[self.field_index] = None;
@@ -381,7 +398,6 @@ impl DuelCommand for HandPlayMultipleCmd {
                 }
             }
             _ => {
-                // TODO: Execute spell effect
                 execute_spell(combined_card.clone(), duel);
             }
         }
@@ -413,6 +429,9 @@ impl DuelCommand for SetGuardianStarCmd {
             let mut monster_row_position = state.monster_row_position.clone();
             monster_row_position.guardian_star_choice = self.guardian_star_choice;
             duel.get_player_mut().monster_row[state.monster_row_index] = Some(monster_row_position);
+
+            reverse_trap(duel);
+
             duel.state = FieldState.into();
         }
 
@@ -683,7 +702,7 @@ impl DuelCommand for FieldPlaySpellCmd {
                 // leave None in the spell row
                 let card = spell.card.clone();
                 duel.get_player_mut().spell_row[self.spell_row_index] = None;
-                // TODO: Execute spell effect
+
                 execute_spell(card, duel);
             }
         }
@@ -787,6 +806,9 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
                 monster.card = combined_card;
                 if combined_attack > original_attack {
                     duel.get_player_mut().monster_row[self.monster_row_index] = Some(monster);
+
+                    reverse_trap(duel);
+
                     duel.state = FieldState.into();
                 } else {
                     // Equip was not successful, go to SetGuardianStarState
