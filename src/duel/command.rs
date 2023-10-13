@@ -20,13 +20,14 @@ use super::{
 fn execute_spell(card: Card, duel: &mut Duel) {
     match card.variant {
         CardVariant::Magic => {
+            duel.state = FieldState.into();
         },
         CardVariant::Ritual { card1_id, card2_id, card3_id, result_card_id } => {
             // Loop through the player's monster row and check if the three cards are present.
             // If so, remove all of them from the field. Then, enter SetGuardianStarState with the ritual card.
             let mut found_cards = vec![];
             let mut found_card_ids = HashSet::new();
-            for (index, monster_row_position) in duel.get_player_mut().monster_row.iter().enumerate() {
+            for (index, monster_row_position) in duel.get_player().monster_row.iter().enumerate() {
                 if let Some(monster_row_position) = monster_row_position {
                     let card_id = monster_row_position.card.id;
                     if (card_id == card1_id || card_id == card2_id || card_id == card3_id) && !found_card_ids.contains(&card_id) {
@@ -382,7 +383,6 @@ impl DuelCommand for HandPlayMultipleCmd {
             _ => {
                 // TODO: Execute spell effect
                 execute_spell(combined_card.clone(), duel);
-                // duel.state = FieldState.into();
             }
         }
 
