@@ -8,7 +8,7 @@ use thiserror::Error;
 use crate::{
     card_from_id, combine, combine_cards,
     duel::field::{MonsterRowPosition, SpellRowPosition},
-    guardian_star_relation, AdvantageRelation, Card, CardVariant,
+    guardian_star_relation, AdvantageRelation, Card, CardVariant, TrapEffectEnum, MagicEffect,
 };
 
 use super::{
@@ -19,9 +19,16 @@ use super::{
 
 fn execute_spell(card: Card, duel: &mut Duel) {
     match card.variant {
-        CardVariant::Magic { .. } => {
-            // TODO: Implement
-            duel.state = FieldState.into();
+        CardVariant::Magic ( magic_effect ) => {
+            magic_effect.execute_effect(duel);
+
+            // Check if either player has <= 0 life points. If so, set the duel state to EndState.
+            if duel.get_player().life_points <= 0 || duel.get_enemy().life_points <= 0 {
+                duel.state = EndState.into();
+            }
+            else {
+                duel.state = FieldState.into();
+            }
         }
         CardVariant::Ritual {
             card1_id,
@@ -68,6 +75,9 @@ fn execute_spell(card: Card, duel: &mut Duel) {
                     monster_row_index: found_cards[0],
                 }
                 .into();
+            }
+            else {
+                duel.state = FieldState.into();
             }
         }
         CardVariant::Equip { .. } | CardVariant::Trap { .. } => {
@@ -502,7 +512,50 @@ impl DuelCommand for FieldAttackCmd {
     fn execute(&self, duel: &mut Duel) -> Result<(), CommandError> {
         self.check_valid(duel)?;
 
-        // TODO: Triggering traps
+        // Loop through the enemy spell row to check for traps.
+        // We are looking for TrapEffectEnum::FakeTrap or TrapEffectEnum::DestroyAttacker { attack_threshold }
+        // If we find a DestroyAttacker, we need to check if the attack of the attacking monster is <= attack_threshold.
+        // If so, we need to destroy the attacking monster and the trap.
+        // In the case of FakeTrap, we just need to destroy the trap and cancel the attack, setting the attacker to disabled.
+        for (index, spell_row_position) in duel.get_enemy().spell_row.iter().enumerate() {
+            if let Some(spell) = spell_row_position {
+                if let CardVariant::Trap(trap_effect) = spell.card.variant {
+                    match trap_effect {
+                        TrapEffectEnum::FakeTrap => {
+                            duel.get_enemy_mut().spell_row[index] = None;
+                            let monster = duel.get_player_mut().monster_row[self.monster_row_index]
+                                .as_mut()
+                                .unwrap();
+
+                            monster.disabled = true;
+                            return Ok(());
+                        }
+                        TrapEffectEnum::DestroyAttacker {
+                            attack_factor_threshold,
+                        } => {
+                            let (attacker_attack, _) = duel.get_player().monster_row
+                                [self.monster_row_index]
+                                .as_ref()
+                                .unwrap()
+                                .card
+                                .get_stats_with_terrain(duel.terrain_type)
+                                .unwrap();
+                            if attack_factor_threshold.is_none()
+                                || attacker_attack <= attack_factor_threshold.unwrap()
+                            {
+                                duel.get_enemy_mut().spell_row[index] = None;
+                                duel.get_player_mut().monster_row[self.monster_row_index] = None;
+                                return Ok(());
+                            }
+                        }
+                        _ => {
+                            // Do nothing
+                        }
+                    }
+                }
+            }
+        }
+
         if duel.get_enemy_mut().monster_row[self.enemy_monster_row_index].is_none() {
             if duel
                 .get_enemy_mut()

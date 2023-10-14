@@ -117,7 +117,6 @@ pub struct LifePointHealerEffect {
 
 impl MagicEffect for LifePointHealerEffect {
     fn execute_effect(&self, duel: &mut Duel) {
-        // TODO: Activate trap cards
         // Iterate through all the enemy spell cards, checking if they are a trap of BadReactionToSimochi
         // If so, turn the trap to None. Then negate self.amount.
         let mut amount = self.amount;
@@ -146,8 +145,6 @@ pub struct LifePointDamagerEffect {
 
 impl MagicEffect for LifePointDamagerEffect {
     fn execute_effect(&self, duel: &mut Duel) {
-        // TODO: Activate trap cards
-
         // Check enemy spells for GoblinFan
         // If present, modify the player's life points instead of the enemy's. Also set the GoblinFan to None.
         let mut goblin_fan_activated = false;
@@ -238,7 +235,8 @@ impl MagicEffect for CursebreakerEffect {
             .for_each(|monster_row_pos| {
                 if let Some(monster) = monster_row_pos {
                     let (base_attack, base_defense) = monster.card.get_base_stats().unwrap();
-                    let (current_attack, current_defense) = monster.card.get_stats_no_terrain().unwrap();
+                    let (current_attack, current_defense) =
+                        monster.card.get_stats_no_terrain().unwrap();
                     {
                         if base_attack > current_attack {
                             // assert that the difference between base_attack and current_attack is the same as the difference between base_defense and current_defense

@@ -2,7 +2,8 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 use crate::{
-    monster_terrain_relation, AdvantageRelation, GuardianStarType, MonsterType, TerrainType, CARDS, MagicEffectEnum, TrapEffectEnum,
+    monster_terrain_relation, AdvantageRelation, GuardianStarType, MagicEffectEnum, MonsterType,
+    TerrainType, TrapEffectEnum, CARDS,
 };
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
