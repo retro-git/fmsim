@@ -64,7 +64,7 @@ impl Duel {
         }
     }
 
-    fn get_player_mut(&mut self) -> &mut Player {
+    pub fn get_player_mut(&mut self) -> &mut Player {
         if self.turn % 2 == 0 {
             &mut self.player1
         } else {
@@ -72,7 +72,7 @@ impl Duel {
         }
     }
 
-    fn get_enemy_mut(&mut self) -> &mut Player {
+    pub fn get_enemy_mut(&mut self) -> &mut Player {
         if self.turn % 2 == 0 {
             &mut self.player2
         } else {

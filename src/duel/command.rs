@@ -105,6 +105,8 @@ pub enum CommandError {
     EquipNotPresentAtSelectedPosition,
     #[error("Cannot attack with a monster on the first turn.")]
     CannotAttackOnFirstTurn,
+    #[error("Cannot attack while Swords of Revealing Light effect is active.")]
+    CannotAttackWhileSORLEffectActive,
     #[error("Cannot attack empty position while enemy monsters are present.")]
     CannotAttackEmptyPositionWhileMonstersPresent,
     #[error("The selected monster is disabled.")]
@@ -454,6 +456,11 @@ impl DuelCommand for FieldAttackCmd {
         // Check if it's the first turn. If so, the player cannot attack.
         if duel.turn == 0 {
             return Err(CommandError::CannotAttackOnFirstTurn);
+        }
+
+        // Check that the sorl_effect_countdown is None. If not, the player cannot attack.
+        if duel.get_player().sorl_effect_countdown.is_some() {
+            return Err(CommandError::CannotAttackWhileSORLEffectActive);
         }
 
         // Check that monster_row_index contains a monster, and that it is not disabled
@@ -841,6 +848,15 @@ impl DuelCommand for EndTurnCmd {
         self.check_valid(duel)?;
 
         duel.turn += 1;
+
+        // for the current player, if sorl_effect_countdown is Some, decrement it. if it is 0, set it to None.
+        if let Some(countdown) = duel.get_player_mut().sorl_effect_countdown {
+            if countdown == 0 {
+                duel.get_player_mut().sorl_effect_countdown = None;
+            } else {
+                duel.get_player_mut().sorl_effect_countdown = Some(countdown - 1);
+            }
+        }
 
         let player = duel.get_player_mut();
         player.draw();

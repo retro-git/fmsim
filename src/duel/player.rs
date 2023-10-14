@@ -17,6 +17,7 @@ pub struct Player {
     pub hand_size: usize,
     pub monster_row: Vec<Option<MonsterRowPosition>>,
     pub spell_row: Vec<Option<SpellRowPosition>>,
+    pub sorl_effect_countdown: Option<u32>,
 }
 
 impl Default for Player {
@@ -28,6 +29,7 @@ impl Default for Player {
             hand_size: 5,
             monster_row: vec![None; 5],
             spell_row: vec![None; 5],
+            sorl_effect_countdown: None,
         }
     }
 }

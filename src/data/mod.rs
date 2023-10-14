@@ -1,11 +1,15 @@
 pub mod card;
 pub mod duelist;
 pub mod guardian_star;
+pub mod monster;
+pub mod spell;
 pub mod terrain;
 
 pub use card::*;
 pub use duelist::*;
 pub use guardian_star::*;
+pub use monster::*;
+pub use spell::*;
 pub use terrain::*;
 
 use std::sync::LazyLock;

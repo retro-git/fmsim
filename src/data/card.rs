@@ -1,17 +1,9 @@
-use num_derive::{FromPrimitive, ToPrimitive};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use crate::{monster_terrain_relation, AdvantageRelation, GuardianStarType, TerrainType, CARDS};
-
-fn from_primitive<'de, D, T>(deserializer: D) -> Result<T, D::Error>
-where
-    D: serde::Deserializer<'de>,
-    T: num_traits::FromPrimitive,
-{
-    let i = u32::deserialize(deserializer)?;
-    T::from_u32(i).ok_or_else(|| serde::de::Error::custom("Out of range"))
-}
+use crate::{
+    monster_terrain_relation, AdvantageRelation, GuardianStarType, MonsterType, TerrainType, CARDS,
+};
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct Card {
@@ -36,13 +28,10 @@ pub struct Card {
 #[serde(tag = "type")]
 pub enum CardVariant {
     Monster {
-        #[serde(deserialize_with = "from_primitive")]
         monster_type: MonsterType,
         attack: u32,
         defense: u32,
-        #[serde(deserialize_with = "from_primitive")]
         guardian_star_a: GuardianStarType,
-        #[serde(deserialize_with = "from_primitive")]
         guardian_star_b: GuardianStarType,
         level: u32,
     },
@@ -184,30 +173,6 @@ pub fn equip(card1: &Card, card2: &Card) -> Option<Card> {
         }
     }
     Some(monster_clone)
-}
-
-#[derive(Serialize, Deserialize, Debug, PartialEq, FromPrimitive, ToPrimitive, Copy, Clone)]
-pub enum MonsterType {
-    Dragon = 0,
-    Spellcaster = 1,
-    Zombie = 2,
-    Warrior = 3,
-    BeastWarrior = 4,
-    Beast = 5,
-    WingedBeast = 6,
-    Fiend = 7,
-    Fairy = 8,
-    Insect = 9,
-    Dinosaur = 10,
-    Reptile = 11,
-    Fish = 12,
-    SeaSerpent = 13,
-    Machine = 14,
-    Thunder = 15,
-    Aqua = 16,
-    Pyro = 17,
-    Rock = 18,
-    Plant = 19,
 }
 
 #[cfg(test)]
