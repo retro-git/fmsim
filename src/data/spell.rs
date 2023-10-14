@@ -1,6 +1,16 @@
 use crate::{Duel, MonsterType, TerrainType};
 use enum_dispatch::enum_dispatch;
 
+pub enum TrapEffect {
+    ReverseTrap, // Reverses equip cards to negate stats instead of boosting them
+    GoblinFan, // Reflects damage magic effects e.g. sparks
+    BadReactionToSimochi, // Reverses healing magic effects e.g. Mooyan Curry
+    FakeTrap, // Activates when the enemy attacks, but does nothing
+    DestroyAttacker { // House of Adhesive Tape (500), Eatgaboon (1000), Bear Trap (1500), Invisible Wire (2000), Acid Trap Hole (3000), Widespread Ruin (no threshold)
+        attack_factor_threshold: Option<u32>,
+    },
+}
+
 #[enum_dispatch]
 pub trait MagicEffect {
     fn execute_effect(&self, duel: &mut Duel);
