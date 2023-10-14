@@ -374,7 +374,6 @@ impl DuelCommand for HandPlayMultipleCmd {
             CardVariant::Monster { .. } => {
                 let mut card_mode = CardMode::Attack;
                 let mut guardian_star_choice = GuardianStarChoice::A;
-                let mut applied_equips_amount = 0;
                 let all_successful_equips = if cards.len() == self.hand_indices.len() + 1 {
                     // Create a new iterator to iterate through windows of combined_cards.
                     // Use the windows function and check a predicate holds for all windows.
