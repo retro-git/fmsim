@@ -73,6 +73,7 @@ fn execute_spell(card: Card, duel: &mut Duel) {
                 duel.state = SetGuardianStarState {
                     monster_row_position: monster_row_pos,
                     monster_row_index: found_cards[0],
+                    applied_equips_amount: None,
                 }
                 .into();
             }
@@ -87,7 +88,7 @@ fn execute_spell(card: Card, duel: &mut Duel) {
     }
 }
 
-fn reverse_trap(duel: &mut Duel) {
+fn reverse_trap(monster_index: usize, equip_amount: u32, duel: &mut Duel) {
     // TODO: Implement
 }
 
@@ -205,6 +206,7 @@ impl DuelCommand for HandPlaySingleCmd {
                     let mut applied_equip = false;
                     let mut card_mode = CardMode::Attack;
                     let mut face_direction = self.face_direction;
+                    let mut equip_amount = None;
                     let card_to_play = match existing_position {
                         Some(existing_card) => {
                             face_direction = FaceDirection::Up;
@@ -225,6 +227,7 @@ impl DuelCommand for HandPlaySingleCmd {
                                 if ret.id == existing_card.card.id && new_attack > existing_attack {
                                     applied_equip = true;
                                     card_mode = existing_card.card_mode;
+                                    equip_amount = Some(new_attack - existing_attack);
                                 }
                             }
                             ret
@@ -247,12 +250,13 @@ impl DuelCommand for HandPlaySingleCmd {
                         duel.state = (SetGuardianStarState {
                             monster_row_position,
                             monster_row_index: field_index,
+                            applied_equips_amount: None,
                         })
                         .into()
                     } else {
                         duel.get_player_mut().monster_row[field_index] = Some(monster_row_position);
 
-                        reverse_trap(duel);
+                        reverse_trap(field_index, equip_amount.unwrap(), duel);
 
                         duel.state = FieldState.into();
                     };
@@ -351,6 +355,7 @@ impl DuelCommand for HandPlayMultipleCmd {
             CardVariant::Monster { .. } => {
                 let mut card_mode = CardMode::Attack;
                 let mut guardian_star_choice = GuardianStarChoice::A;
+                let mut applied_equips_amount = 0;
                 let all_successful_equips = if cards.len() == self.hand_indices.len() + 1 {
                     // Create a new iterator to iterate through windows of combined_cards.
                     // Use the windows function and check a predicate holds for all windows.
@@ -392,12 +397,29 @@ impl DuelCommand for HandPlayMultipleCmd {
                     guardian_star_choice: guardian_star_choice,
                 };
 
+                // We need to check how much equips were applied during the combination.
+                // For each window, we need to check if the previous card was the same as the current card, and if the attack increased.
+                // If so, increase applied_equips_amount by the difference in attack.
+                let mut applied_equips_amount = 0;
+                for window in combined_cards.windows(2) {
+                    let (prev_card, curr_card) = (&window[0], &window[1]);
+                    if prev_card.id == curr_card.id {
+                        let (prev_attack, prev_defense) = prev_card.get_stats_with_terrain(duel.terrain_type).unwrap();
+                        let (curr_attack, curr_defense) = curr_card.get_stats_with_terrain(duel.terrain_type).unwrap();
+                        if curr_attack > prev_attack {
+                            // assert the difference in attacks is the same as the difference in defenses
+                            assert_eq!(curr_defense - prev_defense, curr_attack - prev_attack);
+                            applied_equips_amount += curr_attack - prev_attack;
+                        }
+                    }
+                }
+
                 // Change the duel state based on whether all equips were successful
                 if all_successful_equips {
                     duel.get_player_mut().monster_row[self.field_index] =
                         Some(monster_row_position);
 
-                    reverse_trap(duel);
+                    reverse_trap(self.field_index, applied_equips_amount, duel);
 
                     duel.state = FieldState.into();
                 } else {
@@ -405,6 +427,11 @@ impl DuelCommand for HandPlayMultipleCmd {
                     duel.state = SetGuardianStarState {
                         monster_row_position,
                         monster_row_index: self.field_index,
+                        applied_equips_amount: if applied_equips_amount > 0 {
+                            Some(applied_equips_amount)
+                        } else {
+                            None
+                        },
                     }
                     .into();
                 }
@@ -442,7 +469,14 @@ impl DuelCommand for SetGuardianStarCmd {
             monster_row_position.guardian_star_choice = self.guardian_star_choice;
             duel.get_player_mut().monster_row[state.monster_row_index] = Some(monster_row_position);
 
-            reverse_trap(duel);
+            match state.applied_equips_amount {
+                Some(amount) => {
+                    reverse_trap(state.monster_row_index, amount, duel);
+                }
+                None => {
+                    // Do nothing
+                }
+            }
 
             duel.state = FieldState.into();
         }
@@ -867,7 +901,7 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
                 if combined_attack > original_attack {
                     duel.get_player_mut().monster_row[self.monster_row_index] = Some(monster);
 
-                    reverse_trap(duel);
+                    reverse_trap(self.monster_row_index, combined_attack - original_attack, duel);
 
                     duel.state = FieldState.into();
                 } else {
@@ -876,6 +910,7 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
                     duel.state = SetGuardianStarState {
                         monster_row_position: monster.clone(),
                         monster_row_index: self.monster_row_index,
+                        applied_equips_amount: None,
                     }
                     .into();
                 }

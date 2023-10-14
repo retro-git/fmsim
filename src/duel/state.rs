@@ -24,6 +24,7 @@ impl DuelState for FieldEquipSelectedState {}
 pub struct SetGuardianStarState {
     pub monster_row_position: MonsterRowPosition,
     pub monster_row_index: usize,
+    pub applied_equips_amount: Option<u32>,
 }
 impl DuelState for SetGuardianStarState {}
 
