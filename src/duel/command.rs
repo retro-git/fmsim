@@ -703,13 +703,13 @@ impl DuelCommand for FieldAttackCmd {
                     if attacker_attack > enemy_defense {
                         // Attacker wins, enemy monster is destroyed
                         duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] = None;
-                    } else if attacker_attack < enemy_defense {
-                        // Defender wins, attacking monster is disabled and difference of enemy_defense - attacker_attack is taken as life point damage
+                    } else {
+                        // Defender wins (or draw)
+                        // attacking monster is disabled and difference of enemy_defense - attacker_attack is taken as life point damage
+                        // if it's a draw, that means the difference is 0, so no damage is taken.
                         let damage = (enemy_defense - attacker_attack).abs();
                         // duel.get_player_mut().monster_row[self.monster_row_index] = None;
                         duel.get_player_mut().modify_life_points(-damage);
-                    } else {
-                        // Nothing happens (except player monster disabled)
                     }
                 }
             }
