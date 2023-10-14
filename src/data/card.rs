@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 use crate::{
-    monster_terrain_relation, AdvantageRelation, GuardianStarType, MonsterType, TerrainType, CARDS,
+    monster_terrain_relation, AdvantageRelation, GuardianStarType, MonsterType, TerrainType, CARDS, MagicEffectEnum, TrapEffectEnum,
 };
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
@@ -25,7 +25,6 @@ pub struct Card {
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
-#[serde(tag = "type")]
 pub enum CardVariant {
     Monster {
         monster_type: MonsterType,
@@ -44,8 +43,8 @@ pub enum CardVariant {
     Equip {
         equips: Vec<usize>,
     },
-    Magic,
-    Trap,
+    Magic(MagicEffectEnum),
+    Trap(TrapEffectEnum),
 }
 
 impl Card {

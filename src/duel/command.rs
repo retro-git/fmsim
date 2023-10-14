@@ -19,7 +19,7 @@ use super::{
 
 fn execute_spell(card: Card, duel: &mut Duel) {
     match card.variant {
-        CardVariant::Magic => {
+        CardVariant::Magic { .. } => {
             // TODO: Implement
             duel.state = FieldState.into();
         }
@@ -70,7 +70,7 @@ fn execute_spell(card: Card, duel: &mut Duel) {
                 .into();
             }
         }
-        CardVariant::Equip { .. } | CardVariant::Trap => {
+        CardVariant::Equip { .. } | CardVariant::Trap { .. } => {
             // Do nothing
         }
         _ => panic!("execute_spell: Called on a monster card."),
