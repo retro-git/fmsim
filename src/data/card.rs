@@ -29,8 +29,8 @@ pub struct Card {
 pub enum CardVariant {
     Monster {
         monster_type: MonsterType,
-        attack: u32,
-        defense: u32,
+        attack: i32,
+        defense: i32,
         guardian_star_a: GuardianStarType,
         guardian_star_b: GuardianStarType,
         level: u32,
@@ -49,7 +49,7 @@ pub enum CardVariant {
 }
 
 impl Card {
-    pub fn get_base_stats(&self) -> Option<(u32, u32)> {
+    pub fn get_base_stats(&self) -> Option<(i32, i32)> {
         // we need to get_card_from_id to get the base stats of the card
         // the stats on our card may have been modified e.g. by equips
         let base_card = card_from_id(self.id);
@@ -61,7 +61,7 @@ impl Card {
         }
     }
 
-    pub fn get_stats_no_terrain(&self) -> Option<(u32, u32)> {
+    pub fn get_stats_no_terrain(&self) -> Option<(i32, i32)> {
         match &self.variant {
             CardVariant::Monster {
                 attack, defense, ..
@@ -70,7 +70,7 @@ impl Card {
         }
     }
 
-    pub fn get_stats_with_terrain(&self, terrain_type: TerrainType) -> Option<(u32, u32)> {
+    pub fn get_stats_with_terrain(&self, terrain_type: TerrainType) -> Option<(i32, i32)> {
         // use monster_terrain_relation to check if advantageous (+500), disadvantageous (-500), or neutral (no change)
         match &self.variant {
             CardVariant::Monster {
@@ -85,8 +85,8 @@ impl Card {
                     AdvantageRelation::Neutral => 0,
                 };
                 Some((
-                    (*attack as i32 + terrain_boost).max(0) as u32,
-                    (*defense as i32 + terrain_boost).max(0) as u32,
+                    *attack + terrain_boost,
+                    *defense as i32 + terrain_boost
                 ))
             }
             _ => None,
@@ -95,13 +95,13 @@ impl Card {
 
     pub fn modify_stats(&mut self, delta: i32) {
         // panic if not a Monster
-        // modify attack and defense by delta, but do not let them go below 0
+        // modify attack and defense by delta
         match &mut self.variant {
             CardVariant::Monster {
                 attack, defense, ..
             } => {
-                *attack = (*attack as i32 + delta).max(0) as u32;
-                *defense = (*defense as i32 + delta).max(0) as u32;
+                *attack = *attack + delta;
+                *defense = *defense + delta;
             }
             _ => panic!("Attempted to modify stats of a non-Monster card"),
         }

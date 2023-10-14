@@ -241,12 +241,12 @@ impl MagicEffect for CursebreakerEffect {
                         if base_attack > current_attack {
                             // assert that the difference between base_attack and current_attack is the same as the difference between base_defense and current_defense
                             assert_eq!(
-                                base_attack as i32 - current_attack as i32,
-                                base_defense as i32 - current_defense as i32
+                                base_attack - current_attack,
+                                base_defense - current_defense
                             );
                             monster
                                 .card
-                                .modify_stats((base_attack - current_attack) as i32);
+                                .modify_stats(base_attack - current_attack);
                         }
                     }
                 }

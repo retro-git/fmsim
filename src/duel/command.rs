@@ -89,7 +89,26 @@ fn execute_spell(card: Card, duel: &mut Duel) {
 }
 
 fn reverse_trap(monster_index: usize, equip_amount: u32, duel: &mut Duel) {
-    // TODO: Implement
+    // We need to loop through the enemy spell row and check for a trap with effect ReverseTrap.
+    // If found, we need to remove the trap (set the spell row position to None).
+    // We also need to negate the monster at monster_index's attack by equip_amount * 2.
+    // We can do this with modify_stats.
+
+    for spell_row_pos in duel.get_enemy_mut().spell_row.iter_mut() {
+        if let Some(spell) = spell_row_pos {
+            if let CardVariant::Trap ( effect ) = &spell.card.variant {
+                if *effect == TrapEffectEnum::ReverseTrap {
+                    // Remove the trap
+                    *spell_row_pos = None;
+
+                    // Negate the monster's attack
+                    let monster = &mut duel.get_player_mut().monster_row[monster_index].as_mut().unwrap();
+                    monster.card.modify_stats(-(equip_amount as i32) * 2);
+                    break;
+                }
+            }
+        }
+    }
 }
 
 #[derive(Error, Debug)]
@@ -256,7 +275,7 @@ impl DuelCommand for HandPlaySingleCmd {
                     } else {
                         duel.get_player_mut().monster_row[field_index] = Some(monster_row_position);
 
-                        reverse_trap(field_index, equip_amount.unwrap(), duel);
+                        reverse_trap(field_index, equip_amount.unwrap() as u32, duel);
 
                         duel.state = FieldState.into();
                     };
@@ -419,7 +438,7 @@ impl DuelCommand for HandPlayMultipleCmd {
                     duel.get_player_mut().monster_row[self.field_index] =
                         Some(monster_row_position);
 
-                    reverse_trap(self.field_index, applied_equips_amount, duel);
+                    reverse_trap(self.field_index, applied_equips_amount as u32, duel);
 
                     duel.state = FieldState.into();
                 } else {
@@ -428,7 +447,7 @@ impl DuelCommand for HandPlayMultipleCmd {
                         monster_row_position,
                         monster_row_index: self.field_index,
                         applied_equips_amount: if applied_equips_amount > 0 {
-                            Some(applied_equips_amount)
+                            Some(applied_equips_amount as u32)
                         } else {
                             None
                         },
@@ -575,7 +594,7 @@ impl DuelCommand for FieldAttackCmd {
                                 .get_stats_with_terrain(duel.terrain_type)
                                 .unwrap();
                             if attack_factor_threshold.is_none()
-                                || attacker_attack <= attack_factor_threshold.unwrap()
+                                || attacker_attack <= attack_factor_threshold.unwrap() as i32
                             {
                                 duel.get_enemy_mut().spell_row[index] = None;
                                 duel.get_player_mut().monster_row[self.monster_row_index] = None;
@@ -606,7 +625,8 @@ impl DuelCommand for FieldAttackCmd {
                     .clone()
                     .unwrap();
                 if let CardVariant::Monster { attack, .. } = attacking_monster.card.variant {
-                    let damage = -(attack as i32);
+                    // Attack can be negative. If so, we need to round up to 0 before inflicting damage.
+                    let damage = -(attack.max(0));
                     duel.get_enemy_mut().modify_life_points(damage);
                 }
             }
@@ -637,6 +657,12 @@ impl DuelCommand for FieldAttackCmd {
                 .get_stats_with_terrain(duel.terrain_type)
                 .unwrap();
 
+            // All stats can be negative. Round them all to 0.
+            attacker_attack = attacker_attack.max(0);
+            _attacker_defense = _attacker_defense.max(0);
+            enemy_attack = enemy_attack.max(0);
+            enemy_defense = enemy_defense.max(0);
+
             // for both monsters, use guardian_star_relation function to check if advantageous (+500), disadvantageous (-500), or neutral (no change)
             let (attacker_gs, enemy_gs) = (
                 attacking_monster.get_selected_gs(),
@@ -658,7 +684,7 @@ impl DuelCommand for FieldAttackCmd {
 
             match enemy_monster.card_mode {
                 CardMode::Attack => {
-                    let damage = (attacker_attack as i32 - enemy_attack as i32).abs();
+                    let damage = (attacker_attack - enemy_attack).abs();
                     if attacker_attack > enemy_attack {
                         // Attacker wins, enemy monster is destroyed and difference in attack is taken as life point damage
                         duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] = None;
@@ -678,12 +704,12 @@ impl DuelCommand for FieldAttackCmd {
                         // Attacker wins, enemy monster is destroyed
                         duel.get_enemy_mut().monster_row[self.enemy_monster_row_index] = None;
                     } else if attacker_attack < enemy_defense {
-                        // Defender wins, attacking monster is destroyed and difference in defense is taken as life point damage
-                        let damage = (enemy_defense as i32 - attacker_attack as i32).abs();
-                        duel.get_player_mut().monster_row[self.monster_row_index] = None;
+                        // Defender wins, attacking monster is disabled and difference of enemy_defense - attacker_attack is taken as life point damage
+                        let damage = (enemy_defense - attacker_attack).abs();
+                        // duel.get_player_mut().monster_row[self.monster_row_index] = None;
                         duel.get_player_mut().modify_life_points(-damage);
                     } else {
-                        // Neither monster is destroyed
+                        // Nothing happens (except player monster disabled)
                     }
                 }
             }
@@ -901,7 +927,7 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
                 if combined_attack > original_attack {
                     duel.get_player_mut().monster_row[self.monster_row_index] = Some(monster);
 
-                    reverse_trap(self.monster_row_index, combined_attack - original_attack, duel);
+                    reverse_trap(self.monster_row_index, (combined_attack - original_attack) as u32, duel);
 
                     duel.state = FieldState.into();
                 } else {
