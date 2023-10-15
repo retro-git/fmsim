@@ -970,10 +970,11 @@ impl DuelCommand for EndTurnCmd {
                 winner: duel.get_enemy_enum(),
             }.into()
         } else {
-            duel.state = HandState.into();
+            exodia_check(duel);
+            if !matches!(duel.state, DuelStateEnum::EndState(_)) {
+                duel.state = HandState.into();
+            }
         }
-
-        exodia_check(duel);
 
         Ok(())
     }
