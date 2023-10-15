@@ -64,6 +64,14 @@ impl MagicEffect for DarkHoleEffect {
             .spell_row
             .iter_mut()
             .for_each(|spell| *spell = None);
+        duel.get_player_mut()
+            .monster_row
+            .iter_mut()
+            .for_each(|monster| *monster = None);
+        duel.get_player_mut()
+            .spell_row
+            .iter_mut()
+            .for_each(|spell| *spell = None);
     }
 }
 
