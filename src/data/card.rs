@@ -119,6 +119,8 @@ impl Card {
         // also assert that the difference is a multiple of 500
         assert_eq!((base_attack - current_attack).abs() % 500, 0);
 
+        
+
         // panic if not a Monster
         // modify attack and defense by delta
         match &mut self.variant {
@@ -134,6 +136,24 @@ impl Card {
                 assert_eq!((base_attack - current_attack).abs() % 500, 0);
             }
             _ => panic!("Attempted to modify stats of a non-Monster card"),
+        }
+    }
+
+    pub fn get_stats_no_terrain_base_delta(&self) -> Option<i32> {
+        match &self.variant {
+            CardVariant::Monster { .. } => {
+                // get the base stats
+                let (base_attack, base_defense) = self.get_base_stats().unwrap();
+                // get the current stats
+                let (current_attack, current_defense) = self.get_stats_no_terrain().unwrap();
+                // assert that the difference is the same in both attack and defense
+                assert_eq!(base_attack - current_attack, base_defense - current_defense);
+                // also assert that the difference is a multiple of 500
+                assert_eq!((base_attack - current_attack).abs() % 500, 0); 
+
+                Some(base_attack - current_attack)
+            },
+            _ => None,
         }
     }
 }
