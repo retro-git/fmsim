@@ -96,9 +96,7 @@ impl Card {
         let (base_attack, base_defense) = self.get_base_stats().unwrap();
         match &mut self.variant {
             CardVariant::Monster {
-                attack,
-                defense,
-                ..
+                attack, defense, ..
             } => {
                 *attack = base_attack;
                 *defense = base_defense;
@@ -111,7 +109,6 @@ impl Card {
         // Get the current difference between the base stats and the current stats.
         // We need to assert that the difference is the same in both attack and defense.
         // Then, after the modification is done, we need to assert that the difference is still the same.
-        
 
         // get the base stats
         let (base_attack, base_defense) = self.get_base_stats().unwrap();
@@ -166,7 +163,7 @@ pub fn combine_cards(cards: Vec<Card>) -> Vec<(Card, Card, Card)> {
     // If we represent cards as X and combined_cards as Y, we want the following: X1 X2 Y1 X3 Y2 X4 Y3
     // And so on until only a Y remains.
     // That is, the first two elements should be the first two cards. From then on, we interleave combined_cards with the remaining cards.
-    
+
     let first_pair = cards.iter().take(2).chain(combined_cards.iter().take(1));
     let remaining_cards = cards.iter().skip(2);
     let remaining_combined_cards = combined_cards.iter().skip(1);
@@ -207,23 +204,21 @@ pub fn check_all_successful_equips(io_pairs: Vec<(Card, Card, Card)>) -> bool {
     // check if all the combined cards are the same as the second card in the io_pair
     // if so, return true
     // otherwise, return false
-    io_pairs
-        .iter()
-        .all(|(card1, card2, combined_card)| {
-            let (_equip_card, monster_card) = match (&card1.variant, &card2.variant) {
-                (CardVariant::Equip { .. }, CardVariant::Monster { .. }) => (card1, card2),
-                (CardVariant::Monster { .. }, CardVariant::Equip { .. }) => (card2, card1),
-                (_, _) => return false,
-            };
+    io_pairs.iter().all(|(card1, card2, combined_card)| {
+        let (_equip_card, monster_card) = match (&card1.variant, &card2.variant) {
+            (CardVariant::Equip { .. }, CardVariant::Monster { .. }) => (card1, card2),
+            (CardVariant::Monster { .. }, CardVariant::Equip { .. }) => (card2, card1),
+            (_, _) => return false,
+        };
 
-            let (attack, defense) = monster_card.get_stats_no_terrain().unwrap();
-            let (combined_attack, combined_defense) = combined_card.get_stats_no_terrain().unwrap();
+        let (attack, defense) = monster_card.get_stats_no_terrain().unwrap();
+        let (combined_attack, combined_defense) = combined_card.get_stats_no_terrain().unwrap();
 
-            // check monster id and combined card id are the same, and that combined card has higher stats
-            // also assert the difference between the attack and defense is the same
-            assert_eq!(combined_attack - attack, combined_defense - defense);
-            combined_card.id == monster_card.id && combined_attack > attack
-        })
+        // check monster id and combined card id are the same, and that combined card has higher stats
+        // also assert the difference between the attack and defense is the same
+        assert_eq!(combined_attack - attack, combined_defense - defense);
+        combined_card.id == monster_card.id && combined_attack > attack
+    })
 }
 
 pub fn get_amount_of_equip_boosts(io_pairs: Vec<(Card, Card, Card)>) -> u32 {
@@ -316,7 +311,17 @@ mod tests {
         let pugm = card_from_name("Perfectly Ultimate Great Moth");
         let sorl = card_from_name("Swords of Revealing Light");
         let mm = card_from_name("Megamorph");
-        let cards_to_combine = vec![td.clone(), td.clone(), mm.clone(), sorl.clone(), pugm.clone(), dt.clone(), mm.clone(), thtd.clone(), dt.clone()];
+        let cards_to_combine = vec![
+            td.clone(),
+            td.clone(),
+            mm.clone(),
+            sorl.clone(),
+            pugm.clone(),
+            dt.clone(),
+            mm.clone(),
+            thtd.clone(),
+            dt.clone(),
+        ];
         let io_pairs = combine_cards(cards_to_combine.clone());
         // dbg print combined_card tuples, but only print the names
         for (card1, card2, combined_card) in &io_pairs {

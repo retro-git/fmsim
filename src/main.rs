@@ -10,9 +10,7 @@ use fmsim::duel::field::{MonsterRowPosition, SpellRowPosition};
 use fmsim::duel::state::DuelStateEnum;
 use fmsim::{Card, Duel};
 
-fn main() {
-
-}
+fn main() {}
 
 #[test]
 fn test() {

@@ -6,9 +6,10 @@ use std::collections::HashSet;
 use thiserror::Error;
 
 use crate::{
-    card_from_id, combine, combine_cards,
+    card_from_id, check_all_successful_equips, combine, combine_cards,
     duel::field::{MonsterRowPosition, SpellRowPosition},
-    guardian_star_relation, AdvantageRelation, Card, CardVariant, MagicEffect, TrapEffectEnum, check_all_successful_equips, get_amount_of_equip_boosts,
+    get_amount_of_equip_boosts, guardian_star_relation, AdvantageRelation, Card, CardVariant,
+    MagicEffect, TrapEffectEnum,
 };
 
 use super::{
