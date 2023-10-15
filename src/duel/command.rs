@@ -18,6 +18,26 @@ use super::{
     Duel,
 };
 
+pub fn exodia_check(duel: &mut Duel) {
+    // The cards with IDs 17-21 are the 5 pieces of Exodia.
+    // We need to get the first 5 cards in the player's hand, and check if they are the 5 pieces of Exodia.
+    // We don't check the later cards because an enemy AI might have a hand size greater than 5, but only the first 5 are used for exodia.
+    // If we have the 5 pieces, current player wins immediately
+    // We need to check we have all the IDs UNIQUELY. Not just a total count of 5.
+    // We can do this by putting the IDs in a set, and checking the set has 5 elements.
+    let mut exodia_ids = std::collections::HashSet::new();
+    for card in &duel.get_player().hand[0..5] {
+        if card.id >= 17 && card.id <= 21 {
+            exodia_ids.insert(card.id);
+        }
+    }
+    if exodia_ids.len() == 5 {
+        duel.state = EndState {
+            winner: duel.get_player_enum(),
+        }.into()
+    }
+}
+
 fn end_game_lp_check(duel: &mut Duel) {
     if duel.get_player().life_points <= 0 || duel.get_enemy().life_points <= 0 {
         duel.state = EndState {
@@ -952,6 +972,8 @@ impl DuelCommand for EndTurnCmd {
         } else {
             duel.state = HandState.into();
         }
+
+        exodia_check(duel);
 
         Ok(())
     }
