@@ -81,7 +81,7 @@ fn execute_spell(card: Card, duel: &mut Duel) {
             }
         }
         CardVariant::Equip { .. } | CardVariant::Trap { .. } => {
-            // Do nothing
+            duel.state = FieldState.into();
         }
         _ => panic!("execute_spell: Called on a monster card."),
     }
@@ -253,6 +253,19 @@ impl DuelCommand for HandPlaySingleCmd {
                     }
                     None => card.clone(),
                 };
+
+                // in some rare cases, an equip played faceup can fuse with an existing monster and create a spell.
+                // for example, Sky Dragon + Machine Conversion Factory = Harpie's Feather Duster.
+                // in this case, we need to call execute_spell and return early.
+                match card_to_play.variant {
+                    CardVariant::Magic{ .. } | CardVariant::Ritual{ .. } | CardVariant::Trap{ .. } | CardVariant::Equip{ .. } => {
+                        duel.get_player_mut().monster_row[field_index] = None;
+                        execute_spell(card_to_play, duel);
+                        return Ok(());
+                    } 
+                    _ => {}
+                }
+
                 let monster_row_position = MonsterRowPosition {
                     card: card_to_play.clone(),
                     face_direction: face_direction,

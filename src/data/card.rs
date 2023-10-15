@@ -211,13 +211,15 @@ pub fn check_all_successful_equips(io_pairs: Vec<(Card, Card, Card)>) -> bool {
             (_, _) => return false,
         };
 
-        let (attack, defense) = monster_card.get_stats_no_terrain().unwrap();
-        let (combined_attack, combined_defense) = combined_card.get_stats_no_terrain().unwrap();
-
-        // check monster id and combined card id are the same, and that combined card has higher stats
-        // also assert the difference between the attack and defense is the same
-        assert_eq!(combined_attack - attack, combined_defense - defense);
-        combined_card.id == monster_card.id && combined_attack > attack
+        if monster_card.id == combined_card.id {
+            let (attack, defense) = monster_card.get_stats_no_terrain().unwrap();
+            let (combined_attack, combined_defense) = combined_card.get_stats_no_terrain().unwrap();
+            assert_eq!(attack - defense, combined_attack - combined_defense);
+            return combined_attack > attack;
+        }
+        else {
+            return false;
+        }
     })
 }
 
