@@ -101,7 +101,7 @@ impl MagicEffect for HarpiesFeatherDusterEffect {
 pub struct CrushCardEffect;
 impl MagicEffect for CrushCardEffect {
     fn execute_effect(&self, duel: &mut Duel) {
-        let terrain_type = duel.terrain_type.clone();
+        let terrain_type = duel.terrain_type;
         // Set all enemy monster cards to None if their attack is 1500 or higher
         duel.get_enemy_mut()
             .monster_row
