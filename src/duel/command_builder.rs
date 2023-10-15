@@ -52,32 +52,6 @@ impl<'a> CommandBuilder<'a, Start> {
         }
     }
 
-    pub fn apply_equip(self, monster_row_index: usize) -> Result<DuelCommandEnum, CommandError> {
-        if let DuelStateEnum::FieldEquipSelectedState(_) = &self.duel.state {
-            if self
-                .duel
-                .get_player()
-                .monster_row
-                .get(monster_row_index)
-                .is_some()
-            {
-                Ok(FieldPlayEquipPickMonsterCmd { monster_row_index }.into())
-            } else {
-                Err(CommandError::CannotEquipEmptyPosition)
-            }
-        } else {
-            Err(CommandError::InvalidDuelState)
-        }
-    }
-
-    pub fn cancel_equip(self) -> Result<DuelCommandEnum, CommandError> {
-        if let DuelStateEnum::FieldEquipSelectedState(_) = &self.duel.state {
-            Ok(FieldCancelPlayEquipCmd.into())
-        } else {
-            Err(CommandError::InvalidDuelState)
-        }
-    }
-
     pub fn set_guardian_star(
         self,
         guardian_star_choice: GuardianStarChoice,
@@ -266,17 +240,40 @@ impl<'a> CommandBuilder<'a, Field> {
 
     pub fn play_spell(self, spell_index: usize) -> Result<DuelCommandEnum, CommandError> {
         let player = self.duel.get_player();
-        let spell_card_pos = player
+        let spell_row_pos = player
             .spell_row
             .get(spell_index)
             .ok_or(CommandError::OutOfBoundsFieldSelection)?;
 
-        match spell_card_pos {
-            Some(_) => Ok(FieldPlaySpellCmd {
-                spell_row_index: spell_index,
-            }
-            .into()),
+        match spell_row_pos {
+            Some(spell) => match spell.card.variant {
+                CardVariant::Magic { .. } | CardVariant::Ritual { .. } | CardVariant::Trap { .. } => Ok(FieldPlaySpellCmd {
+                    spell_row_index: spell_index,
+                }
+                .into()),
+                _ => Err(CommandError::SpellNotPresentAtSelectedPosition),
+            },
             None => Err(CommandError::SpellNotPresentAtSelectedPosition),
+        }
+    }
+
+    pub fn play_equip(self, equip_index: usize, monster_index: usize) -> Result<DuelCommandEnum, CommandError> {
+        let player = self.duel.get_player();
+        let equip_card_pos = player
+            .spell_row
+            .get(equip_index)
+            .ok_or(CommandError::OutOfBoundsFieldSelection)?;
+
+        match equip_card_pos {
+            Some(equip_card) => match equip_card.card.variant {
+                CardVariant::Equip { .. } => Ok(FieldPlayEquipCmd {
+                    spell_row_index: equip_index,
+                    monster_row_index: monster_index,
+                }
+                .into()),
+                _ => Err(CommandError::EquipNotPresentAtSelectedPosition),
+            },
+            None => Err(CommandError::EquipNotPresentAtSelectedPosition),
         }
     }
 

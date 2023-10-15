@@ -464,6 +464,9 @@ impl DuelCommand for SetGuardianStarCmd {
         // Then simply place it in the monster_row at the monster_row_index
         if let DuelStateEnum::SetGuardianStarState(state) = duel.state.clone() {
             let mut monster_row_position = state.monster_row_position.clone();
+            // assert that the card is a Monster variant
+            assert!(matches!(monster_row_position.card.variant, CardVariant::Monster { .. }));
+
             monster_row_position.guardian_star_choice = self.guardian_star_choice;
             duel.get_player_mut().monster_row[state.monster_row_index] = Some(monster_row_position);
 
@@ -774,7 +777,12 @@ impl DuelCommand for FieldPlaySpellCmd {
             .spell_row
             .get(self.spell_row_index)
             .ok_or(CommandError::OutOfBoundsFieldSelection)?;
-        if spell.is_none() {
+        if let Some(spell) = spell {
+            match spell.card.variant {
+                CardVariant::Magic { .. } | CardVariant::Ritual{ .. } | CardVariant::Trap{ .. } => {},
+                _ => return Err(CommandError::SpellNotPresentAtSelectedPosition),
+            }
+        } else {
             return Err(CommandError::SpellNotPresentAtSelectedPosition);
         }
 
@@ -788,69 +796,36 @@ impl DuelCommand for FieldPlaySpellCmd {
             .as_ref()
             .unwrap();
 
-        // Match on the spell type. If it is a magic/ritual/trap, do nothing for now.
-        // If it is an equip, go to FieldEquipSelectedState.
-        match spell.card.variant {
-            CardVariant::Equip { .. } => {
-                duel.state = FieldEquipSelectedState {
-                    spell_row_index: self.spell_row_index,
-                }
-                .into();
-            }
-            _ => {
-                // leave None in the spell row
-                let card = spell.card.clone();
-                duel.get_player_mut().spell_row[self.spell_row_index] = None;
+        let card = spell.card.clone();
+        duel.get_player_mut().spell_row[self.spell_row_index] = None;
 
-                execute_spell(card, duel);
-            }
-        }
+        execute_spell(card, duel);
 
         Ok(())
     }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct FieldCancelPlayEquipCmd;
-impl DuelCommand for FieldCancelPlayEquipCmd {
-    fn check_valid(&self, duel: &Duel) -> Result<(), CommandError> {
-        // Check for FieldEquipSelectedState
-        if !matches!(duel.state, DuelStateEnum::FieldEquipSelectedState(_)) {
-            return Err(CommandError::InvalidDuelState);
-        }
-
-        Ok(())
-    }
-    fn execute(&self, duel: &mut Duel) -> Result<(), CommandError> {
-        self.check_valid(duel)?;
-
-        // return the duel unmodified, except the state is set to FieldState.
-        duel.state = FieldState.into();
-        Ok(())
-    }
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct FieldPlayEquipPickMonsterCmd {
+pub struct FieldPlayEquipCmd {
+    pub spell_row_index: usize,
     pub monster_row_index: usize,
 }
-impl DuelCommand for FieldPlayEquipPickMonsterCmd {
+impl DuelCommand for FieldPlayEquipCmd {
     fn check_valid(&self, duel: &Duel) -> Result<(), CommandError> {
         // Check for FieldEquipSelectedState
         // extract the state from the FieldEquipSelectedState
-        let state = match duel.state.clone() {
-            DuelStateEnum::FieldEquipSelectedState(state) => state,
-            _ => return Err(CommandError::InvalidDuelState),
-        };
+        if !matches!(duel.state, DuelStateEnum::FieldState(_)) {
+            return Err(CommandError::InvalidDuelState);
+        }
 
         // Check that the state.spell_row_index contains an equip
         let spell = duel
             .get_player()
             .spell_row
-            .get(state.spell_row_index)
+            .get(self.spell_row_index)
             .ok_or(CommandError::OutOfBoundsFieldSelection)?;
 
-        if spell.is_none() {
+        if spell.is_none() || !matches!(spell.as_ref().unwrap().card.variant, CardVariant::Equip { .. }) {
             return Err(CommandError::EquipNotPresentAtSelectedPosition);
         }
 
@@ -872,14 +847,9 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
         // Apply the equip to the monster at monster_row_index
         // If it succeeds, go to FieldState.
         // Otherwise, go to SetGuardianStarState.
-        // Get the current state
-        let state = match duel.state.clone() {
-            DuelStateEnum::FieldEquipSelectedState(state) => state,
-            _ => unreachable!(),
-        };
 
         // Take the equip card from the spell row, leaving None in its place
-        let equip_card = duel.get_player_mut().spell_row[state.spell_row_index]
+        let equip_card = duel.get_player_mut().spell_row[self.spell_row_index]
             .take()
             .unwrap();
 
@@ -902,8 +872,9 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
             } = monster.card.variant
             {
                 monster.face_direction = FaceDirection::Up;
-                monster.card = combined_card;
-                if combined_attack > original_attack {
+                // monster.card = combined_card;
+                if combined_attack > original_attack && combined_card.id == monster.card.id {
+                    monster.card = combined_card;
                     duel.get_player_mut().monster_row[self.monster_row_index] = Some(monster);
 
                     reverse_trap(
@@ -915,6 +886,7 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
                     duel.state = FieldState.into();
                 } else {
                     // Equip was not successful, go to SetGuardianStarState
+                    monster.card = combined_card;
                     duel.get_player_mut().monster_row[self.monster_row_index] = None;
                     duel.state = SetGuardianStarState {
                         monster_row_position: monster.clone(),
@@ -924,6 +896,10 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
                     .into();
                 }
             }
+        }
+        else {
+            duel.get_player_mut().monster_row[self.monster_row_index] = None;
+            execute_spell(combined_card, duel);
         }
 
         Ok(())
@@ -977,8 +953,7 @@ pub enum DuelCommandEnum {
     FieldAttackCmd,
     FieldChangeModeCmd,
     FieldPlaySpellCmd,
-    FieldPlayEquipPickMonsterCmd,
-    FieldCancelPlayEquipCmd,
+    FieldPlayEquipCmd,
     EndTurnCmd,
 }
 
@@ -1115,33 +1090,17 @@ impl DuelCommandEnum {
             })
             .collect::<Vec<_>>();
 
-        // To generate all FieldCancelPlayEquipCmd:
-        // There is only one possibility, but we also need to check if it is valid
-        let field_cancel_play_equip_cmds = vec![DuelCommandEnum::FieldCancelPlayEquipCmd(
-            FieldCancelPlayEquipCmd,
-        )];
-        let field_cancel_play_equip_cmds = field_cancel_play_equip_cmds
-            .into_iter()
-            .filter_map(|cmd| {
-                if cmd.check_valid(duel).is_ok() {
-                    Some(cmd)
-                } else {
-                    None
-                }
-            })
-            .collect::<Vec<_>>();
-
-        // To generate all FieldPlayEquipPickMonsterCmd:
-        // We need to generate all possible combinations of monster_row_index.
-        // monster_row_index ranges between 0 and 4 inclusive.
+        // To generate all FieldPlayEquipCmd:
+        // We need to generate all possible combinations of spell_row_index monster_row_index.
+        // They range between 0 and 4 inclusive.
         // We need to filter out invalid combinations.
         let monster_row_indices = 0..5;
-        let field_play_equip_pick_monster_cmds = monster_row_indices
-            .into_iter()
-            .filter_map(|monster_row_index| {
-                let cmd = FieldPlayEquipPickMonsterCmd { monster_row_index };
+        let spell_row_indices = 0..5;
+        let field_play_equip_cmds = iproduct!(spell_row_indices, monster_row_indices)
+            .filter_map(|(spell_row_index, monster_row_index)| {
+                let cmd = FieldPlayEquipCmd { spell_row_index, monster_row_index };
                 if cmd.check_valid(duel).is_ok() {
-                    Some(DuelCommandEnum::FieldPlayEquipPickMonsterCmd(cmd))
+                    Some(DuelCommandEnum::FieldPlayEquipCmd(cmd))
                 } else {
                     None
                 }
@@ -1170,8 +1129,7 @@ impl DuelCommandEnum {
         commands.extend(field_attack_cmds);
         commands.extend(field_change_mode_cmds);
         commands.extend(field_play_spell_cmds);
-        commands.extend(field_cancel_play_equip_cmds);
-        commands.extend(field_play_equip_pick_monster_cmds);
+        commands.extend(field_play_equip_cmds);
         commands.extend(end_turn_cmds);
 
         commands
