@@ -349,7 +349,7 @@ mod test {
     // create a test that causes an error
     #[test]
     fn test_play_single_card_error() {
-        let duel = Duel::default();
+        let duel = Duel::random();
         let builder = CommandBuilder::new(&duel);
         let command = builder.field(); // this will cause InvalidDuelState error
                                        // let err = command.unwrap_err();

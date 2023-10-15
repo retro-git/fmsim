@@ -1144,7 +1144,7 @@ mod tests {
     // create a default duel, generate all valid moves, and dbg print them
     #[test]
     fn test_generate_all_valid() {
-        let duel = Duel::default();
+        let duel = Duel::random();
         let commands = DuelCommandEnum::generate_all_valid(&duel);
         // dbg!(&commands);
         // dbg!(&commands.len());
@@ -1171,7 +1171,7 @@ mod tests {
     // create a default duel, then benchmark the generation of all valid commands
     #[bench]
     fn bench_generate_all_valid(b: &mut Bencher) {
-        let duel = Duel::default();
+        let duel = Duel::random();
         b.iter(|| {
             let commands = DuelCommandEnum::generate_all_valid(&duel);
             let mut max_commands_len = 1650;

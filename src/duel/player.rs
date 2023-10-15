@@ -1,4 +1,3 @@
-use derive_builder::Builder;
 use serde::{Deserialize, Serialize};
 
 use crate::Card;
@@ -8,8 +7,7 @@ use super::{
     field::{MonsterRowPosition, SpellRowPosition},
 };
 
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Builder)]
-#[builder(setter(into), default)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct Player {
     pub life_points: u32,
     pub deck: Vec<Card>,
@@ -20,8 +18,8 @@ pub struct Player {
     pub sorl_effect_countdown: Option<u32>,
 }
 
-impl Default for Player {
-    fn default() -> Self {
+impl Player {
+    pub fn random() -> Self {
         Self {
             life_points: 8000,
             deck: generate_random_deck(),

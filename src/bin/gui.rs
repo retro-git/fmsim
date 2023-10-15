@@ -160,7 +160,7 @@ fn DuelComponent(cx: Scope) -> Element {
 }
 
 fn App(cx: Scope) -> Element {
-    let duel = fmsim::Duel::default();
+    let duel = fmsim::Duel::random();
     use_shared_state_provider(cx, || duel);
 
     cx.render(rsx! { DuelComponent {}})

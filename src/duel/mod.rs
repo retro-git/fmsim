@@ -1,4 +1,3 @@
-use derive_builder::Builder;
 use serde::{Deserialize, Serialize};
 
 use crate::TerrainType;
@@ -15,8 +14,7 @@ pub mod field;
 pub mod player;
 pub mod state;
 
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Builder)]
-#[builder(setter(into), default)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct Duel {
     pub player1: Player,
     pub player2: Player,
@@ -25,11 +23,11 @@ pub struct Duel {
     pub state: DuelStateEnum,
 }
 
-impl Default for Duel {
-    fn default() -> Self {
+impl Duel {
+    pub fn random() -> Self {
         let mut duel = Self {
-            player1: Player::default(),
-            player2: Player::default(),
+            player1: Player::random(),
+            player2: Player::random(),
             terrain_type: TerrainType::Default,
             turn: 0,
             state: HandState.into(),
@@ -37,9 +35,7 @@ impl Default for Duel {
         duel.get_player_mut().draw();
         duel
     }
-}
 
-impl Duel {
     pub fn command_builder(&self) -> command_builder::CommandBuilder<command_builder::Start> {
         command_builder::CommandBuilder::new(self)
     }
@@ -87,7 +83,7 @@ mod tests {
 
     #[test]
     fn test_duel_turns() {
-        let mut duel = Duel::default();
+        let mut duel = Duel::random();
 
         assert_eq!(duel.get_player().life_points, 8000);
         duel.get_player_mut().life_points -= 1000;

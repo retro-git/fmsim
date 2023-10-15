@@ -90,7 +90,7 @@ fn test() {
 
     for _ in 1..=50000 {
         let handle = thread::spawn(|| {
-            let mut duel = fmsim::Duel::default();
+            let mut duel = fmsim::Duel::random();
             let starting_duel_state = duel.clone();
 
             let strategy = RandomCommandStrategy;
