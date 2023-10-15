@@ -1,7 +1,7 @@
 use enum_dispatch::enum_dispatch;
 use serde::{Deserialize, Serialize};
 
-use super::field::MonsterRowPosition;
+use super::{field::MonsterRowPosition, PlayerEnum};
 
 #[enum_dispatch]
 pub trait DuelState {}
@@ -23,7 +23,9 @@ pub struct SetGuardianStarState {
 impl DuelState for SetGuardianStarState {}
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
-pub struct EndState;
+pub struct EndState {
+    pub winner: PlayerEnum,
+}
 impl DuelState for EndState {}
 
 #[enum_dispatch(DuelState)]

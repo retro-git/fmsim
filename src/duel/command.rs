@@ -18,15 +18,28 @@ use super::{
     Duel,
 };
 
+fn end_game_lp_check(duel: &mut Duel) {
+    if duel.get_player().life_points <= 0 || duel.get_enemy().life_points <= 0 {
+        duel.state = EndState {
+            winner: if duel.get_player().life_points <= 0 {
+                duel.get_enemy_enum()
+            } else {
+                duel.get_player_enum()
+            },
+        }
+        .into();
+    }
+}
+
 fn execute_spell(card: Card, duel: &mut Duel) {
     match card.variant {
         CardVariant::Magic(magic_effect) => {
             magic_effect.execute_effect(duel);
 
-            // Check if either player has <= 0 life points. If so, set the duel state to EndState.
-            if duel.get_player().life_points <= 0 || duel.get_enemy().life_points <= 0 {
-                duel.state = EndState.into();
-            } else {
+            end_game_lp_check(duel);
+
+            // if we are not in EndState, go to FieldState
+            if !matches!(duel.state, DuelStateEnum::EndState(_)) {
                 duel.state = FieldState.into();
             }
         }
@@ -708,10 +721,8 @@ impl DuelCommand for FieldAttackCmd {
             monster.face_direction = FaceDirection::Up;
         }
 
-        // Check both players to see if either has <= 0 life points. If so, set the duel state to EndState.
-        if duel.get_player().life_points <= 0 || duel.get_enemy().life_points <= 0 {
-            duel.state = EndState.into();
-        }
+        // Check if the game should end
+        end_game_lp_check(duel);
 
         Ok(())
     }
@@ -935,7 +946,9 @@ impl DuelCommand for EndTurnCmd {
         player.draw();
 
         if player.hand.len() < 5 {
-            duel.state = EndState.into();
+            duel.state = EndState {
+                winner: duel.get_enemy_enum(),
+            }.into()
         } else {
             duel.state = HandState.into();
         }

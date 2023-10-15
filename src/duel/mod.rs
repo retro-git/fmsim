@@ -15,6 +15,12 @@ pub mod player;
 pub mod state;
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+pub enum PlayerEnum {
+    Player1,
+    Player2,
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 pub struct Duel {
     pub player1: Player,
     pub player2: Player,
@@ -73,6 +79,22 @@ impl Duel {
             &mut self.player2
         } else {
             &mut self.player1
+        }
+    }
+
+    pub fn get_player_enum(&self) -> PlayerEnum {
+        if self.turn % 2 == 0 {
+            PlayerEnum::Player1
+        } else {
+            PlayerEnum::Player2
+        }
+    }
+
+    pub fn get_enemy_enum(&self) -> PlayerEnum {
+        if self.turn % 2 == 0 {
+            PlayerEnum::Player2
+        } else {
+            PlayerEnum::Player1
         }
     }
 }
