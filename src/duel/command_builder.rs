@@ -182,18 +182,22 @@ impl<'a> CommandBuilder<'a, HandSingleSelectedWithFaceDirection> {
 
         // if the card is a monster or faceup equip, we need to check that the field_index is within the monster row.
         // otherwise, we need to check that the field_index is within the spell row.
-        match card.variant {
-            CardVariant::Monster { .. } | CardVariant::Equip { .. }
-                if self.state.face_direction == FaceDirection::Up =>
-            {
-                if field_index >= self.duel.get_player().monster_row.len() {
-                    return Err(CommandError::OutOfBoundsFieldSelection);
-                }
+        if matches!(card.variant, CardVariant::Monster { .. })
+            || (matches!(card.variant, CardVariant::Equip { .. })
+                && self.state.face_direction == FaceDirection::Up)
+        {
+            if field_index >= self.duel.get_player().monster_row.len() {
+                return Err(CommandError::OutOfBoundsFieldSelection);
             }
-            _ => {
-                if field_index >= self.duel.get_player().spell_row.len() {
-                    return Err(CommandError::OutOfBoundsFieldSelection);
-                }
+            // Check if monster is present at field index for Equip card
+            if matches!(card.variant, CardVariant::Equip { .. })
+                && self.duel.get_player().monster_row[field_index].is_none()
+            {
+                return Err(CommandError::CannotEquipEmptyPosition);
+            }
+        } else {
+            if field_index >= self.duel.get_player().spell_row.len() {
+                return Err(CommandError::OutOfBoundsFieldSelection);
             }
         }
 
@@ -216,7 +220,7 @@ impl<'a> CommandBuilder<'a, HandMultipleSelected> {
         for index in &self.state.hand_indices {
             cards.push(self.duel.get_player().hand[*index].clone());
         }
-        let card = crate::combine_cards(cards).last().unwrap().clone();
+        let card = crate::combine_cards(cards).last().unwrap().2.clone();
 
         // if the card is a monster, we need to check that the field_index is within the length of the monster row.
         if let CardVariant::Monster { .. } = card.variant {

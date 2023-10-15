@@ -8,7 +8,7 @@ use thiserror::Error;
 use crate::{
     card_from_id, combine, combine_cards,
     duel::field::{MonsterRowPosition, SpellRowPosition},
-    guardian_star_relation, AdvantageRelation, Card, CardVariant, TrapEffectEnum, MagicEffect,
+    guardian_star_relation, AdvantageRelation, Card, CardVariant, MagicEffect, TrapEffectEnum, check_all_successful_equips, get_amount_of_equip_boosts,
 };
 
 use super::{
@@ -19,14 +19,13 @@ use super::{
 
 fn execute_spell(card: Card, duel: &mut Duel) {
     match card.variant {
-        CardVariant::Magic ( magic_effect ) => {
+        CardVariant::Magic(magic_effect) => {
             magic_effect.execute_effect(duel);
 
             // Check if either player has <= 0 life points. If so, set the duel state to EndState.
             if duel.get_player().life_points <= 0 || duel.get_enemy().life_points <= 0 {
                 duel.state = EndState.into();
-            }
-            else {
+            } else {
                 duel.state = FieldState.into();
             }
         }
@@ -76,8 +75,7 @@ fn execute_spell(card: Card, duel: &mut Duel) {
                     applied_equips_amount: None,
                 }
                 .into();
-            }
-            else {
+            } else {
                 duel.state = FieldState.into();
             }
         }
@@ -96,13 +94,15 @@ fn reverse_trap(monster_index: usize, equip_amount: u32, duel: &mut Duel) {
 
     for spell_row_pos in duel.get_enemy_mut().spell_row.iter_mut() {
         if let Some(spell) = spell_row_pos {
-            if let CardVariant::Trap ( effect ) = &spell.card.variant {
+            if let CardVariant::Trap(effect) = &spell.card.variant {
                 if *effect == TrapEffectEnum::ReverseTrap {
                     // Remove the trap
                     *spell_row_pos = None;
 
                     // Negate the monster's attack
-                    let monster = &mut duel.get_player_mut().monster_row[monster_index].as_mut().unwrap();
+                    let monster = &mut duel.get_player_mut().monster_row[monster_index]
+                        .as_mut()
+                        .unwrap();
                     monster.card.modify_stats(-(equip_amount as i32) * 2);
                     break;
                 }
@@ -166,7 +166,7 @@ impl DuelCommand for HandPlaySingleCmd {
             return Err(CommandError::InvalidDuelState);
         }
 
-        // Check if the hand index is valid and remove the card from the hand
+        // Check if the hand index is valid
         let card = duel
             .get_player()
             .hand
@@ -183,24 +183,22 @@ impl DuelCommand for HandPlaySingleCmd {
         } else if self.field_index.is_none() {
             return Err(CommandError::FieldIndexNotSet);
         } else if let Some(field_index) = self.field_index {
-            match card.variant {
-                CardVariant::Monster { .. } | CardVariant::Equip { .. }
-                    if self.face_direction == FaceDirection::Up =>
-                {
-                    if field_index >= duel.get_player().monster_row.len() {
-                        return Err(CommandError::OutOfBoundsFieldSelection);
-                    }
-                    // Check if monster is present at field index for Equip card
-                    if matches!(card.variant, CardVariant::Equip { .. })
-                        && duel.get_player().monster_row[field_index].is_none()
-                    {
-                        return Err(CommandError::CannotEquipEmptyPosition);
-                    }
+            if matches!(card.variant, CardVariant::Monster { .. })
+                || (matches!(card.variant, CardVariant::Equip { .. })
+                    && self.face_direction == FaceDirection::Up)
+            {
+                if field_index >= duel.get_player().monster_row.len() {
+                    return Err(CommandError::OutOfBoundsFieldSelection);
                 }
-                _ => {
-                    if field_index >= duel.get_player().spell_row.len() {
-                        return Err(CommandError::OutOfBoundsFieldSelection);
-                    }
+                // Check if monster is present at field index for Equip card
+                if matches!(card.variant, CardVariant::Equip { .. })
+                    && duel.get_player().monster_row[field_index].is_none()
+                {
+                    return Err(CommandError::CannotEquipEmptyPosition);
+                }
+            } else {
+                if field_index >= duel.get_player().spell_row.len() {
+                    return Err(CommandError::OutOfBoundsFieldSelection);
                 }
             }
         }
@@ -217,82 +215,81 @@ impl DuelCommand for HandPlaySingleCmd {
         // We need to check if a card is already present (there is a Some) at the field index
         // If so, we need to combine with the existing card. The result, wrapped in a MonsterRowPosition/SpellRowPosition, is placed at the field index.
         if let Some(field_index) = self.field_index {
-            match card.variant {
-                CardVariant::Monster { .. } | CardVariant::Equip { .. }
-                    if self.face_direction == FaceDirection::Up =>
-                {
-                    let existing_position = duel.get_player().monster_row[field_index].clone();
-                    let mut applied_equip = false;
-                    let mut card_mode = CardMode::Attack;
-                    let mut face_direction = self.face_direction;
-                    let mut equip_amount = None;
-                    let card_to_play = match existing_position {
-                        Some(existing_card) => {
-                            face_direction = FaceDirection::Up;
-                            let ret = combine(&card, &existing_card.card);
-                            // destructure ret and existing_card variants as monster to extract attack
-                            if let (
-                                CardVariant::Monster {
-                                    attack: existing_attack,
-                                    ..
-                                },
-                                CardVariant::Monster {
-                                    attack: new_attack, ..
-                                },
-                            ) = (&existing_card.card.variant, &ret.variant)
-                            {
-                                // if the new card is the same but with increased attack, we know we successfully applied an equip.
-                                // in this case, we need to preserve the mode of the existing card and go to FieldState instead of SetGuardianStarState.
-                                if ret.id == existing_card.card.id && new_attack > existing_attack {
-                                    applied_equip = true;
-                                    card_mode = existing_card.card_mode;
-                                    equip_amount = Some(new_attack - existing_attack);
-                                }
+            // if matches monster OR matches equip and face_direction is up
+            if matches!(card.variant, CardVariant::Monster { .. })
+                || (matches!(card.variant, CardVariant::Equip { .. })
+                    && self.face_direction == FaceDirection::Up)
+            {
+                let existing_position = duel.get_player().monster_row[field_index].clone();
+                let mut applied_equip = false;
+                let mut card_mode = CardMode::Attack;
+                let mut face_direction = self.face_direction;
+                let mut equip_amount = None;
+                let card_to_play = match existing_position {
+                    Some(existing_card) => {
+                        face_direction = FaceDirection::Up;
+                        let ret = combine(&card, &existing_card.card);
+                        // destructure ret and existing_card variants as monster to extract attack
+                        if let (
+                            CardVariant::Monster {
+                                attack: existing_attack,
+                                ..
+                            },
+                            CardVariant::Monster {
+                                attack: new_attack, ..
+                            },
+                        ) = (&existing_card.card.variant, &ret.variant)
+                        {
+                            // if the new card is the same but with increased attack, we know we successfully applied an equip.
+                            // in this case, we need to preserve the mode of the existing card and go to FieldState instead of SetGuardianStarState.
+                            if ret.id == existing_card.card.id && new_attack > existing_attack {
+                                applied_equip = true;
+                                card_mode = existing_card.card_mode;
+                                equip_amount = Some(new_attack - existing_attack);
                             }
-                            ret
                         }
-                        None => card.clone(),
-                    };
-                    let monster_row_position = MonsterRowPosition {
-                        card: card_to_play.clone(),
-                        face_direction: face_direction,
-                        disabled: false,
-                        card_mode: card_mode,
-                        guardian_star_choice: GuardianStarChoice::A,
-                    };
-
-                    // Remove the card from the hand.
-                    // duel.get_player_mut().hand.remove(self.hand_index);
-
-                    if !applied_equip {
-                        duel.get_player_mut().monster_row[field_index] = None;
-                        duel.state = (SetGuardianStarState {
-                            monster_row_position,
-                            monster_row_index: field_index,
-                            applied_equips_amount: None,
-                        })
-                        .into()
-                    } else {
-                        duel.get_player_mut().monster_row[field_index] = Some(monster_row_position);
-
-                        reverse_trap(field_index, equip_amount.unwrap() as u32, duel);
-
-                        duel.state = FieldState.into();
-                    };
-                }
-                _ => {
-                    let existing_position = duel.get_player().spell_row[field_index].clone();
-                    if existing_position.is_some() {
-                        let card = combine(&card, &existing_position.as_ref().unwrap().card);
-                        duel.get_player_mut().spell_row[field_index] = None;
-
-                        execute_spell(card, duel);
-                    } else {
-                        duel.get_player_mut().spell_row[field_index] = Some(SpellRowPosition {
-                            card: card.clone(),
-                            face_direction: self.face_direction,
-                        });
+                        ret
                     }
+                    None => card.clone(),
+                };
+                let monster_row_position = MonsterRowPosition {
+                    card: card_to_play.clone(),
+                    face_direction: face_direction,
+                    disabled: false,
+                    card_mode: card_mode,
+                    guardian_star_choice: GuardianStarChoice::A,
+                };
+
+                // Remove the card from the hand.
+                // duel.get_player_mut().hand.remove(self.hand_index);
+
+                if !applied_equip {
+                    duel.get_player_mut().monster_row[field_index] = None;
+                    duel.state = (SetGuardianStarState {
+                        monster_row_position,
+                        monster_row_index: field_index,
+                        applied_equips_amount: None,
+                    })
+                    .into()
+                } else {
+                    duel.get_player_mut().monster_row[field_index] = Some(monster_row_position);
+
+                    reverse_trap(field_index, equip_amount.unwrap() as u32, duel);
+
+                    duel.state = FieldState.into();
+                };
+            } else {
+                let existing_position = duel.get_player().spell_row[field_index].clone();
+                if existing_position.is_some() {
+                    let card = combine(&card, &existing_position.as_ref().unwrap().card);
+                    duel.get_player_mut().spell_row[field_index] = None;
+
+                    execute_spell(card, duel);
+                } else {
+                    duel.get_player_mut().spell_row[field_index] = Some(SpellRowPosition {
+                        card: card.clone(),
+                        face_direction: self.face_direction,
+                    });
                 }
             }
         } else {
@@ -360,10 +357,10 @@ impl DuelCommand for HandPlayMultipleCmd {
 
         // combine all the cards into a single card
         let combined_cards = combine_cards(cards.clone());
-        let combined_card = combined_cards.last().unwrap();
+        let combined_card_result = combined_cards.last().unwrap().2.clone();
 
         // match on whether the card is a monster or otherwise
-        match combined_card.variant {
+        match combined_card_result.variant {
             // if the result is a monster, and field_index has an existing card:
             // we need to check if ALL combined_cards were also monsters of the same ID as the existing card and with increased attack.
             // this signifies that every card was a successfully applied equip to the original card.
@@ -374,26 +371,7 @@ impl DuelCommand for HandPlayMultipleCmd {
             CardVariant::Monster { .. } => {
                 let mut card_mode = CardMode::Attack;
                 let mut guardian_star_choice = GuardianStarChoice::A;
-                let all_successful_equips = if cards.len() == self.hand_indices.len() + 1 {
-                    // Create a new iterator to iterate through windows of combined_cards.
-                    // Use the windows function and check a predicate holds for all windows.
-                    // This predicate will ensure that in each window, the two cards have the same id and the latter card has a higher attack + defense stat compared to the previous.
-                    // We can get the attack and defense stats as a (attack, defense) tuple with the cards get_stats_no_terrain function.
-                    combined_cards.windows(2).all(|window| {
-                        let (prev_card, curr_card) = (&window[0], &window[1]);
-                        if prev_card.id != curr_card.id {
-                            false
-                        } else {
-                            let (prev_attack, prev_defense) =
-                                prev_card.get_stats_no_terrain().unwrap();
-                            let (curr_attack, curr_defense) =
-                                curr_card.get_stats_no_terrain().unwrap();
-                            curr_attack > prev_attack && curr_defense > prev_defense
-                        }
-                    })
-                } else {
-                    false
-                };
+                let all_successful_equips = check_all_successful_equips(combined_cards.clone());
 
                 if all_successful_equips {
                     if let Some(monster_row) =
@@ -408,7 +386,7 @@ impl DuelCommand for HandPlayMultipleCmd {
                 // if all_successful_equips is true, we place the card and then go to FieldState, preserving the mode of the existing card.
                 // otherwise, we go to SetGuardianStarState.
                 let monster_row_position = MonsterRowPosition {
-                    card: combined_cards.last().unwrap().clone(),
+                    card: combined_card_result.clone(),
                     face_direction: FaceDirection::Up,
                     disabled: false,
                     card_mode: card_mode,
@@ -418,19 +396,7 @@ impl DuelCommand for HandPlayMultipleCmd {
                 // We need to check how much equips were applied during the combination.
                 // For each window, we need to check if the previous card was the same as the current card, and if the attack increased.
                 // If so, increase applied_equips_amount by the difference in attack.
-                let mut applied_equips_amount = 0;
-                for window in combined_cards.windows(2) {
-                    let (prev_card, curr_card) = (&window[0], &window[1]);
-                    if prev_card.id == curr_card.id {
-                        let (prev_attack, prev_defense) = prev_card.get_stats_with_terrain(duel.terrain_type).unwrap();
-                        let (curr_attack, curr_defense) = curr_card.get_stats_with_terrain(duel.terrain_type).unwrap();
-                        if curr_attack > prev_attack {
-                            // assert the difference in attacks is the same as the difference in defenses
-                            assert_eq!(curr_defense - prev_defense, curr_attack - prev_attack);
-                            applied_equips_amount += curr_attack - prev_attack;
-                        }
-                    }
-                }
+                let applied_equips_amount = get_amount_of_equip_boosts(combined_cards.clone());
 
                 // Change the duel state based on whether all equips were successful
                 if all_successful_equips {
@@ -455,7 +421,7 @@ impl DuelCommand for HandPlayMultipleCmd {
                 }
             }
             _ => {
-                execute_spell(combined_card.clone(), duel);
+                execute_spell(combined_card_result.clone(), duel);
             }
         }
 
@@ -926,7 +892,11 @@ impl DuelCommand for FieldPlayEquipPickMonsterCmd {
                 if combined_attack > original_attack {
                     duel.get_player_mut().monster_row[self.monster_row_index] = Some(monster);
 
-                    reverse_trap(self.monster_row_index, (combined_attack - original_attack) as u32, duel);
+                    reverse_trap(
+                        self.monster_row_index,
+                        (combined_attack - original_attack) as u32,
+                        duel,
+                    );
 
                     duel.state = FieldState.into();
                 } else {

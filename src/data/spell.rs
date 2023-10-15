@@ -239,14 +239,15 @@ impl MagicEffect for CursebreakerEffect {
                         monster.card.get_stats_no_terrain().unwrap();
                     {
                         if base_attack > current_attack {
+                            dbg!("CursebreakerEffect: base_attack > current_attack");
+                            dbg!(&monster.card);
                             // assert that the difference between base_attack and current_attack is the same as the difference between base_defense and current_defense
                             assert_eq!(
                                 base_attack - current_attack,
                                 base_defense - current_defense
                             );
-                            monster
-                                .card
-                                .modify_stats(base_attack - current_attack);
+                            monster.card.reset_stats_to_base();
+                            // monster.card.modify_stats(base_attack - current_attack);
                         }
                     }
                 }
