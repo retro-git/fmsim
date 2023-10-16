@@ -247,7 +247,9 @@ impl<'a> CommandBuilder<'a, Field> {
 
         match spell_row_pos {
             Some(spell) => match spell.card.variant {
-                CardVariant::Magic { .. } | CardVariant::Ritual { .. } | CardVariant::Trap { .. } => Ok(FieldPlaySpellCmd {
+                CardVariant::Magic { .. }
+                | CardVariant::Ritual { .. }
+                | CardVariant::Trap { .. } => Ok(FieldPlaySpellCmd {
                     spell_row_index: spell_index,
                 }
                 .into()),
@@ -257,7 +259,11 @@ impl<'a> CommandBuilder<'a, Field> {
         }
     }
 
-    pub fn play_equip(self, equip_index: usize, monster_index: usize) -> Result<DuelCommandEnum, CommandError> {
+    pub fn play_equip(
+        self,
+        equip_index: usize,
+        monster_index: usize,
+    ) -> Result<DuelCommandEnum, CommandError> {
         let player = self.duel.get_player();
         let equip_card_pos = player
             .spell_row

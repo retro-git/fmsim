@@ -10,7 +10,7 @@ use fmsim::duel::command::{DuelCommand, DuelCommandEnum};
 use fmsim::duel::command_strategy::{CommandStrategy, RandomCommandStrategy};
 use fmsim::duel::field::{MonsterRowPosition, SpellRowPosition};
 use fmsim::duel::state::DuelStateEnum;
-use fmsim::{Card, Duel, card_from_name};
+use fmsim::{card_from_name, Card, Duel};
 use serde::{Deserialize, Serialize};
 
 // derive serde
@@ -63,20 +63,33 @@ fn main() {
         // print list of cards in hand by name
         println!(
             "Player hand: {:?}",
-            duel.get_player().hand.iter().map(|card| card.name.clone()).collect::<Vec<_>>()
+            duel.get_player()
+                .hand
+                .iter()
+                .map(|card| card.name.clone())
+                .collect::<Vec<_>>()
         );
         //print enemy hand
         println!(
             "Enemy hand: {:?}",
-            duel.get_enemy().hand.iter().map(|card| card.name.clone()).collect::<Vec<_>>()
+            duel.get_enemy()
+                .hand
+                .iter()
+                .map(|card| card.name.clone())
+                .collect::<Vec<_>>()
         );
         // print all the cards on the enemy monster row by name
         println!(
             "Player monster row: {:?}",
-            duel.get_player().monster_row.clone().iter().map(|card_pos| card_pos.as_ref().map(|cp| cp.card.name.clone())).collect::<Vec<_>>()
+            duel.get_player()
+                .monster_row
+                .clone()
+                .iter()
+                .map(|card_pos| card_pos.as_ref().map(|cp| cp.card.name.clone()))
+                .collect::<Vec<_>>()
         );
         println!("Executing command: {:?}", command);
-        
+
         command.execute(&mut duel).unwrap();
         // use random command strategy to get a command
         // let strategy = RandomCommandStrategy;
@@ -111,17 +124,21 @@ fn test() {
                 // print the name of each card in the hand of the current player
                 println!(
                     "{:?}",
-                    duel.get_player().hand.iter().map(|card| card.name.clone()).collect::<Vec<_>>()
+                    duel.get_player()
+                        .hand
+                        .iter()
+                        .map(|card| card.name.clone())
+                        .collect::<Vec<_>>()
                 );
                 // serialise the starting duel state and commands_list to json. then write to a file.
                 // the filename should be something unique, like the current timestamp.
                 // the file should be written to a folder called "crashes" in the root of the project.
                 // the file should be named "crash-<timestamp>.json"
                 // if the folder doesn't exist, create it.
+                use serde_json::json;
                 use std::fs::File;
                 use std::io::Write;
                 use std::path::Path;
-                use serde_json::json;
 
                 let timestamp = chrono::Utc::now().format("%Y%m%d%H%M%S").to_string();
                 let filename = format!("crash-{}.json", timestamp);

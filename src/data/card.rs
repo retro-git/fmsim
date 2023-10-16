@@ -119,8 +119,6 @@ impl Card {
         // also assert that the difference is a multiple of 500
         assert_eq!((base_attack - current_attack).abs() % 500, 0);
 
-        
-
         // panic if not a Monster
         // modify attack and defense by delta
         match &mut self.variant {
@@ -149,10 +147,10 @@ impl Card {
                 // assert that the difference is the same in both attack and defense
                 assert_eq!(base_attack - current_attack, base_defense - current_defense);
                 // also assert that the difference is a multiple of 500
-                assert_eq!((base_attack - current_attack).abs() % 500, 0); 
+                assert_eq!((base_attack - current_attack).abs() % 500, 0);
 
                 Some(base_attack - current_attack)
-            },
+            }
             _ => None,
         }
     }
@@ -236,8 +234,7 @@ pub fn check_all_successful_equips(io_pairs: Vec<(Card, Card, Card)>) -> bool {
             let (combined_attack, combined_defense) = combined_card.get_stats_no_terrain().unwrap();
             assert_eq!(attack - defense, combined_attack - combined_defense);
             return combined_attack > attack;
-        }
-        else {
+        } else {
             return false;
         }
     })

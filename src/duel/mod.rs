@@ -97,6 +97,20 @@ impl Duel {
             PlayerEnum::Player1
         }
     }
+
+    pub fn get_player_by_enum(&self, player_enum: PlayerEnum) -> &Player {
+        match player_enum {
+            PlayerEnum::Player1 => &self.player1,
+            PlayerEnum::Player2 => &self.player2,
+        }
+    }
+
+    pub fn get_enemy_by_enum(&self, player_enum: PlayerEnum) -> &Player {
+        match player_enum {
+            PlayerEnum::Player1 => &self.player2,
+            PlayerEnum::Player2 => &self.player1,
+        }
+    }
 }
 
 #[cfg(test)]

@@ -34,7 +34,8 @@ pub fn exodia_check(duel: &mut Duel) {
     if exodia_ids.len() == 5 {
         duel.state = EndState {
             winner: duel.get_player_enum(),
-        }.into()
+        }
+        .into()
     }
 }
 
@@ -300,11 +301,14 @@ impl DuelCommand for HandPlaySingleCmd {
                 // for example, Sky Dragon + Machine Conversion Factory = Harpie's Feather Duster.
                 // in this case, we need to call execute_spell and return early.
                 match card_to_play.variant {
-                    CardVariant::Magic{ .. } | CardVariant::Ritual{ .. } | CardVariant::Trap{ .. } | CardVariant::Equip{ .. } => {
+                    CardVariant::Magic { .. }
+                    | CardVariant::Ritual { .. }
+                    | CardVariant::Trap { .. }
+                    | CardVariant::Equip { .. } => {
                         duel.get_player_mut().monster_row[field_index] = None;
                         execute_spell(card_to_play, duel);
                         return Ok(());
-                    } 
+                    }
                     _ => {}
                 }
 
@@ -507,7 +511,10 @@ impl DuelCommand for SetGuardianStarCmd {
         if let DuelStateEnum::SetGuardianStarState(state) = duel.state.clone() {
             let mut monster_row_position = state.monster_row_position.clone();
             // assert that the card is a Monster variant
-            assert!(matches!(monster_row_position.card.variant, CardVariant::Monster { .. }));
+            assert!(matches!(
+                monster_row_position.card.variant,
+                CardVariant::Monster { .. }
+            ));
 
             monster_row_position.guardian_star_choice = self.guardian_star_choice;
             duel.get_player_mut().monster_row[state.monster_row_index] = Some(monster_row_position);
@@ -819,7 +826,9 @@ impl DuelCommand for FieldPlaySpellCmd {
             .ok_or(CommandError::OutOfBoundsFieldSelection)?;
         if let Some(spell) = spell {
             match spell.card.variant {
-                CardVariant::Magic { .. } | CardVariant::Ritual{ .. } | CardVariant::Trap{ .. } => {},
+                CardVariant::Magic { .. }
+                | CardVariant::Ritual { .. }
+                | CardVariant::Trap { .. } => {}
                 _ => return Err(CommandError::SpellNotPresentAtSelectedPosition),
             }
         } else {
@@ -865,7 +874,12 @@ impl DuelCommand for FieldPlayEquipCmd {
             .get(self.spell_row_index)
             .ok_or(CommandError::OutOfBoundsFieldSelection)?;
 
-        if spell.is_none() || !matches!(spell.as_ref().unwrap().card.variant, CardVariant::Equip { .. }) {
+        if spell.is_none()
+            || !matches!(
+                spell.as_ref().unwrap().card.variant,
+                CardVariant::Equip { .. }
+            )
+        {
             return Err(CommandError::EquipNotPresentAtSelectedPosition);
         }
 
@@ -936,8 +950,7 @@ impl DuelCommand for FieldPlayEquipCmd {
                     .into();
                 }
             }
-        }
-        else {
+        } else {
             duel.get_player_mut().monster_row[self.monster_row_index] = None;
             execute_spell(combined_card, duel);
         }
@@ -960,6 +973,13 @@ impl DuelCommand for EndTurnCmd {
     fn execute(&self, duel: &mut Duel) -> Result<(), CommandError> {
         self.check_valid(duel)?;
 
+        // loop through all monsters and set disabled to false
+        for monster in duel.get_player_mut().monster_row.iter_mut() {
+            if let Some(monster) = monster {
+                monster.disabled = false;
+            }
+        }
+
         duel.turn += 1;
 
         // for the current player, if sorl_effect_countdown is Some, decrement it. if it is 0, set it to None.
@@ -977,7 +997,8 @@ impl DuelCommand for EndTurnCmd {
         if player.hand.len() < 5 {
             duel.state = EndState {
                 winner: duel.get_enemy_enum(),
-            }.into()
+            }
+            .into()
         } else {
             exodia_check(duel);
             if !matches!(duel.state, DuelStateEnum::EndState(_)) {
@@ -1143,7 +1164,10 @@ impl DuelCommandEnum {
         let spell_row_indices = 0..5;
         let field_play_equip_cmds = iproduct!(spell_row_indices, monster_row_indices)
             .filter_map(|(spell_row_index, monster_row_index)| {
-                let cmd = FieldPlayEquipCmd { spell_row_index, monster_row_index };
+                let cmd = FieldPlayEquipCmd {
+                    spell_row_index,
+                    monster_row_index,
+                };
                 if cmd.check_valid(duel).is_ok() {
                     Some(DuelCommandEnum::FieldPlayEquipCmd(cmd))
                 } else {
