@@ -102,10 +102,19 @@ fn execute_spell(card: Card, duel: &mut Duel) {
                     guardian_star_choice: GuardianStarChoice::A,
                 };
 
+                // the newly created ritual card takes the position where card2_id was found
+                let mut position_to_place_ritual = 0;
+                for (index, card_id) in found_card_ids.iter().enumerate() {
+                    if *card_id == card2_id {
+                        position_to_place_ritual = found_cards[index];
+                        break;
+                    }
+                }
+
                 // Go to SetGuardianStarState
                 duel.state = SetGuardianStarState {
                     monster_row_position: monster_row_pos,
-                    monster_row_index: found_cards[0],
+                    monster_row_index: position_to_place_ritual,
                     applied_equips_amount: None,
                 }
                 .into();
