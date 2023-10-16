@@ -2,7 +2,7 @@
 
 use dioxus::prelude::*;
 use dioxus_desktop::{LogicalSize, WindowBuilder};
-use fmsim::duel::command::DuelCommand;
+use fmsim::duel::command::{DuelCommand, DuelCommandEnum};
 use fmsim::duel::command_strategy::{CommandStrategy, RandomCommandStrategy};
 use fmsim::duel::field::{MonsterRowPosition, SpellRowPosition};
 use fmsim::duel::state::DuelStateEnum;
@@ -15,7 +15,7 @@ pub fn default_window() -> WindowBuilder {
     builder
         .with_title("fmsim")
         .with_theme(Some(dioxus_desktop::tao::window::Theme::Dark))
-        .with_inner_size(LogicalSize::new(1200, 768))
+        .with_inner_size(LogicalSize::new(1920, 1080))
 }
 
 fn main() {
@@ -191,16 +191,11 @@ fn SpellRowComponent(cx: Scope, spell_row: Vec<Option<SpellRowPosition>>) -> Ele
 
 fn DuelComponent(cx: Scope) -> Element {
     let duel = use_shared_state::<Duel>(cx).unwrap();
+    let commands = use_shared_state::<Vec<DuelCommandEnum>>(cx).unwrap();
     cx.render(rsx! {
         div {
             div {
-                // print current player by duel.get_player_enum()
-                style: "text-align: center;",
-                format!("Current player: {:?}", duel.read().get_player_enum())
-            }
-            // in the top left, a div to display the terrain_type
-            div {
-                style: "display: flex; justify-content: space-between;",
+                style: "display: flex; justify-content: space-between; align-items: center;",
                 div {
                     style: "flex: 1;",
                     div {
@@ -211,12 +206,22 @@ fn DuelComponent(cx: Scope) -> Element {
                     }
                 }
                 div {
+                    style: "text-align: center; flex: 1;",
+                    format!("Current player: {:?}", duel.read().get_player_enum())
+                }
+                div {
                     style: "text-align: right; flex: 1;",
                     div {
                         format!("Player 2 Life Points: {}", duel.read().get_player_by_enum(PlayerEnum::Player2).life_points)
                     }
                     div {
+                        format!("Player 1 Remaining Cards: {}", duel.read().get_player_by_enum(PlayerEnum::Player1).deck.len())
+                    }
+                    div {
                         format!("Player 1 Life Points: {}", duel.read().get_player_by_enum(PlayerEnum::Player1).life_points)
+                    }
+                    div {
+                        format!("Player 2 Remaining Cards: {}", duel.read().get_player_by_enum(PlayerEnum::Player2).deck.len())
                     }
                 }
             }
@@ -242,13 +247,26 @@ fn DuelComponent(cx: Scope) -> Element {
             HandComponent {
                 hand: duel.read().get_player().hand.clone()
             }
+            div {
+                // print the next command
+                format!("Next command: {:?}", commands.read().last().unwrap())
+            }
             button {
                 onclick: move |_| {
                     if !matches!(duel.read().state, DuelStateEnum::EndState(_)) {
+                        let duel_state = duel.read().state.clone();
                         let strategy = RandomCommandStrategy;
-                        let command = strategy.get_command(&duel.read());
-                        let mut duel_ref = duel.write();
-                        command.execute(&mut *duel_ref).unwrap();
+                        if !matches!(duel_state, DuelStateEnum::EndState(_)) {
+                            let command = commands.read().last().unwrap().clone();
+                            command.execute(&mut *duel.write()).unwrap();
+                        }
+
+                        let duel_state = duel.read().state.clone();
+                        if !matches!(duel_state, DuelStateEnum::EndState(_)) {
+                            let command = strategy.get_command(&duel.read());
+                            let mut commands_ref = commands.write();
+                            commands_ref.push(command.clone());
+                        }
                     }
                 }
             }
@@ -256,9 +274,55 @@ fn DuelComponent(cx: Scope) -> Element {
     })
 }
 
+fn CommandsComponent(cx: Scope) -> Element {
+    let commands = use_shared_state::<Vec<DuelCommandEnum>>(cx).unwrap();
+    cx.render(rsx! {
+        div {
+            div {
+                // start state
+                "start"
+            }
+            commands.read().iter().take(commands.read().len() - 1).map(|command| {
+                rsx! { div {
+                    div {
+                        format!("{:?}", command)
+                    }
+                }}
+            })
+        }
+    })
+}
+
 fn App(cx: Scope) -> Element {
     let duel = fmsim::Duel::random();
+    let mut commands: Vec<DuelCommandEnum> = Vec::new();
+    // generate the first command
+    let strategy = RandomCommandStrategy;
+    let command = strategy.get_command(&duel);
+    commands.push(command.clone());
+    
     use_shared_state_provider(cx, || duel);
+    use_shared_state_provider(cx, || commands);
 
-    cx.render(rsx! { DuelComponent {}})
+    cx.render(rsx! { 
+        div {
+            display: "flex",
+            justify_content: "center",
+            align_items: "flex-start",
+            flex_direction: "row",
+            height: "100%",
+            width: "100%",
+            div {
+                max_width: "1280px",
+                max_height: "720px",
+                DuelComponent {}
+            }
+            div {
+                width: "50px", // adjust this value as needed
+            }
+            div {
+                CommandsComponent {}
+            }
+        }
+    })
 }
